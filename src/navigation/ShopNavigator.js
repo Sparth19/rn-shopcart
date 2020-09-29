@@ -22,6 +22,8 @@ import PlaceOrderScreen from '../screens/shop/PlaceOrderScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import AuthScreen from '../screens/users/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
+import UserProductsScreen from '../screens/users/UserProductsScreen';
+import EditProductsScreen from '../screens/users/EditProductsScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -65,6 +67,15 @@ const HomeNavigator = () => {
   );
 };
 
+const UserProductsNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={defaultHeaderConfig}>
+      <Stack.Screen name="UserProductsScreen" component={UserProductsScreen} />
+      <Stack.Screen name="EditProductsScreen" component={EditProductsScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const DrawerNavigator = (props) => {
   const dispatch = useDispatch();
   const logoutHandler = () => {
@@ -104,6 +115,24 @@ const DrawerNavigator = (props) => {
                 Platform.OS === 'android'
                   ? 'md-home-outline'
                   : 'ios-home-outline'
+              }
+              size={25}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="UserProductsNavigator"
+        component={UserProductsNavigator}
+        options={{
+          title: 'Sell on Shopcart',
+          drawerIcon: ({color}) => (
+            <Icon
+              name={
+                Platform.OS === 'android'
+                  ? 'md-cloud-upload-outline'
+                  : 'ios-cloud-upload-outline'
               }
               size={25}
               color={color}
