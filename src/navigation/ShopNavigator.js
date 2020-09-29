@@ -1,14 +1,14 @@
 import React from 'react';
-import {Platform} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { Platform } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import * as authActions from '../store/actions/auth';
@@ -63,6 +63,10 @@ const HomeNavigator = () => {
         name="ProductDetailScreen"
         component={ProductDetailScreen}
       />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+      />
     </Stack.Navigator>
   );
 };
@@ -86,7 +90,7 @@ const DrawerNavigator = (props) => {
     <Drawer.Navigator
       drawerContentOptions={{
         activeTintColor: Colors.accent,
-        labelStyle: {fontSize: 16, fontWeight: 'bold'},
+        labelStyle: { fontSize: 16, fontWeight: 'bold' },
       }}
       drawerContent={(props) => {
         return (
@@ -94,8 +98,8 @@ const DrawerNavigator = (props) => {
             <DrawerItemList {...props} />
             <DrawerItem
               label="Logout"
-              labelStyle={{fontSize: 16, fontWeight: 'bold'}}
-              style={{flex: 1}}
+              labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
+              style={{ flex: 1 }}
               onPress={logoutHandler}
               icon={() => (
                 <Icon color="red" size={25} name={'ios-close-outline'} />
@@ -109,7 +113,7 @@ const DrawerNavigator = (props) => {
         component={HomeNavigator}
         options={{
           title: 'Home',
-          drawerIcon: ({color}) => (
+          drawerIcon: ({ color }) => (
             <Icon
               name={
                 Platform.OS === 'android'
