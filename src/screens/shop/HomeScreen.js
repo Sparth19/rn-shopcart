@@ -26,6 +26,17 @@ const HomeScreen = (props) => {
           />
         </HeaderButtons>
       ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="cart"
+            iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+            onPress={() => {
+              props.navigation.navigate('CartScreen');
+            }}
+          />
+        </HeaderButtons>
+      )
     });
   }, [navigation]);
 
