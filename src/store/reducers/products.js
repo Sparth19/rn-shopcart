@@ -5,16 +5,18 @@ import { FETCH_PRODUCT } from '../actions/products';
 
 const initialState = {
     availableCategories: CATEGORY,
-    availableProducts: PRODUCT
+    availableProducts: []
 };
 
 export default (state = initialState, action) => {
     switch (action.type) {
         case FETCH_PRODUCT:
+
+            console.log(action.availableProducts)
             return {
                 ...state,
                 availableCategories: CATEGORY,
-                availableProducts: PRODUCT
+                availableProducts: action.availableProducts
             };
         default:
             return state;
