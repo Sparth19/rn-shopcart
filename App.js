@@ -1,22 +1,29 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text
-} from 'react-native';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import {createStore, compose, combineReducers, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 
 import ShopNavigator from './src/navigation/ShopNavigator';
-import productsReducer from './src/store/reducers/products'
+import productsReducer from './src/store/reducers/products';
+import authReducer from './src/store/reducers/auth';
 
 const rootReducer = combineReducers({
-  products: productsReducer
+  products: productsReducer,
+  auth: authReducer,
 });
 
-const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
+let composeEnhancers = compose;
+
+if (__DEV__) {
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+}
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(ReduxThunk)),
+);
 
 const App = () => {
   return (
@@ -25,8 +32,5 @@ const App = () => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-});
 
 export default App;
