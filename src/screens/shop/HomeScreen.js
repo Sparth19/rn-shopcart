@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import React, { useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CategoryGridTile from '../../components/UI/CategoryGridTile';
 import HeaderButton from '../../components/UI/HeaderButton';
@@ -10,7 +10,7 @@ import HeaderButton from '../../components/UI/HeaderButton';
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const {navigation} = props;
+  const { navigation } = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -26,6 +26,17 @@ const HomeScreen = (props) => {
           />
         </HeaderButtons>
       ),
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="cart"
+            iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+            onPress={() => {
+              props.navigation.navigate('CartScreen');
+            }}
+          />
+        </HeaderButtons>
+      )
     });
   }, [navigation]);
 
@@ -38,7 +49,7 @@ const HomeScreen = (props) => {
           color={itemData.item.color}
           onSelect={() => {
             props.navigation.navigate('CategoryProductsScreen', {
-              categoryId: itemData.item.id,
+              category: itemData.item.title,
             });
           }}
         />

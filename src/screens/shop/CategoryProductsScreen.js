@@ -8,26 +8,31 @@ import CATEGORIES from '../../data/category-data';
 import Colors from '../../constants/Colors';
 
 const HomeScreen = props => {
+    const dispatch = useDispatch();
+
     const [isLoading, setIsLoading] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState();
-    const dispatch = useDispatch();
-    const { categoryId } = props.route.params;
-    const selectedCategory = CATEGORIES.find(cat => cat.id === categoryId);
+
+    const { category } = props.route.params;
+    const selectedCategory = CATEGORIES.find(cat => cat.title === category);
+    const { navigation } = props
+
     useEffect(() => {
-        props.navigation.setOptions({
+        navigation.setOptions({
             title: selectedCategory.title
         })
-    }, [props]);
+    }, [navigation]);
 
     const products = useSelector(state => state.products.availableProducts);
-    console.log(products);
+    //console.log(products);
 
     const loadProducts = useCallback(async () => {
         setError(null);
         setIsRefreshing(true);
         try {
-            await dispatch(productsActions.fetchProduct());
+            console.log('in try')
+            await dispatch(productsActions.fetchProduct(category));
         } catch (err) {
             setError(err.message);
         }

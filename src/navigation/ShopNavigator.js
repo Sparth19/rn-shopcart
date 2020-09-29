@@ -1,14 +1,14 @@
 import React from 'react';
-import {Platform} from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { Platform } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
+import { NavigationContainer } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import * as authActions from '../store/actions/auth';
@@ -22,6 +22,8 @@ import PlaceOrderScreen from '../screens/shop/PlaceOrderScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import AuthScreen from '../screens/users/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
+import UserProductsScreen from '../screens/users/UserProductsScreen';
+import EditProductsScreen from '../screens/users/EditProductsScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -61,6 +63,19 @@ const HomeNavigator = () => {
         name="ProductDetailScreen"
         component={ProductDetailScreen}
       />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const UserProductsNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={defaultHeaderConfig}>
+      <Stack.Screen name="UserProductsScreen" component={UserProductsScreen} />
+      <Stack.Screen name="EditProductsScreen" component={EditProductsScreen} />
     </Stack.Navigator>
   );
 };
@@ -75,7 +90,7 @@ const DrawerNavigator = (props) => {
     <Drawer.Navigator
       drawerContentOptions={{
         activeTintColor: Colors.accent,
-        labelStyle: {fontSize: 16, fontWeight: 'bold'},
+        labelStyle: { fontSize: 16, fontWeight: 'bold' },
       }}
       drawerContent={(props) => {
         return (
@@ -83,8 +98,8 @@ const DrawerNavigator = (props) => {
             <DrawerItemList {...props} />
             <DrawerItem
               label="Logout"
-              labelStyle={{fontSize: 16, fontWeight: 'bold'}}
-              style={{flex: 1}}
+              labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
+              style={{ flex: 1 }}
               onPress={logoutHandler}
               icon={() => (
                 <Icon color="red" size={25} name={'ios-close-outline'} />
@@ -98,12 +113,30 @@ const DrawerNavigator = (props) => {
         component={HomeNavigator}
         options={{
           title: 'Home',
-          drawerIcon: ({color}) => (
+          drawerIcon: ({ color }) => (
             <Icon
               name={
                 Platform.OS === 'android'
                   ? 'md-home-outline'
                   : 'ios-home-outline'
+              }
+              size={25}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="UserProductsNavigator"
+        component={UserProductsNavigator}
+        options={{
+          title: 'Sell on Shopcart',
+          drawerIcon: ({color}) => (
+            <Icon
+              name={
+                Platform.OS === 'android'
+                  ? 'md-cloud-upload-outline'
+                  : 'ios-cloud-upload-outline'
               }
               size={25}
               color={color}
