@@ -20,6 +20,8 @@ import HeaderButton from '../../components/UI/HeaderButton';
 const FORM_UPDATE_REDUCER = 'FORM_UPDATE_REDUCER';
 
 const formReducer = (state, action) => {
+  // console.log('in form ');
+  //console.log(action.value);
   if (action.type === FORM_UPDATE_REDUCER) {
     const updatedValues = {
       ...state.inputValues,
@@ -40,7 +42,7 @@ const formReducer = (state, action) => {
       formIsValid: updatedFormIsValid,
     };
   }
-  return state;
+  //return state;
 };
 
 const EditProductScreen = (props) => {
@@ -49,7 +51,7 @@ const EditProductScreen = (props) => {
   const [error, setError] = useState();
 
   const {productId} = props.route.params;
-
+  //console.log('product id : ' + productId);
   const selectedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId),
   );
@@ -71,6 +73,7 @@ const EditProductScreen = (props) => {
 
     formIsValid: selectedProduct ? true : false,
   });
+  //console.log(formState);
 
   useEffect(() => {
     if (error) {
@@ -79,30 +82,11 @@ const EditProductScreen = (props) => {
   }, [error]);
 
   // useEffect(() => {
-  //   props.navigation.setParams({ submit: saveProductHandler });
+  //   props.navigation.setParams({submit: saveProductHandler});
   // }, [saveProductHandler]);
-  const {navigation} = props;
-
-  useEffect(() => {
-    navigation.setOptions({
-      title: productId ? 'Edit Product' : 'Add Product',
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Save"
-            iconName={
-              Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
-            }
-            onPress={() => {
-              saveProductHandler();
-            }}
-          />
-        </HeaderButtons>
-      ),
-    });
-  }, [navigation]);
 
   const saveProductHandler = useCallback(async () => {
+    // console.log(formState);
     if (!formState.formIsValid) {
       Alert.alert('Invalid Input', 'Please enter valid input', [
         {text: 'Okay'},
@@ -135,14 +119,14 @@ const EditProductScreen = (props) => {
       }
       props.navigation.goBack();
     } catch (err) {
-      setError('Something went wrong');
+      setError('Something went wrong' + err);
     }
     setIsLoading(false);
-  }, [dispatch, productId, formState]);
+  }, [dispatch, formState]);
 
   const inputChangeHandler = useCallback(
     (identifier, inputValue, inputValidity) => {
-      //console.log(inputValue);
+      // console.log(inputValue);
       dispatchFormState({
         type: FORM_UPDATE_REDUCER,
         value: inputValue,
@@ -152,6 +136,24 @@ const EditProductScreen = (props) => {
     },
     [dispatchFormState],
   );
+  const {navigation} = props;
+
+  useEffect(() => {
+    navigation.setOptions({
+      title: productId ? 'Edit Product' : 'Add Product',
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Save"
+            iconName={
+              Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
+            }
+            onPress={saveProductHandler}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [navigation, saveProductHandler]);
 
   if (isLoading) {
     return (
@@ -218,6 +220,7 @@ const EditProductScreen = (props) => {
           initiallyValid={!!selectedProduct}
           required
         />
+        
       </View>
     </ScrollView>
     // </KeyboardAvoidingView>

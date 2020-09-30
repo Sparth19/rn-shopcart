@@ -53,7 +53,6 @@ const UserProductsScreen = (props) => {
   }, [navigation]);
 
   const products = useSelector((state) => state.products.userProducts);
-  //console.log(products);
 
   const loadProducts = useCallback(async () => {
     setError(null);
@@ -80,6 +79,25 @@ const UserProductsScreen = (props) => {
       setIsLoading(false);
     });
   }, [dispatch, loadProducts]);
+
+  const editProductHandler = (id) => {
+    props.navigation.navigate('EditProductsScreen', {
+      productId: id,
+    });
+  };
+
+  const deleteProductHandler = async (id) => {
+    setError(null);
+    try {
+      setIsLoading(true);
+      await dispatch(productsActions.deleteProduct(id));
+      loadProducts();
+      setIsLoading(false);
+    } catch (err) {
+      setError('Error while Deleting product' + err.message);
+      setIsLoading(false);
+    }
+  };
 
   if (error) {
     return (
@@ -121,20 +139,16 @@ const UserProductsScreen = (props) => {
             image={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
-            onSelect={() => {
-              props.navigation.navigate('EditProductsScreen', {
-                productId: itemData.item.id,
-              });
-            }}>
+            onSelect={editProductHandler.bind(this, itemData.item.id)}>
             <Button
               color={Colors.accent}
               title="Edit Product"
-              onPress={() => {}}
+              onPress={editProductHandler.bind(this, itemData.item.id)}
             />
             <Button
               color={Colors.accent}
               title="Delete Product"
-              onPress={() => {}}
+              onPress={deleteProductHandler.bind(this, itemData.item.id)}
             />
           </ProductItem>
         )}

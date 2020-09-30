@@ -100,3 +100,110 @@ export const fetchUserProduct = () => {
     }
   };
 };
+
+//crete new product from edit(new) products screen
+
+export const createProduct = (title, image, price, description) => {
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().auth.token;
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/products/create',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            title: title,
+            imageUrl: image,
+            description: description,
+            price: price,
+            category: 'Mobiles',
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('Create product failed.');
+      }
+
+      const resData = await response.json();
+      console.log(resData);
+    } catch (err) {
+      throw new Error('Error in create product');
+    }
+  };
+};
+
+//edit product from edit products screen
+
+export const updateProduct = (productId, title, image, description) => {
+  return async (dispatch, getState) => {
+    //console.log(title);
+    try {
+      const token = getState().auth.token;
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/products/updateProduct/' + productId,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            title: title,
+            imageUrl: image,
+            description: description,
+            category: 'Sports',
+          }),
+        },
+      );
+
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('Update product failed.');
+      }
+
+      const resData = await response.json();
+      console.log(resData);
+    } catch (err) {
+      throw new Error('Error in update product');
+    }
+  };
+};
+
+//delete product from user products screen
+
+export const deleteProduct = (productId) => {
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().auth.token;
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/products/delete/' + productId,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('delete product failed.');
+      }
+
+      const resData = await response.json();
+      console.log(resData);
+    } catch (err) {
+      throw new Error('Error in delete product');
+    }
+  };
+};
