@@ -2,12 +2,13 @@ import React from 'react';
 import {
     View,
     Text,
-    Image,
     StyleSheet,
     TouchableOpacity,
     TouchableNativeFeedback,
-    Platform
+    Platform,
+    ImageBackground
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import Card from '../UI/Card';
 
@@ -24,7 +25,13 @@ const ProductItem = props => {
                 <Touchable onPress={props.onSelect} useForeground>
                     <View>
                         <View style={styles.imageContainer}>
-                            <Image style={styles.image} source={{ uri: props.image }} />
+                            <ImageBackground style={styles.image} source={{ uri: props.image }} >
+                                <View>
+                                    <Touchable onPress={props.onSelectFavorite} >
+                                        <Icon style={styles.icon} name={Platform.OS === "android" ? 'md-heart' : 'ios-heart'} />
+                                    </Touchable>
+                                </View>
+                            </ImageBackground>
                         </View>
                         <View style={styles.details}>
                             <Text style={styles.title}>{props.title}</Text>
@@ -81,6 +88,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: '23%',
         paddingHorizontal: 20
+    },
+    icon: {
+        fontSize: 30,
+        margin: 10
     }
 });
 

@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/Ionicons';
-import CategoryGridTile from '../../components/UI/CategoryGridTile';
+
 import HeaderButton from '../../components/UI/HeaderButton';
+import CategoryGridTile from '../../components/UI/CategoryGridTile';
 
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
@@ -28,6 +28,13 @@ const HomeScreen = (props) => {
       ),
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="heart"
+            iconName={Platform.OS === 'android' ? 'md-heart' : 'ios-heart'}
+            onPress={() => {
+              props.navigation.navigate('FavoritesScreen');
+            }}
+          />
           <Item
             title="cart"
             iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}

@@ -67,6 +67,10 @@ const HomeNavigator = () => {
         name="CartScreen"
         component={CartScreen}
       />
+      <Stack.Screen
+        name="FavoritesScreen"
+        component={FavoritesScreen}
+      />
     </Stack.Navigator>
   );
 };
@@ -131,7 +135,7 @@ const DrawerNavigator = (props) => {
         component={UserProductsNavigator}
         options={{
           title: 'Sell on Shopcart',
-          drawerIcon: ({color}) => (
+          drawerIcon: ({ color }) => (
             <Icon
               name={
                 Platform.OS === 'android'

@@ -1,9 +1,21 @@
-import Product from '../../models/Product';
 
 export const FETCH_PRODUCT = 'FETCH_PRODUCT';
+export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
+import Product from '../../models/Product';
+
+
+
+
+
 export const FETCH_USER_PRODUCT = 'FETCH_USER_PRODUCT';
 
+
+
+export const toggleFavorite = (id) => {
+  return { type: TOGGLE_FAVORITE, productId: id };
+}
 //fetch all products
+
 export const fetchProduct = (category) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
@@ -52,6 +64,7 @@ export const fetchProduct = (category) => {
     }
   };
 };
+
 
 //fetch user products from node api
 export const fetchUserProduct = () => {
@@ -213,3 +226,4 @@ export const deleteProduct = (productId) => {
     }
   };
 };
+

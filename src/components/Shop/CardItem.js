@@ -1,15 +1,18 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, Image, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const CartItem = props => {
     return (
         <View style={styles.cartItem}>
-            <View style={styles.itemData}>
-                <Text style={styles.quantity}>{props.quantity}{' '}</Text>
+            <View style={styles.itemDataUp}>
                 <Text style={styles.mainText}>{props.title}</Text>
+                <View style={styles.itemDataInner}>
+                    <Image style={styles.image} source={{ uri: props.image }} />
+                    <Text style={styles.quantity}>{props.quantity}</Text>
+                </View>
             </View>
-            <View style={styles.itemData}>
+            <View style={styles.itemDataDown}>
                 <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
                 {props.deletable && <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
                     <Icon
@@ -26,18 +29,33 @@ const styles = StyleSheet.create({
     cartItem: {
         padding: 10,
         backgroundColor: 'white',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'space-between',
         marginHorizontal: 20
     },
-    itemData: {
+    itemDataUp: {
         flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    itemDataDown: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
+        marginTop: 20
+    },
+    itemDataInner: {
+        flexDirection: 'column',
+        alignItems: 'center'
+    },
+    image: {
+        width: 100,
+        height: 100
     },
     quantity: {
         //fontFamily: 'open-sans',
         color: '#888',
         fontSize: 16,
+        marginTop: 15
     },
     mainText: {
         //fontFamily: 'open-sans-bold',

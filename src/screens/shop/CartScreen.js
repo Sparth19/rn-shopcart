@@ -26,6 +26,7 @@ const CartScreen = props => {
                 productId: key,
                 productTitle: state.cart.items[key].productTitle,
                 productPrice: state.cart.items[key].productPrice,
+                productImage: state.cart.items[key].productImage,
                 quantity: state.cart.items[key].quantity,
                 sum: state.cart.items[key].sum,
             });
@@ -79,15 +80,17 @@ const CartScreen = props => {
             <FlatList
                 data={cartItems}
                 keyExtractor={item => item.productId}
-                renderItem={itemData => <CartItem
-                    quantity={itemData.item.quantity}
-                    title={itemData.item.productTitle}
-                    amount={itemData.item.sum}
-                    deletable
-                    onRemove={() => {
-                        dispatch(cartActions.removeFromCart(itemData.item.productId));
-                    }}
-                />}
+                renderItem={itemData =>
+                    <CartItem
+                        quantity={itemData.item.quantity}
+                        title={itemData.item.productTitle}
+                        image={itemData.item.productImage}
+                        amount={itemData.item.sum}
+                        deletable
+                        onRemove={() => {
+                            dispatch(cartActions.removeFromCart(itemData.item.productId));
+                        }}
+                    />}
             />
         </View>
     );

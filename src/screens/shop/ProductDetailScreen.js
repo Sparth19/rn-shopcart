@@ -17,6 +17,7 @@ const PlaceDetailScreen = props => {
     const selectedProduct = useSelector(state =>
         state.products.availableProducts.find(prod => prod.id === productId)
     );
+    console.log(selectedProduct);
 
     const dispatch = useDispatch();
 
