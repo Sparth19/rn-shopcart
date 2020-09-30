@@ -16,8 +16,8 @@ const StartupScreen = (props) => {
         dispatch(authActions.restoreToken(null));
         return;
       }
-      console.log('IN STARTUPPPP');
-      console.log(userDataJson);
+      //console.log('IN STARTUPPPP');
+      //  console.log(userDataJson);
       const {token, userId, expiryDate} = userDataJson;
       const expirationDate = new Date(expiryDate);
 
