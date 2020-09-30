@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, Button } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
+import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
 import * as productsActions from '../../store/actions/products';
+import { toggleFavorite } from '../../store/actions/products';
+import * as cartActions from '../../store/actions/cart';
 import CATEGORIES from '../../data/category-data';
 import Colors from '../../constants/Colors';
 
@@ -20,7 +24,18 @@ const HomeScreen = props => {
 
     useEffect(() => {
         navigation.setOptions({
-            title: selectedCategory.title
+            title: selectedCategory.title,
+            headerRight: () => (
+                <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                    <Item
+                        title="cart"
+                        iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+                        onPress={() => {
+                            props.navigation.navigate('CartScreen');
+                        }}
+                    />
+                </HeaderButtons>
+            )
         })
     }, [navigation]);
 
@@ -99,16 +114,23 @@ const HomeScreen = props => {
                                 { productId: itemData.item.id }
                             );
                         }}
+                        onSelectFavorite={() => {
+                            dispatch(toggleFavorite(itemData.item.id));
+                        }}
                     >
                         <Button
                             color={Colors.primary}
-                            title='View Details'
-                            onPress={() => { }}
+                            title='Add to Wishlist'
+                            onPress={() => {
+                                dispatch(toggleFavorite(itemData.item.id));
+                            }}
                         />
                         <Button
                             color={Colors.primary}
-                            title='To Cart'
-                            onPress={() => { }}
+                            title='Add To Cart'
+                            onPress={() => {
+                                dispatch(cartActions.addToCart(itemData.item));
+                            }}
                         />
                     </ProductItem>
                 )}
