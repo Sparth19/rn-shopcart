@@ -1,23 +1,39 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, FlatList, StyleSheet, Button, ActivityIndicator, Alert } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
+import HeaderButton from '../../components/UI/HeaderButton';
 import Colors from '../../constants/Colors';
 import CartItem from '../../components/Shop/CardItem';
 import Card from '../../components/UI/Card';
 import * as cartActions from '../../store/actions/cart';
-//import * as ordersActions from '../../store/actions/orders';
+import * as ordersActions from '../../store/actions/orders';
 
 const CartScreen = props => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState();
+
     const { navigation } = props;
     useEffect(() => {
         navigation.setOptions({
-            title: 'Your Cart'
+            title: 'Your Cart',
+            headerLeft: () => (
+                <HeaderButtons HeaderButtonComponent={HeaderButton}>
+                    <Item
+                        title='Menu'
+                        iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+                        onPress={() => {
+                            props.navigation.toggleDrawer();
+                        }}
+                    />
+                </HeaderButtons>
+            )
         })
     }, [navigation]);
+
     const dispatch = useDispatch();
+
     const cartTotalAmount = useSelector(state => state.cart.totalAmount);
     const cartItems = useSelector(state => {
         const transformedCartItems = [];
@@ -39,7 +55,9 @@ const CartScreen = props => {
     const sendOrderHandler = useCallback(async () => {
         setIsLoading(true);
         try {
+            //await props.navigation.navigate('PlaceOrderScreen');
             await dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+            props.navigation.navigate('HomeScreen');
         } catch (err) {
             setError(err.message);
         }
