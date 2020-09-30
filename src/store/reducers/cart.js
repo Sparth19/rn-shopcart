@@ -1,5 +1,5 @@
 import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cart';
-//import { ADD_ORDER } from '../actions/orders';
+import { ADD_ORDER } from '../actions/orders';
 //import { DELETE_PRODUCT } from '../actions/products';
 import CartItem from '../../models/CartItem';
 
@@ -56,8 +56,8 @@ export default (state = initialState, action) => {
                 items: updatedCartItems,
                 totalAmount: state.totalAmount - selectedCartItem.productPrice
             };
-        // case ADD_ORDER:
-        //     return initialState;
+        case ADD_ORDER:
+            return initialState;
         // case DELETE_PRODUCT:
         //     if (!state.items[action.pid]) {
         //         return state;

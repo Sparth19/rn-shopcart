@@ -9,11 +9,13 @@ import ShopNavigator from './src/navigation/ShopNavigator';
 import productsReducer from './src/store/reducers/products';
 import authReducer from './src/store/reducers/auth';
 import cartReducer from './src/store/reducers/cart';
+import orderReducer from './src/store/reducers/orders';
 
 const rootReducer = combineReducers({
   products: productsReducer,
   auth: authReducer,
-  cart: cartReducer
+  cart: cartReducer,
+  orders: orderReducer
 });
 
 let composeEnhancers = compose;

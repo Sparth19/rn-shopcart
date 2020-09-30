@@ -19,6 +19,7 @@ import CategoryProductsScreen from '../screens/shop/CategoryProductsScreen';
 import FavoritesScreen from '../screens/shop/FavoritesScreen';
 import HomeScreen from '../screens/shop/HomeScreen';
 import PlaceOrderScreen from '../screens/shop/PlaceOrderScreen';
+import OrdersScreen from '../screens/shop/OrdersScreen';
 import ProductDetailScreen from '../screens/shop/ProductDetailScreen';
 import AuthScreen from '../screens/users/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
@@ -68,9 +69,21 @@ const HomeNavigator = () => {
         component={CartScreen}
       />
       <Stack.Screen
+        name="PlaceOrderScreen"
+        component={PlaceOrderScreen}
+      />
+      <Stack.Screen
         name="FavoritesScreen"
         component={FavoritesScreen}
       />
+    </Stack.Navigator>
+  );
+};
+
+const OrderNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={defaultHeaderConfig}>
+      <Stack.Screen name="OrdersScreen" component={OrdersScreen} />
     </Stack.Navigator>
   );
 };
@@ -123,6 +136,24 @@ const DrawerNavigator = (props) => {
                 Platform.OS === 'android'
                   ? 'md-home-outline'
                   : 'ios-home-outline'
+              }
+              size={25}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="OrderNavigator"
+        component={OrderNavigator}
+        options={{
+          title: 'My Orders',
+          drawerIcon: ({ color }) => (
+            <Icon
+              name={
+                Platform.OS === 'android'
+                  ? 'md-cart'
+                  : 'ios-cart'
               }
               size={25}
               color={color}
