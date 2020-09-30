@@ -74,8 +74,8 @@ export const login = (email, password) => {
       }
 
       const resData = await response.json();
-      console.log(resData);
-      console.log(resData.token);
+      // console.log(resData);  
+      // console.log(resData.token);
       //for autologin
       const expiresIn = 3600;
       const expirationDate = new Date(

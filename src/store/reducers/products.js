@@ -1,8 +1,8 @@
 import Product from '../../models/Product';
 import PRODUCT from '../../data/dummy-data';
 import CATEGORY from '../../data/category-data';
-import { FETCH_PRODUCT } from '../actions/products';
-import { TOGGLE_FAVORITE } from '../actions/products';
+
+import {FETCH_PRODUCT,TOGGLE_FAVORITE, FETCH_USER_PRODUCT} from '../actions/products';
 
 const initialState = {
   availableCategories: CATEGORY,
@@ -14,7 +14,7 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_PRODUCT:
-      console.log(action.availableProducts);
+      //console.log(action.availableProducts);
       return {
         ...state,
         availableCategories: CATEGORY,
@@ -30,6 +30,12 @@ export default (state = initialState, action) => {
         const product = state.availableProducts.find(prod => prod.id === action.productId);
         return { ...state, favoriteProduct: state.favoriteProduct.concat(product) };
       }
+    case FETCH_USER_PRODUCT:
+      return {
+        ...state,
+        userProducts: action.userProducts,
+      };
+
     default:
       return state;
   }
