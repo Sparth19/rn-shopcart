@@ -6,6 +6,7 @@ import {
   FlatList,
   ActivityIndicator,
   Button,
+  Alert,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -86,17 +87,26 @@ const UserProductsScreen = (props) => {
     });
   };
 
-  const deleteProductHandler = async (id) => {
-    setError(null);
-    try {
-      setIsLoading(true);
-      await dispatch(productsActions.deleteProduct(id));
-      loadProducts();
-      setIsLoading(false);
-    } catch (err) {
-      setError('Error while Deleting product' + err.message);
-      setIsLoading(false);
-    }
+  const deleteProductHandler = (id) => {
+    Alert.alert('Are you sure ?', 'Do you really want to Delete this item?', [
+      {text: 'No', style: 'default'},
+      {
+        text: 'Yes',
+        style: 'destructive',
+        onPress: async () => {
+          try {
+            setError(null);
+            setIsLoading(true);
+            await dispatch(productsActions.deleteProduct(id));
+            loadProducts();
+            setIsLoading(false);
+          } catch (err) {
+            setError('Error while Deleting product' + err.message);
+            setIsLoading(false);
+          }
+        },
+      },
+    ]);
   };
 
   if (error) {

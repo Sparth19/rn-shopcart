@@ -103,7 +103,7 @@ export const fetchUserProduct = () => {
 
 //crete new product from edit(new) products screen
 
-export const createProduct = (title, image, price, description) => {
+export const createProduct = (title, image, price, description, category) => {
   return async (dispatch, getState) => {
     try {
       const token = getState().auth.token;
@@ -120,7 +120,7 @@ export const createProduct = (title, image, price, description) => {
             imageUrl: image,
             description: description,
             price: price,
-            category: 'Mobiles',
+            category: category,
           }),
         },
       );
@@ -141,7 +141,13 @@ export const createProduct = (title, image, price, description) => {
 
 //edit product from edit products screen
 
-export const updateProduct = (productId, title, image, description) => {
+export const updateProduct = (
+  productId,
+  title,
+  image,
+  description,
+  category,
+) => {
   return async (dispatch, getState) => {
     //console.log(title);
     try {
@@ -158,7 +164,7 @@ export const updateProduct = (productId, title, image, description) => {
             title: title,
             imageUrl: image,
             description: description,
-            category: 'Sports',
+            category: category,
           }),
         },
       );
