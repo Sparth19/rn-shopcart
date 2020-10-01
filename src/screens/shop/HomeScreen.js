@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import React, {useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTile from '../../components/UI/CategoryGridTile';
@@ -10,7 +10,7 @@ import CategoryGridTile from '../../components/UI/CategoryGridTile';
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const { navigation } = props;
+  const {navigation} = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -43,7 +43,7 @@ const HomeScreen = (props) => {
             }}
           />
         </HeaderButtons>
-      )
+      ),
     });
   }, [navigation]);
 

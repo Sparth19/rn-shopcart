@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,8 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import {useSelector, useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import Colors from '../../constants/Colors';
@@ -20,23 +20,11 @@ import * as ordersActions from '../../store/actions/orders';
 
 const CartScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState();
 
-  const { navigation } = props;
+  const {navigation} = props;
   useEffect(() => {
     navigation.setOptions({
       title: 'Your Cart',
-      // headerLeft: () => (
-      //   <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      //     <Item
-      //       title="Menu"
-      //       iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-      //       onPress={() => {
-      //         props.navigation.toggleDrawer();
-      //       }}
-      //     />
-      //   </HeaderButtons>
-      // ),
     });
   }, [navigation]);
 
@@ -57,30 +45,14 @@ const CartScreen = (props) => {
       });
     }
     return transformedCartItems;
-    //   .sort((a, b) =>
-    //   a.productId > b.productId ? 1 : -1,
-    // );
   });
-  const sendOrderHandler = useCallback(async () => {
-    //console.log(cartItems);
-    setIsLoading(true);
-    try {
-      //await props.navigation.navigate('PlaceOrderScreen');
 
-      await dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
-
-      props.navigation.navigate('HomeScreen');
-    } catch (err) {
-      setError(err.message);
-    }
-    setIsLoading(false);
-  }, [dispatch, cartItems, cartTotalAmount]);
-
-  useEffect(() => {
-    if (error) {
-      Alert.alert('An Error Occured!', error, [{ text: 'Okay' }]);
-    }
-  }, [error]);
+  const buyNowHandler = () => {
+    props.navigation.navigate('PlaceOrderScreen', {
+      cartItems: cartItems,
+      cartTotalAmount: cartTotalAmount,
+    });
+  };
 
   if (isLoading) {
     return (
@@ -102,13 +74,13 @@ const CartScreen = (props) => {
         {isLoading ? (
           <ActivityIndicator size="small" color={Colors.primary} />
         ) : (
-            <Button
-              color={Colors.accent}
-              title="Order Now"
-              disabled={cartItems.length === 0}
-              onPress={sendOrderHandler}
-            />
-          )}
+          <Button
+            color={Colors.accent}
+            title="Buy Now"
+            disabled={cartItems.length === 0}
+            onPress={buyNowHandler}
+          />
+        )}
       </Card>
       <FlatList
         data={cartItems}
@@ -155,6 +127,11 @@ const styles = StyleSheet.create({
   },
   amount: {
     color: Colors.primary,
+  },
+  centered: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
