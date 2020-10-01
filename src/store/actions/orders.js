@@ -38,8 +38,8 @@ export const fetchOrders = () => {
           ),
         );
       }
-      console.log('fetch orders');
-      console.log(loadedOrders);
+      // console.log('fetch orders');
+      // console.log(loadedOrders);
       dispatch({
         type: SET_ORDER,
         orders: loadedOrders,

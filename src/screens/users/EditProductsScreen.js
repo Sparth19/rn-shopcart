@@ -100,7 +100,7 @@ const EditProductScreen = (props) => {
     }
     setError(null);
     setIsLoading(true);
-    console.log(category);
+    //console.log(category);
     try {
       if (selectedProduct) {
         //edited product

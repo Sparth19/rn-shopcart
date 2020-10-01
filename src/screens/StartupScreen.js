@@ -3,31 +3,33 @@ import AsyncStorage from '@react-native-community/async-storage';
 import {View, Text} from 'react-native';
 import * as authActions from '../store/actions/auth';
 import {useDispatch} from 'react-redux';
+import {cos} from 'react-native-reanimated';
 
 const StartupScreen = (props) => {
   console.log('Start Up Screen');
   const dispatch = useDispatch();
   useEffect(() => {
     const tryLogin = async () => {
-      const userData = await AsyncStorage.getItem('userData');
-      const userDataJson = JSON.parse(userData);
+      const storedUserData = await AsyncStorage.getItem('userData');
+      const userDataJson = JSON.parse(storedUserData);
 
-      if (!userData) {
-        dispatch(authActions.restoreToken(null));
+      if (!storedUserData) {
+        dispatch(authActions.restoreToken(null, null));
         return;
       }
       //console.log('IN STARTUPPPP');
       //  console.log(userDataJson);
-      const {token, userId, expiryDate} = userDataJson;
+      const {token, userData, expiryDate} = userDataJson;
       const expirationDate = new Date(expiryDate);
 
-      if (expirationDate <= new Date() || !token || !userId) {
-        dispatch(authActions.restoreToken(null));
+      if (expirationDate <= new Date() || !token || !userData) {
+        dispatch(authActions.restoreToken(null, null));
         return;
       }
 
-      //console.log('USER DATA JSON TOKEN' + userDataJson.token);
-      dispatch(authActions.restoreToken(userDataJson.token));
+      //console.log('in Startup');
+      console.log(userDataJson);
+      dispatch(authActions.restoreToken(token, userData));
     };
     tryLogin();
   }, []);
