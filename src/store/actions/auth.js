@@ -20,6 +20,7 @@ export const signup = (name, email, password) => {
             name: name,
             email: email,
             password: password,
+            address: '',
           }),
         },
       );
@@ -30,23 +31,31 @@ export const signup = (name, email, password) => {
       }
 
       const resData = await response.json();
-      console.log(resData);
-      console.log(resData.token);
+      //console.log(resData);
+
+      const userData = {
+        userId: resData.user._id,
+        userName: resData.user.name,
+        userEmail: resData.user.email,
+        userAddress: resData.user.address,
+      };
+      console.log('signup user Data');
+      console.log(userData);
+
       //async storage
 
-      //for autologin
       const expiresIn = 3600;
       const expirationDate = new Date(
         new Date().getTime() + parseInt(expiresIn) * 1000,
       );
 
-      saveDataToStorage(resData.token, resData.user._id, expirationDate);
+      saveDataToStorage(resData.token, userData, expirationDate);
 
       dispatch(setLogoutTimer(parseInt(expiresIn) * 1000));
 
-      dispatch({type: USER_SIGNUP, token: resData.token});
+      dispatch({type: USER_SIGNUP, token: resData.token, userData: userData});
     } catch (err) {
-      throw new Error('Authentication Error');
+      throw new Error('Authentication Error in signup');
     }
   };
 };
@@ -74,27 +83,35 @@ export const login = (email, password) => {
       }
 
       const resData = await response.json();
-      // console.log(resData);  
-      // console.log(resData.token);
+      const userData = {
+        userId: resData.user._id,
+        userName: resData.user.name,
+        userEmail: resData.user.email,
+        userAddress: resData.user.address,
+      };
+
+      console.log('Logged in user');
+      console.log(userData);
+
       //for autologin
       const expiresIn = 3600;
       const expirationDate = new Date(
         new Date().getTime() + parseInt(expiresIn) * 1000,
       );
 
-      saveDataToStorage(resData.token, resData.user._id, expirationDate);
+      saveDataToStorage(resData.token, userData, expirationDate);
 
       dispatch(setLogoutTimer(parseInt(expiresIn) * 1000));
 
-      dispatch({type: USER_LOGIN, token: resData.token});
+      dispatch({type: USER_LOGIN, token: resData.token, userData: userData});
     } catch (err) {
       throw new Error('Authentication Error');
     }
   };
 };
 
-export const restoreToken = (token) => {
-  return {type: RESTORE_TOKEN, token: token};
+export const restoreToken = (token, userData) => {
+  return {type: RESTORE_TOKEN, token: token, userData: userData};
 };
 
 export const logout = () => {
@@ -117,12 +134,12 @@ const setLogoutTimer = (expirationTime) => {
   };
 };
 
-const saveDataToStorage = (token, userId, expirationDate) => {
+const saveDataToStorage = (token, userData, expirationDate) => {
   AsyncStorage.setItem(
     'userData',
     JSON.stringify({
       token: token,
-      userId: userId,
+      userData: userData,
       expiryDate: expirationDate.toISOString(),
     }),
   );

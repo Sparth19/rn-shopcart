@@ -1,14 +1,14 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Platform} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import * as authActions from '../store/actions/auth';
@@ -25,6 +25,7 @@ import AuthScreen from '../screens/users/AuthScreen';
 import StartupScreen from '../screens/StartupScreen';
 import UserProductsScreen from '../screens/users/UserProductsScreen';
 import EditProductsScreen from '../screens/users/EditProductsScreen';
+import MyAccountScreen from '../screens/users/MyAccountScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -73,14 +74,8 @@ const HomeNavigator = () => {
         name="ProductDetailScreen"
         component={ProductDetailScreen}
       />
-      <Stack.Screen
-        name="CartScreen"
-        component={CartScreen}
-      />
-      <Stack.Screen
-        name="PlaceOrderScreen"
-        component={PlaceOrderScreen}
-      />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
+      <Stack.Screen name="PlaceOrderScreen" component={PlaceOrderScreen} />
     </Stack.Navigator>
   );
 };
@@ -102,17 +97,25 @@ const UserProductsNavigator = () => {
   );
 };
 
+const MyAccountNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={defaultHeaderConfig}>
+      <Stack.Screen name="MyAccountScreen" component={MyAccountScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const DrawerNavigator = (props) => {
   const dispatch = useDispatch();
   const logoutHandler = () => {
-    console.log('LOGOUT');
+    console.log('Logout');
     dispatch(authActions.logout());
   };
   return (
     <Drawer.Navigator
       drawerContentOptions={{
         activeTintColor: Colors.accent,
-        labelStyle: { fontSize: 16, fontWeight: 'bold' },
+        labelStyle: {fontSize: 16, fontWeight: 'bold'},
       }}
       drawerContent={(props) => {
         return (
@@ -120,8 +123,8 @@ const DrawerNavigator = (props) => {
             <DrawerItemList {...props} />
             <DrawerItem
               label="Logout"
-              labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
-              style={{ flex: 1 }}
+              labelStyle={{fontSize: 16, fontWeight: 'bold'}}
+              style={{flex: 1}}
               onPress={logoutHandler}
               icon={() => (
                 <Icon color="red" size={25} name={'ios-close-outline'} />
@@ -135,7 +138,7 @@ const DrawerNavigator = (props) => {
         component={HomeNavigator}
         options={{
           title: 'Home',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -153,7 +156,7 @@ const DrawerNavigator = (props) => {
         component={OrderNavigator}
         options={{
           title: 'My Orders',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -171,7 +174,7 @@ const DrawerNavigator = (props) => {
         component={FavoriteNavigator}
         options={{
           title: 'My Favorites',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -185,11 +188,21 @@ const DrawerNavigator = (props) => {
         }}
       />
       <Drawer.Screen
+        name="MyAccountNavigator"
+        component={MyAccountNavigator}
+        options={{
+          title: 'My Account',
+          drawerIcon: ({color}) => (
+            <Icon name={'person-circle-outline'} size={25} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
         name="UserProductsNavigator"
         component={UserProductsNavigator}
         options={{
           title: 'Sell on Shopcart',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -209,8 +222,11 @@ const DrawerNavigator = (props) => {
 const ShopNavigator = (props) => {
   const token = useSelector((state) => state.auth.token);
   const isLoading = useSelector((state) => state.auth.isLoading);
+  const userData = useSelector((state) => state.auth.userData);
   // console.log('Token in navigator' + token);
   // console.log('isLoading in navigator' + isLoading);
+  //console.log('userData in navigator');
+  //console.log(userData);
 
   if (isLoading) {
     return (
