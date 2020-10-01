@@ -23,22 +23,18 @@ const ProductItem = props => {
         <Card style={styles.product}>
             <View style={styles.touchable}>
                 <Touchable onPress={props.onSelect} useForeground>
-                    <View>
+                    <View style={styles.wholeView}>
                         <View style={styles.imageContainer}>
-                            <ImageBackground style={styles.image} source={{ uri: props.image }} >
-                                <View>
-                                    <Touchable onPress={props.onSelectFavorite} >
-                                        <Icon style={styles.icon} name={Platform.OS === "android" ? 'md-heart' : 'ios-heart'} />
-                                    </Touchable>
-                                </View>
-                            </ImageBackground>
+                            <ImageBackground style={styles.image} source={{ uri: props.image }} />
                         </View>
-                        <View style={styles.details}>
-                            <Text style={styles.title}>{props.title}</Text>
-                            <Text style={styles.price}>${props.price.toFixed(2)}</Text>
-                        </View>
-                        <View style={styles.actions}>
-                            {props.children}
+                        <View style={styles.content} >
+                            <View style={styles.details}>
+                                <Text style={styles.title}>{props.title}</Text>
+                                <Text style={styles.price}>₹ {props.price.toFixed(2)}</Text>
+                            </View>
+                            <View style={styles.actions}>
+                                {props.children}
+                            </View>
                         </View>
                     </View>
                 </Touchable>
@@ -49,12 +45,15 @@ const ProductItem = props => {
 
 const styles = StyleSheet.create({
     product: {
-        height: 300,
+        height: 265,
         margin: 20
     },
     touchable: {
         overflow: 'hidden',
         borderRadius: 10
+    },
+    wholeView: {
+
     },
     imageContainer: {
         width: '100%',
@@ -67,31 +66,34 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%'
     },
+    content: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center'
+    },
     details: {
-        alignItems: 'center',
-        height: '17%',
-        padding: 10
+        flex: 2
+    },
+    actions: {
+        flex: 1,
+        alignItems: 'flex-end',
+        //flexDirection: 'column',
+        //justifyContent: 'space-around',
+        //paddingHorizontal: 20
+        //height: '23%',
     },
     title: {
-        //fontFamily: 'open-sans-bold',
-        fontSize: 18,
-        marginVertical: 2
+        fontSize: 20,
+        marginVertical: 10,
+        marginHorizontal: 10,
+        fontWeight: 'bold',
     },
     price: {
         //fontFamily: 'open-sans',
-        fontSize: 14,
+        fontSize: 16,
+        marginVertical: 10,
+        marginHorizontal: 10,
         color: '#888'
-    },
-    actions: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        height: '23%',
-        paddingHorizontal: 20
-    },
-    icon: {
-        fontSize: 30,
-        margin: 10
     }
 });
 

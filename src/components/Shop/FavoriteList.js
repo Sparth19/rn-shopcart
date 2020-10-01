@@ -1,9 +1,14 @@
 import React from 'react';
 import { View, StyleSheet, FlatList } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import FavoriteItem from '../../models/FavoriteItem';
+import { toggleFavorite } from '../../store/actions/products';
+import Icon from 'react-native-vector-icons/Ionicons';
+import * as cartActions from '../../store/actions/cart';
 
 const FavoriteList = props => {
+    const dispatch = useDispatch();
 
     const renderMealItem = itemData => {
         return (
@@ -11,10 +16,16 @@ const FavoriteList = props => {
                 title={itemData.item.title}
                 image={itemData.item.imageUrl}
                 price={itemData.item.price}
-                onSelectMeal={() => {
-                    props.navigation.navigate('FavoritesScreen', {
+                onSelect={() => {
+                    props.navigation.navigate('ProductDetailScreen', {
                         productId: itemData.item.id
                     })
+                }}
+                onSelectFavorite={() => {
+                    dispatch(toggleFavorite(itemData.item.id));
+                }}
+                onAdd={() => {
+                    dispatch(cartActions.addToCart(itemData.item));
                 }}
             />
         );
@@ -36,7 +47,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 15
+        padding: 20
     }
 });
 
