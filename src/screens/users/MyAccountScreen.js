@@ -9,10 +9,12 @@ import {
   Image,
   KeyboardAvoidingView,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
 
+import Colors from '../../constants/Colors';
 import Input from '../../components/UI/Input';
 import HeaderButton from '../../components/UI/HeaderButton';
 import * as authActions from '../../store/actions/auth';
@@ -101,6 +103,7 @@ const MyAccountScreen = (props) => {
           formState.inputValues.address,
         ),
       );
+      props.navigation.goBack();
     } catch (err) {
       setError('Something went wrong' + err);
     }
@@ -136,6 +139,13 @@ const MyAccountScreen = (props) => {
     });
   }, [navigation, saveAccountHandler]);
 
+  if (isLoading) {
+    return (
+      <View style={styles.spinnerCenter}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
   return (
     <KeyboardAvoidingView
       behavior="height"
@@ -184,6 +194,7 @@ const MyAccountScreen = (props) => {
               returnKeyType="done"
               multiline
               numberOfLines={5}
+              minLength={10}
               onInputChange={inputChangeHandler}
               initialValue={userData.userAddress}
               initiallyValid={!!userData.userAddress}
@@ -210,6 +221,11 @@ const styles = StyleSheet.create({
   image: {
     height: 100,
     width: 120,
+  },
+  spinnerCenter: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

@@ -57,14 +57,14 @@ const UserProductsScreen = (props) => {
 
   const loadProducts = useCallback(async () => {
     setError(null);
-    setIsRefreshing(true);
+    //setIsRefreshing(true);
     try {
       // console.log('in try');
       await dispatch(productsActions.fetchUserProduct());
     } catch (err) {
       setError(err.message);
     }
-    setIsRefreshing(false);
+    // setIsRefreshing(false);
   }, [dispatch, setIsRefreshing, setError]);
 
   useEffect(() => {

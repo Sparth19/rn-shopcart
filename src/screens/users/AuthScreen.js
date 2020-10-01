@@ -134,7 +134,7 @@ const AuthScreen = (props) => {
             {isSignUp ? (
               <Input
                 id="name"
-                label="Name"
+                label="Full Name"
                 autoCapitalize="none"
                 errorMessage="Please enter a valid name"
                 onInputChange={inputChangeHandler}

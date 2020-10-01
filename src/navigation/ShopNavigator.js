@@ -58,7 +58,10 @@ const FavoriteNavigator = () => {
     <Stack.Navigator screenOptions={defaultHeaderConfig}>
       <Stack.Screen name="FavoritesScreen" component={FavoritesScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
-      <Stack.Screen name="ProductDetailScreen" component={ProductDetailScreen} />
+      <Stack.Screen
+        name="ProductDetailScreen"
+        component={ProductDetailScreen}
+      />
     </Stack.Navigator>
   );
 };
