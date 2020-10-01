@@ -4,6 +4,7 @@ export const USER_LOGIN = 'USER_LOGIN';
 export const USER_SIGNUP = 'USER_SIGNUP';
 export const RESTORE_TOKEN = 'RESTORE_TOKEN';
 export const LOGOUT = 'LOGOUT';
+export const USER_UPDATE = 'USER_UPDATE';
 
 let timer;
 export const signup = (name, email, password) => {
@@ -120,6 +121,60 @@ export const logout = () => {
   return {type: LOGOUT};
 };
 
+export const userUpdate = (userId, name, email, address) => {
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().auth.token;
+
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/users/updateProfile/' + userId,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            address: address,
+          }),
+        },
+      );
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('Response not ok');
+      }
+
+      const resData = await response.json();
+      console.log('user updated');
+      console.log(resData);
+
+      const userData = {
+        userId: resData._id,
+        userName: resData.name,
+        userEmail: resData.email,
+        userAddress: resData.address,
+      };
+      console.log(userData);
+      // async storage
+      // merge item will overwrite old data if exists
+      AsyncStorage.mergeItem(
+        'userData',
+        JSON.stringify({
+          userData: userData,
+        }),
+      );
+      console.log('after merge');
+      dispatch({type: USER_UPDATE, userData: userData});
+    } catch (err) {
+      throw new Error('Authentication Error in update user profile');
+    }
+  };
+};
+
+//
 const clearLogoutTimer = () => {
   if (timer) {
     clearTimeout(timer);

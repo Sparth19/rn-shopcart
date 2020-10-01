@@ -28,7 +28,7 @@ const StartupScreen = (props) => {
       }
 
       //console.log('in Startup');
-      //console.log(userDataJson);
+      console.log(userDataJson);
       dispatch(authActions.restoreToken(token, userData));
     };
     tryLogin();

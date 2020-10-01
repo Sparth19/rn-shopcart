@@ -1,4 +1,11 @@
-import {LOGOUT, RESTORE_TOKEN, USER_LOGIN, USER_SIGNUP} from '../actions/auth';
+import {act} from 'react-test-renderer';
+import {
+  LOGOUT,
+  RESTORE_TOKEN,
+  USER_LOGIN,
+  USER_SIGNUP,
+  USER_UPDATE,
+} from '../actions/auth';
 
 const initialState = {
   token: null,
@@ -30,6 +37,11 @@ export default (state = initialState, action) => {
         userData: action.userData,
       };
 
+    case USER_UPDATE:
+      return {
+        ...state,
+        userData: action.userData,
+      };
     case LOGOUT:
       return initialState;
     default:

@@ -8,12 +8,14 @@ import {
   ScrollView,
   Image,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
 
 import Input from '../../components/UI/Input';
 import HeaderButton from '../../components/UI/HeaderButton';
+import * as authActions from '../../store/actions/auth';
 
 const USER_DATA_REDUCER = 'USER_DATA_REDUCER';
 
@@ -43,6 +45,7 @@ const formReducer = (state, action) => {
 
 const MyAccountScreen = (props) => {
   const dispatch = useDispatch();
+
   const [error, setError] = useState();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,7 +55,7 @@ const MyAccountScreen = (props) => {
     initialValue: {
       name: userData.userName,
       email: userData.userEmail,
-      address: userData.userAddress ? userData.userAddress : '',
+      address: userData.userAddress,
     },
     inputValidities: {
       name: true,
@@ -61,6 +64,12 @@ const MyAccountScreen = (props) => {
     },
     formIsValid: false,
   });
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Error Occurred', error, [{text: 'Okay'}]);
+    }
+  }, [error]);
 
   const inputChangeHandler = useCallback(
     (identifier, inputValue, inputValidity) => {
@@ -84,11 +93,19 @@ const MyAccountScreen = (props) => {
     setError(null);
     setIsLoading(true);
     try {
+      await dispatch(
+        authActions.userUpdate(
+          userData.userId,
+          formState.inputValues.name,
+          formState.inputValues.email,
+          formState.inputValues.address,
+        ),
+      );
     } catch (err) {
       setError('Something went wrong' + err);
     }
     setIsLoading(false);
-  }, [dispatch, formState, category]);
+  }, [dispatch, formState, userData]);
 
   const {navigation} = props;
   useEffect(() => {
