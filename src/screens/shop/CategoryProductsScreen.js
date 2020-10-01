@@ -1,7 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, StyleSheet, FlatList, ActivityIndicator, Button } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  Button,
+  TouchableOpacity,
+  TouchableNativeFeedback
+} from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
@@ -40,6 +50,11 @@ const HomeScreen = (props) => {
     })
   }, [navigation]);
 
+  let Touchable = TouchableOpacity;
+
+  if (Platform.OS === 'android' && Platform.Version >= 21) {
+    Touchable = TouchableNativeFeedback;
+  }
 
   const products = useSelector((state) => state.products.availableProducts);
   //console.log(products);
@@ -120,13 +135,11 @@ const HomeScreen = (props) => {
               dispatch(toggleFavorite(itemData.item.id));
             }}
           >
-            <Button
-              color={Colors.primary}
-              title='Add to Wishlist'
-              onPress={() => {
-                dispatch(toggleFavorite(itemData.item.id));
-              }}
-            />
+            <Touchable onPress={() => {
+              dispatch(toggleFavorite(itemData.item.id));
+            }} >
+              <Icon color={Colors.primary} style={styles.icon} name={Platform.OS === "android" ? 'md-heart' : 'ios-heart'} />
+            </Touchable>
             <Button
               color={Colors.primary}
               title='Add To Cart'
@@ -147,6 +160,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  icon: {
+    fontSize: 30,
+    margin: 8
+  }
 });
 
 export default HomeScreen;

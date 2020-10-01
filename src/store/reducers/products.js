@@ -2,7 +2,7 @@ import Product from '../../models/Product';
 import PRODUCT from '../../data/dummy-data';
 import CATEGORY from '../../data/category-data';
 
-import {FETCH_PRODUCT,TOGGLE_FAVORITE, FETCH_USER_PRODUCT} from '../actions/products';
+import { FETCH_PRODUCT, TOGGLE_FAVORITE, FETCH_USER_PRODUCT } from '../actions/products';
 
 const initialState = {
   availableCategories: CATEGORY,
