@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -7,10 +7,10 @@ import {
   ActivityIndicator,
   Button,
   TouchableOpacity,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import {useSelector, useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
@@ -27,10 +27,9 @@ const HomeScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
-  const { category } = props.route.params;
+  const {category} = props.route.params;
   const selectedCategory = CATEGORIES.find((cat) => cat.title === category);
-  const { navigation } = props;
-
+  const {navigation} = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -45,8 +44,8 @@ const HomeScreen = (props) => {
             }}
           />
         </HeaderButtons>
-      )
-    })
+      ),
+    });
   }, [navigation]);
 
   let Touchable = TouchableOpacity;
@@ -119,29 +118,32 @@ const HomeScreen = (props) => {
         onRefresh={loadProducts}
         refreshing={isRefreshing}
         data={products}
-        renderItem={itemData => (
+        renderItem={(itemData) => (
           <ProductItem
             image={itemData.item.imageUrl}
             title={itemData.item.title}
             price={itemData.item.price}
             onSelect={() => {
-              props.navigation.navigate(
-                'ProductDetailScreen',
-                { productId: itemData.item.id }
-              );
+              props.navigation.navigate('ProductDetailScreen', {
+                productId: itemData.item.id,
+              });
             }}
             onSelectFavorite={() => {
               dispatch(productsActions.toggleFavorite(itemData.item.id));
-            }}
-          >
-            <Touchable onPress={() => {
-              dispatch(productsActions.toggleFavorite(itemData.item.id));
-            }} >
-              <Icon color={Colors.primary} style={styles.icon} name={'ios-heart-outline'} />
+            }}>
+            <Touchable
+              onPress={() => {
+                dispatch(productsActions.toggleFavorite(itemData.item.id));
+              }}>
+              <Icon
+                color={Colors.primary}
+                style={styles.icon}
+                name={'ios-heart-outline'}
+              />
             </Touchable>
             <Button
               color={Colors.primary}
-              title='Add To Cart'
+              title="Add To Cart"
               onPress={() => {
                 dispatch(cartActions.addToCart(itemData.item));
               }}
@@ -161,8 +163,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 30,
-    margin: 8
-  }
+    margin: 8,
+  },
 });
 
 export default HomeScreen;

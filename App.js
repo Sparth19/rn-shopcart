@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 
 import React from 'react';
-import { createStore, compose, combineReducers, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import {createStore, compose, combineReducers, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 
 import ShopNavigator from './src/navigation/ShopNavigator';
@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   products: productsReducer,
   auth: authReducer,
   cart: cartReducer,
-  orders: orderReducer
+  orders: orderReducer,
 });
 
 let composeEnhancers = compose;
