@@ -7,7 +7,8 @@ import {
   ActivityIndicator,
   Button,
   TouchableOpacity,
-  TouchableNativeFeedback
+  TouchableNativeFeedback,
+  Platform
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';

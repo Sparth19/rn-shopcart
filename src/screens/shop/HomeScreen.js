@@ -48,21 +48,24 @@ const HomeScreen = (props) => {
   }, [navigation]);
 
   return (
-    <FlatList
-      data={categories}
-      renderItem={(itemData) => (
-        <CategoryGridTile
-          title={itemData.item.title}
-          color={itemData.item.color}
-          onSelect={() => {
-            props.navigation.navigate('CategoryProductsScreen', {
-              category: itemData.item.title,
-            });
-          }}
-        />
-      )}
-      numColumns={2}
-    />
+    <View>
+      <FlatList
+        data={categories}
+        renderItem={(itemData) => (
+          <CategoryGridTile
+            title={itemData.item.title}
+            color={itemData.item.color}
+            image={itemData.item.image}
+            onSelect={() => {
+              props.navigation.navigate('CategoryProductsScreen', {
+                category: itemData.item.title,
+              });
+            }}
+          />
+        )}
+        numColumns={2}
+      />
+    </View>
   );
 };
 
