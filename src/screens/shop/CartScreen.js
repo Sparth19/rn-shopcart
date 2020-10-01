@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,8 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import Colors from '../../constants/Colors';
@@ -22,7 +22,7 @@ const CartScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const {navigation} = props;
+  const { navigation } = props;
   useEffect(() => {
     navigation.setOptions({
       title: 'Your Cart',
@@ -43,6 +43,7 @@ const CartScreen = (props) => {
   const dispatch = useDispatch();
 
   const cartTotalAmount = useSelector((state) => state.cart.totalAmount);
+
   const cartItems = useSelector((state) => {
     const transformedCartItems = [];
     for (const key in state.cart.items) {
@@ -55,9 +56,10 @@ const CartScreen = (props) => {
         sum: state.cart.items[key].sum,
       });
     }
-    return transformedCartItems.sort((a, b) =>
-      a.productId > b.productId ? 1 : -1,
-    );
+    return transformedCartItems;
+    //   .sort((a, b) =>
+    //   a.productId > b.productId ? 1 : -1,
+    // );
   });
   const sendOrderHandler = useCallback(async () => {
     //console.log(cartItems);
@@ -72,11 +74,11 @@ const CartScreen = (props) => {
       setError(err.message);
     }
     setIsLoading(false);
-  }, [dispatch]);
+  }, [dispatch, cartItems, cartTotalAmount]);
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An Error Occured!', error, [{text: 'Okay'}]);
+      Alert.alert('An Error Occured!', error, [{ text: 'Okay' }]);
     }
   }, [error]);
 
@@ -100,13 +102,13 @@ const CartScreen = (props) => {
         {isLoading ? (
           <ActivityIndicator size="small" color={Colors.primary} />
         ) : (
-          <Button
-            color={Colors.accent}
-            title="Order Now"
-            disabled={cartItems.length === 0}
-            onPress={sendOrderHandler}
-          />
-        )}
+            <Button
+              color={Colors.accent}
+              title="Order Now"
+              disabled={cartItems.length === 0}
+              onPress={sendOrderHandler}
+            />
+          )}
       </Card>
       <FlatList
         data={cartItems}
@@ -116,10 +118,18 @@ const CartScreen = (props) => {
             quantity={itemData.item.quantity}
             title={itemData.item.productTitle}
             image={itemData.item.productImage}
+            price={itemData.item.productPrice}
             amount={itemData.item.sum}
             deletable
+            editable
             onRemove={() => {
-              dispatch(cartActions.removeFromCart(itemData.item.productId));
+              dispatch(cartActions.removeFromCart(itemData.item.productId, 'remove'));
+            }}
+            onAdd={() => {
+              dispatch(cartActions.removeFromCart(itemData.item.productId, 'add'));
+            }}
+            onDelete={() => {
+              dispatch(cartActions.deleteFromCart(itemData.item.productId));
             }}
           />
         )}

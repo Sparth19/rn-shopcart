@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   FlatList,
   Platform,
@@ -8,8 +8,8 @@ import {
   StyleSheet,
   Button,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import OrderItem from '../../components/Shop/OrderItem';
@@ -47,7 +47,7 @@ const OrdersScreen = (props) => {
     });
   }, [loadedOrders]);
 
-  const {navigation} = props;
+  const { navigation } = props;
   useEffect(() => {
     navigation.setOptions({
       title: 'Your Orders',
@@ -97,7 +97,7 @@ const OrdersScreen = (props) => {
   return (
     <FlatList
       data={orders}
-      renderItem={(itemData) => (
+      renderItem={(itemData, index) => (
         <OrderItem
           amount={itemData.item.totalAmount}
           date={itemData.item.date}

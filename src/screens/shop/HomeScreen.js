@@ -28,13 +28,13 @@ const HomeScreen = (props) => {
       ),
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
+          {/* <Item
             title="heart"
             iconName={Platform.OS === 'android' ? 'md-heart' : 'ios-heart'}
             onPress={() => {
               props.navigation.navigate('FavoritesScreen');
             }}
-          />
+          /> */}
           <Item
             title="cart"
             iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}

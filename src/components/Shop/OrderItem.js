@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, StyleSheet } from 'react-native';
 
 import CartItem from './CardItem';
 import Colors from '../../constants/Colors';
@@ -30,6 +30,7 @@ const OrderItem = (props) => {
               amount={cartItem.sum}
               title={cartItem.productTitle}
               image={cartItem.productImage}
+              price={cartItem.productPrice}
             />
           ))}
         </View>

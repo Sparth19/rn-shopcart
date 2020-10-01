@@ -52,6 +52,15 @@ const StartupNavigator = () => {
   );
 };
 
+const FavoriteNavigator = () => {
+  return (
+    <Stack.Navigator screenOptions={defaultHeaderConfig}>
+      <Stack.Screen name="FavoritesScreen" component={FavoritesScreen} />
+      <Stack.Screen name="CartScreen" component={CartScreen} />
+    </Stack.Navigator>
+  );
+};
+
 const HomeNavigator = () => {
   return (
     <Stack.Navigator screenOptions={defaultHeaderConfig}>
@@ -71,10 +80,6 @@ const HomeNavigator = () => {
       <Stack.Screen
         name="PlaceOrderScreen"
         component={PlaceOrderScreen}
-      />
-      <Stack.Screen
-        name="FavoritesScreen"
-        component={FavoritesScreen}
       />
     </Stack.Navigator>
   );
@@ -152,8 +157,26 @@ const DrawerNavigator = (props) => {
             <Icon
               name={
                 Platform.OS === 'android'
-                  ? 'md-cart'
-                  : 'ios-cart'
+                  ? 'file-tray-stacked-outline'
+                  : 'file-tray-stacked-outline'
+              }
+              size={25}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="FavoriteNavigator"
+        component={FavoriteNavigator}
+        options={{
+          title: 'My Favorites',
+          drawerIcon: ({ color }) => (
+            <Icon
+              name={
+                Platform.OS === 'android'
+                  ? 'md-heart-outline'
+                  : 'ios-heart-outline'
               }
               size={25}
               color={color}
