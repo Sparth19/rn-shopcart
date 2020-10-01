@@ -1,11 +1,17 @@
 export const FETCH_PRODUCT = 'FETCH_PRODUCT';
 export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
+export const TOGGLE_FAVORITE_ICON = 'TOGGLE_FAVORITE_ICON';
 import Product from '../../models/Product';
 
 export const FETCH_USER_PRODUCT = 'FETCH_USER_PRODUCT';
 
 export const toggleFavorite = (id) => {
-  return {type: TOGGLE_FAVORITE, productId: id};
+  return { type: TOGGLE_FAVORITE, productId: id };
+};
+
+
+export const toggleFavoriteIcon = (value) => {
+  return { type: TOGGLE_FAVORITE_ICON, value: value };
 };
 //fetch all products
 

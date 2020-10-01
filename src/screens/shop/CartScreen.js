@@ -123,10 +123,10 @@ const CartScreen = (props) => {
             deletable
             editable
             onRemove={() => {
-              dispatch(cartActions.removeFromCart(itemData.item.productId, 'remove'));
+              dispatch(cartActions.removeFromCart(itemData.item.productId));
             }}
             onAdd={() => {
-              dispatch(cartActions.removeFromCart(itemData.item.productId, 'add'));
+              dispatch(cartActions.addFromCart(itemData.item.productId));
             }}
             onDelete={() => {
               dispatch(cartActions.deleteFromCart(itemData.item.productId));

@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions/cart';
+import { ADD_TO_CART, REMOVE_FROM_CART, ADD_FROM_CART } from '../actions/cart';
 import { ADD_ORDER } from '../actions/orders';
 import { DELETE_FROM_CART } from '../actions/cart';
 import CartItem from '../../models/CartItem';
@@ -36,40 +36,46 @@ export default (state = initialState, action) => {
             };
         case REMOVE_FROM_CART:
             const selectedCartItem = state.items[action.pid];
-            const identifier = action.identifier;
             const currentQty = selectedCartItem.quantity;
 
-            let variable;
-            let sumVariable
-            if (identifier === 'add') {
-                variable = selectedCartItem.quantity + 1
-                sumVariable = selectedCartItem.sum + selectedCartItem.productPrice
-                totalVariable = state.totalAmount + selectedCartItem.productPrice
-            } else {
-                variable = selectedCartItem.quantity - 1
-                sumVariable = selectedCartItem.sum - selectedCartItem.productPrice
-                totalVariable = state.totalAmount - selectedCartItem.productPrice
-
-            }
             let updatedCartItems;
             if (currentQty > 1) {
                 const updatedCartItem = new CartItem(
-                    variable,
+                    selectedCartItem.quantity - 1,
                     selectedCartItem.productPrice,
                     selectedCartItem.productTitle,
                     selectedCartItem.productImage,
-                    sumVariable
+                    selectedCartItem.sum - selectedCartItem.productPrice
                 );
                 updatedCartItems = { ...state.items, [action.pid]: updatedCartItem };
             } else {
                 updatedCartItems = { ...state.items };
                 delete updatedCartItems[action.pid];
+                // totalVariable = state.totalAmount - state.items[action.pid].sum;
             }
             console.log(updatedCartItems);
             return {
                 ...state,
                 items: updatedCartItems,
-                totalAmount: totalVariable
+                totalAmount: state.totalAmount - selectedCartItem.productPrice
+            };
+        case ADD_FROM_CART:
+            const selectedCartItemAdd = state.items[action.pid];
+
+            let updatedCartItemsAdd;
+            const updatedCartItemAdd = new CartItem(
+                selectedCartItemAdd.quantity + 1,
+                selectedCartItemAdd.productPrice,
+                selectedCartItemAdd.productTitle,
+                selectedCartItemAdd.productImage,
+                selectedCartItemAdd.sum + selectedCartItemAdd.productPrice
+            );
+            updatedCartItemsAdd = { ...state.items, [action.pid]: updatedCartItemAdd };
+            console.log(updatedCartItemsAdd);
+            return {
+                ...state,
+                items: updatedCartItemsAdd,
+                totalAmount: state.totalAmount + selectedCartItemAdd.productPrice
             };
         case ADD_ORDER:
             return initialState;

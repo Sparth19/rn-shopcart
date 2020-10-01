@@ -1,5 +1,4 @@
 import Product from '../../models/Product';
-import PRODUCT from '../../data/dummy-data';
 import CATEGORY from '../../data/category-data';
 
 import { FETCH_PRODUCT, TOGGLE_FAVORITE, FETCH_USER_PRODUCT } from '../actions/products';
@@ -35,7 +34,6 @@ export default (state = initialState, action) => {
         ...state,
         userProducts: action.userProducts,
       };
-
     default:
       return state;
   }

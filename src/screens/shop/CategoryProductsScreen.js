@@ -16,7 +16,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
 import * as productsActions from '../../store/actions/products';
-import { toggleFavorite } from '../../store/actions/products';
 import * as cartActions from '../../store/actions/cart';
 import CATEGORIES from '../../data/category-data';
 import Colors from '../../constants/Colors';
@@ -132,13 +131,13 @@ const HomeScreen = (props) => {
               );
             }}
             onSelectFavorite={() => {
-              dispatch(toggleFavorite(itemData.item.id));
+              dispatch(productsActions.toggleFavorite(itemData.item.id));
             }}
           >
             <Touchable onPress={() => {
-              dispatch(toggleFavorite(itemData.item.id));
+              dispatch(productsActions.toggleFavorite(itemData.item.id));
             }} >
-              <Icon color={Colors.primary} style={styles.icon} name={Platform.OS === "android" ? 'md-heart' : 'ios-heart'} />
+              <Icon color={Colors.primary} style={styles.icon} name={'ios-heart-outline'} />
             </Touchable>
             <Button
               color={Colors.primary}

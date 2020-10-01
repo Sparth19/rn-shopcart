@@ -35,7 +35,7 @@ const FavoriteItem = (props) => {
             <Text style={styles.price}>Price : ₹ {props.price}</Text>
             <View>
               <Touchable onPress={props.onSelectFavorite} >
-                <Icon color={Colors.primary} style={styles.icon} name={Platform.OS === "android" ? 'md-heart' : 'ios-heart'} />
+                <Icon color={Colors.primary} style={styles.icon} name={'ios-heart-outline'} />
               </Touchable>
             </View>
             <Button color={Colors.primary} title='Add to Cart' onPress={props.onAdd} />

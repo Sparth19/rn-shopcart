@@ -15,7 +15,7 @@ const CartItem = props => {
                     <Image style={styles.image} source={{ uri: props.image }} />
                     <Text style={styles.quantity}>
                         {props.editable && <Icon name='remove-circle-outline' size={20} onPress={props.onRemove} />}
-                        {'  '}{props.quantity}{'  '}
+                        {props.quantity}
                         {props.editable && <Icon name='add-circle-outline' size={20} onPress={props.onAdd} />}
                     </Text>
                 </View>

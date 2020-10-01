@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         width: '100%',
-        height: '60%',
+        height: '65%',
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         overflow: 'hidden'
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     details: {
-        flex: 2
+        flex: 1
     },
     actions: {
         flex: 1,
