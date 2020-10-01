@@ -18,43 +18,43 @@ const HomeScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
-  const {category} = props.route.params;
+  const { category } = props.route.params;
   const selectedCategory = CATEGORIES.find((cat) => cat.title === category);
-  const {navigation} = props;
+  const { navigation } = props;
 
 
-    useEffect(() => {
-        navigation.setOptions({
-            title: selectedCategory.title,
-            headerRight: () => (
-                <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                    <Item
-                        title="cart"
-                        iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-                        onPress={() => {
-                            props.navigation.navigate('CartScreen');
-                        }}
-                    />
-                </HeaderButtons>
-            )
-        })
-    }, [navigation]);
- 
+  useEffect(() => {
+    navigation.setOptions({
+      title: selectedCategory.title,
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="cart"
+            iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+            onPress={() => {
+              props.navigation.navigate('CartScreen');
+            }}
+          />
+        </HeaderButtons>
+      )
+    })
+  }, [navigation]);
+
 
   const products = useSelector((state) => state.products.availableProducts);
   //console.log(products);
 
   const loadProducts = useCallback(async () => {
     setError(null);
-    setIsRefreshing(true);
+    // setIsRefreshing(true);
     try {
       // console.log('in try');
       await dispatch(productsActions.fetchProduct(category));
     } catch (err) {
       setError(err.message);
     }
-    setIsRefreshing(false);
-  }, [dispatch, setIsRefreshing, setError]);
+    //setIsRefreshing(false);
+  }, [dispatch, setError]);
 
   useEffect(() => {
     props.navigation.addListener('focus', loadProducts);
@@ -96,48 +96,48 @@ const HomeScreen = (props) => {
       <View style={styles.centered}>
         <Text>No Products found. Maybe start adding some!</Text>
       </View>
-       );
+    );
   }
 
   return (
     <View>
-            <FlatList
-                onRefresh={loadProducts}
-                refreshing={isRefreshing}
-                data={products}
-                renderItem={itemData => (
-                    <ProductItem
-                        image={itemData.item.imageUrl}
-                        title={itemData.item.title}
-                        price={itemData.item.price}
-                        onSelect={() => {
-                            props.navigation.navigate(
-                                'ProductDetailScreen',
-                                { productId: itemData.item.id }
-                            );
-                        }}
-                        onSelectFavorite={() => {
-                            dispatch(toggleFavorite(itemData.item.id));
-                        }}
-                    >
-                        <Button
-                            color={Colors.primary}
-                            title='Add to Wishlist'
-                            onPress={() => {
-                                dispatch(toggleFavorite(itemData.item.id));
-                            }}
-                        />
-                        <Button
-                            color={Colors.primary}
-                            title='Add To Cart'
-                            onPress={() => {
-                                dispatch(cartActions.addToCart(itemData.item));
-                            }}
-                        />
-                    </ProductItem>
-                )}
+      <FlatList
+        onRefresh={loadProducts}
+        refreshing={isRefreshing}
+        data={products}
+        renderItem={itemData => (
+          <ProductItem
+            image={itemData.item.imageUrl}
+            title={itemData.item.title}
+            price={itemData.item.price}
+            onSelect={() => {
+              props.navigation.navigate(
+                'ProductDetailScreen',
+                { productId: itemData.item.id }
+              );
+            }}
+            onSelectFavorite={() => {
+              dispatch(toggleFavorite(itemData.item.id));
+            }}
+          >
+            <Button
+              color={Colors.primary}
+              title='Add to Wishlist'
+              onPress={() => {
+                dispatch(toggleFavorite(itemData.item.id));
+              }}
             />
-        </View>
+            <Button
+              color={Colors.primary}
+              title='Add To Cart'
+              onPress={() => {
+                dispatch(cartActions.addToCart(itemData.item));
+              }}
+            />
+          </ProductItem>
+        )}
+      />
+    </View>
   );
 };
 

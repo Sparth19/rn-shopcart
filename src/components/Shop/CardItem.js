@@ -6,15 +6,23 @@ const CartItem = props => {
     return (
         <View style={styles.cartItem}>
             <View style={styles.itemDataUp}>
-                <Text style={styles.mainText}>{props.title}</Text>
-                <View style={styles.itemDataInner}>
+                <View style={styles.itemDataInnerOne}>
+                    <Text style={styles.mainText}>{props.title}</Text>
+                    <Text style={styles.price}>{props.price} X {props.quantity}</Text>
+                </View>
+
+                <View style={styles.itemDataInnerTwo}>
                     <Image style={styles.image} source={{ uri: props.image }} />
-                    <Text style={styles.quantity}>{props.quantity}</Text>
+                    <Text style={styles.quantity}>
+                        {props.editable && <Icon name='remove-circle-outline' size={20} onPress={props.onRemove} />}
+                        {'  '}{props.quantity}{'  '}
+                        {props.editable && <Icon name='add-circle-outline' size={20} onPress={props.onAdd} />}
+                    </Text>
                 </View>
             </View>
             <View style={styles.itemDataDown}>
-                <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
-                {props.deletable && <TouchableOpacity onPress={props.onRemove} style={styles.deleteButton}>
+                <Text style={styles.mainText}>Sum : ₹ {props.amount.toFixed(2)}</Text>
+                {props.deletable && <TouchableOpacity onPress={props.onDelete} style={styles.deleteButton}>
                     <Icon
                         name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
                         size={23}
@@ -43,7 +51,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20
     },
-    itemDataInner: {
+    itemDataInnerOne: {
+        flex: 1,
+        flexDirection: 'column'
+    },
+    itemDataInnerTwo: {
+        //flex: 1,
         flexDirection: 'column',
         alignItems: 'center'
     },
@@ -51,11 +64,16 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100
     },
+    price: {
+        fontSize: 16,
+        marginTop: 15
+    },
     quantity: {
         //fontFamily: 'open-sans',
         color: '#888',
-        fontSize: 16,
-        marginTop: 15
+        fontSize: 20,
+        marginTop: 15,
+        justifyContent: 'center'
     },
     mainText: {
         //fontFamily: 'open-sans-bold',
