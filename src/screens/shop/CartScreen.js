@@ -26,17 +26,17 @@ const CartScreen = (props) => {
   useEffect(() => {
     navigation.setOptions({
       title: 'Your Cart',
-      headerLeft: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Menu"
-            iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
-            onPress={() => {
-              props.navigation.toggleDrawer();
-            }}
-          />
-        </HeaderButtons>
-      ),
+      // headerLeft: () => (
+      //   <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      //     <Item
+      //       title="Menu"
+      //       iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+      //       onPress={() => {
+      //         props.navigation.toggleDrawer();
+      //       }}
+      //     />
+      //   </HeaderButtons>
+      // ),
     });
   }, [navigation]);
 
