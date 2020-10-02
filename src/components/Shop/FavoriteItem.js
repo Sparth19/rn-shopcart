@@ -7,9 +7,9 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   ImageBackground,
-  Platform
+  Platform,
 } from 'react-native';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const FavoriteItem = (props) => {
@@ -22,23 +22,30 @@ const FavoriteItem = (props) => {
     <View style={styles.favItem}>
       <TouchableOpacity onPress={props.onSelect}>
         <View>
-          <View style={{ ...styles.favRow, ...styles.FavHeader }}>
-            <ImageBackground source={{ uri: props.image }} style={styles.bgImage}>
+          <View style={{...styles.favRow, ...styles.FavHeader}}>
+            <ImageBackground source={{uri: props.image}} style={styles.bgImage}>
               <View style={styles.titleContainer}>
-                <Text style={styles.title} >
-                  {props.title}
-                </Text>
+                <Text style={styles.title}>{props.title}</Text>
               </View>
             </ImageBackground>
           </View>
-          <View style={{ ...styles.favRow, ...styles.favDetail }}>
+          <View style={{...styles.favRow, ...styles.favDetail}}>
             <Text style={styles.price}>Price : ₹ {props.price}</Text>
             <View>
-              <Touchable onPress={props.onSelectFavorite} >
-                <Icon color={Colors.primary} style={styles.icon} name={'ios-heart-outline'} />
+              <Touchable onPress={props.onSelectFavorite}>
+                {/* change icon here */}
+                <Icon
+                  color={Colors.primary}
+                  style={styles.icon}
+                  name={'ios-heart'}
+                />
               </Touchable>
             </View>
-            <Button color={Colors.primary} title='Add to Cart' onPress={props.onAdd} />
+            <Button
+              color={Colors.primary}
+              title="Add to Cart"
+              onPress={props.onAdd}
+            />
           </View>
         </View>
       </TouchableOpacity>
@@ -61,14 +68,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   favRow: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   FavHeader: {
     height: '75%',
   },
   price: {
     fontSize: 20,
-    color: Colors.primary
+    color: Colors.primary,
   },
   favDetail: {
     paddingHorizontal: 20,
@@ -88,8 +95,8 @@ const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 30,
-    margin: 10
-  }
+    margin: 10,
+  },
 });
 
 export default FavoriteItem;

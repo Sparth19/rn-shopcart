@@ -10,12 +10,14 @@ import productsReducer from './src/store/reducers/products';
 import authReducer from './src/store/reducers/auth';
 import cartReducer from './src/store/reducers/cart';
 import orderReducer from './src/store/reducers/orders';
+import favReducer from './src/store/reducers/favorites';
 
 const rootReducer = combineReducers({
   products: productsReducer,
   auth: authReducer,
   cart: cartReducer,
   orders: orderReducer,
+  fav: favReducer,
 });
 
 let composeEnhancers = compose;

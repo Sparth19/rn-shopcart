@@ -1,14 +1,14 @@
 import React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Platform} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import * as authActions from '../store/actions/auth';
@@ -119,7 +119,7 @@ const DrawerNavigator = (props) => {
     <Drawer.Navigator
       drawerContentOptions={{
         activeTintColor: Colors.primary,
-        labelStyle: { fontSize: 16, fontWeight: 'bold' },
+        labelStyle: {fontSize: 16, fontWeight: 'bold'},
       }}
       drawerContent={(props) => {
         return (
@@ -127,8 +127,8 @@ const DrawerNavigator = (props) => {
             <DrawerItemList {...props} />
             <DrawerItem
               label="Logout"
-              labelStyle={{ fontSize: 16, fontWeight: 'bold' }}
-              style={{ flex: 1 }}
+              labelStyle={{fontSize: 16, fontWeight: 'bold'}}
+              style={{flex: 1}}
               onPress={logoutHandler}
               icon={() => (
                 <Icon color="red" size={25} name={'ios-close-outline'} />
@@ -142,7 +142,7 @@ const DrawerNavigator = (props) => {
         component={HomeNavigator}
         options={{
           title: 'Home',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -160,7 +160,7 @@ const DrawerNavigator = (props) => {
         component={OrderNavigator}
         options={{
           title: 'My Orders',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -178,7 +178,7 @@ const DrawerNavigator = (props) => {
         component={FavoriteNavigator}
         options={{
           title: 'My Favorites',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -196,7 +196,7 @@ const DrawerNavigator = (props) => {
         component={MyAccountNavigator}
         options={{
           title: 'My Account',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon name={'person-circle-outline'} size={25} color={color} />
           ),
         }}
@@ -206,7 +206,7 @@ const DrawerNavigator = (props) => {
         component={UserProductsNavigator}
         options={{
           title: 'Sell on Shopcart',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'

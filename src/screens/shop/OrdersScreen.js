@@ -19,8 +19,8 @@ import * as ordersActions from '../../store/actions/orders';
 const OrdersScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
-  const orders = useSelector((state) => state.orders.orders);
   const dispatch = useDispatch();
+  const orders = useSelector((state) => state.orders.orders);
 
   const loadedOrders = useCallback(async () => {
     setError(null);
