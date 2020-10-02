@@ -15,7 +15,7 @@ const OrderItem = (props) => {
         <Text style={styles.date}>{props.date}</Text>
       </View>
       <Button
-        color={Colors.primary}
+        color={Colors.accent}
         title={showDetail ? 'Hide Details' : 'Show Details'}
         onPress={() => {
           setShowDetail((prevState) => !prevState);

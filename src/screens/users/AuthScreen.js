@@ -1,4 +1,4 @@
-import React, {useState, useCallback, useEffect, useReducer} from 'react';
+import React, { useState, useCallback, useEffect, useReducer } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import * as authActions from '../../store/actions/auth';
 import Input from '../../components/UI/Input';
@@ -48,9 +48,9 @@ const AuthScreen = (props) => {
   const [name, setName] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
 
-  const {navigation} = props;
+  const { navigation } = props;
   useEffect(() => {
-    props.navigation.setOptions({title: isSignUp ? 'Sign up' : 'Login'});
+    props.navigation.setOptions({ title: isSignUp ? 'Sign up' : 'Login' });
   }, [navigation, isSignUp]);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -68,7 +68,7 @@ const AuthScreen = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An Error Occurred !', error, [{text: 'Okay'}]);
+      Alert.alert('An Error Occurred !', error, [{ text: 'Okay' }]);
     }
   }, [error]);
 
@@ -76,7 +76,7 @@ const AuthScreen = (props) => {
     let action;
     if (!formState.formIsValid) {
       Alert.alert('Invalid Input', 'Please enter valid input', [
-        {text: 'Okay'},
+        { text: 'Okay' },
       ]);
       return;
     }
@@ -141,8 +141,8 @@ const AuthScreen = (props) => {
                 initialValue=""
               />
             ) : (
-              <View></View>
-            )}
+                <View></View>
+              )}
             <Input
               id="email"
               label="E-Mail"
@@ -170,17 +170,17 @@ const AuthScreen = (props) => {
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors.primary} />
               ) : (
-                <Button
-                  title={isSignUp ? 'Sign Up' : 'Login'}
-                  color={Colors.primaryColor}
-                  onPress={authHandler}
-                />
-              )}
+                  <Button
+                    title={isSignUp ? 'Sign Up' : 'Login'}
+                    color={Colors.primary}
+                    onPress={authHandler}
+                  />
+                )}
             </View>
             <View style={styles.buttonContainer}>
               <Button
                 title={`Switch to ${isSignUp ? 'Login' : 'SignUp'}`}
-                color={Colors.accentColor}
+                color={Colors.primary}
                 onPress={() => {
                   setIsSignUp((prev) => !prev);
                 }}
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#C9F6FF',
+    backgroundColor: Colors.background, //sky color #C9F6FF
   },
   authContainer: {
     width: '80%',
