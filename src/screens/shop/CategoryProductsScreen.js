@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -8,29 +8,32 @@ import {
   Button,
   TouchableOpacity,
   TouchableNativeFeedback,
-  Platform
+  Platform,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+
+import {useSelector, useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
 import * as productsActions from '../../store/actions/products';
 import * as cartActions from '../../store/actions/cart';
+import * as favoritesActions from '../../store/actions/favorites';
 import CATEGORIES from '../../data/category-data';
 import Colors from '../../constants/Colors';
 
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
+  const [filled, setFilled] = useState();
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
-  const { category } = props.route.params;
+  const {category} = props.route.params;
   const selectedCategory = CATEGORIES.find((cat) => cat.title === category);
-  const { navigation } = props;
+  const {navigation} = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -56,18 +59,18 @@ const HomeScreen = (props) => {
   }
 
   const products = useSelector((state) => state.products.availableProducts);
-  //console.log(products);
+  const favoriteList = useSelector((state) => state.fav.favoritesProduct);
 
   const loadProducts = useCallback(async () => {
     setError(null);
-    // setIsRefreshing(true);
+    setIsLoading(true);
     try {
-      // console.log('in try');
+      await dispatch(favoritesActions.fetchFavorites());
       await dispatch(productsActions.fetchProduct(category));
     } catch (err) {
       setError(err.message);
     }
-    //setIsRefreshing(false);
+    setIsLoading(false);
   }, [dispatch, setError]);
 
   useEffect(() => {
@@ -83,6 +86,8 @@ const HomeScreen = (props) => {
       setIsLoading(false);
     });
   }, [dispatch, loadProducts]);
+
+  //extra
 
   if (error) {
     return (
@@ -125,23 +130,28 @@ const HomeScreen = (props) => {
             title={itemData.item.title}
             price={itemData.item.price}
             onSelect={() => {
+              let variable = 'false';
+              for (var x in favoriteList) {
+                if (favoriteList[x].favProductId === itemData.item.id) {
+                  variable = 'true';
+                }
+              }
               props.navigation.navigate('ProductDetailScreen', {
                 productId: itemData.item.id,
+                variable: variable,
               });
-            }}
-            onSelectFavorite={() => {
-              dispatch(productsActions.toggleFavorite(itemData.item.id));
             }}>
-            <Touchable
+            {/* <Touchable
               onPress={() => {
-                dispatch(productsActions.toggleFavorite(itemData.item.id));
+                dispatch(favoritesActions.toggleFavoritesApi(itemData.item.id));
+                setFilled(filled === 'true' ? 'false' : 'true');
               }}>
               <Icon
                 color={Colors.primary}
                 style={styles.icon}
-                name={'ios-heart-outline'}
+                name={filled === 'true' ? 'ios-heart' : 'ios-heart-outline'}
               />
-            </Touchable>
+            </Touchable> */}
             <Button
               color={Colors.primary}
               title="Add To Cart"

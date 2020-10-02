@@ -1,19 +1,20 @@
 export const FETCH_PRODUCT = 'FETCH_PRODUCT';
 export const TOGGLE_FAVORITE = 'TOGGLE_FAVORITE';
 export const TOGGLE_FAVORITE_ICON = 'TOGGLE_FAVORITE_ICON';
-import Product from '../../models/Product';
+export const FETCH_ALL_PRODUCT = 'FETCH_ALL_PRODUCT';
 
+import Product from '../../models/Product';
 export const FETCH_USER_PRODUCT = 'FETCH_USER_PRODUCT';
 
 export const toggleFavorite = (id) => {
-  return { type: TOGGLE_FAVORITE, productId: id };
+  return {type: TOGGLE_FAVORITE, productId: id};
 };
-
 
 export const toggleFavoriteIcon = (value) => {
-  return { type: TOGGLE_FAVORITE_ICON, value: value };
+  return {type: TOGGLE_FAVORITE_ICON, value: value};
 };
-//fetch all products
+
+//fetch all products by category
 
 export const fetchProduct = (category) => {
   return async (dispatch, getState) => {
@@ -64,6 +65,53 @@ export const fetchProduct = (category) => {
   };
 };
 
+//fetch all products
+export const fetchAllProduct = () => {
+  return async (dispatch, getState) => {
+    const token = getState().auth.token;
+    try {
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/products/readAllProduct',
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('Fetching Product failed..');
+      }
+      const resData = await response.json();
+
+      const loadedProducts = [];
+      //id, title, imageUrl, description, price, category, owner
+      for (var key = 0; key < resData.length; key++) {
+        loadedProducts.push(
+          new Product(
+            resData[key]._id,
+            resData[key].title,
+            resData[key].imageUrl,
+            resData[key].description,
+            resData[key].price,
+            resData[key].category,
+            resData[key].owner,
+          ),
+        );
+      }
+      dispatch({
+        type: FETCH_ALL_PRODUCT,
+        availableProducts: loadedProducts,
+      });
+    } catch (error) {
+      throw new Error('No products available!');
+    }
+  };
+};
 //fetch user products from node api
 export const fetchUserProduct = () => {
   return async (dispatch, getState) => {
