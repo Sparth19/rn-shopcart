@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   Platform,
   Image,
-  ImageBackground,
+  Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import Colors from '../../constants/Colors';
@@ -27,14 +27,22 @@ const CartItem = (props) => {
           <View style={styles.quantity}>
             {props.editable && (
               <View style={styles.iconleft}>
-                <Icon name="remove" size={25} onPress={props.onRemove} />
+                <Icon
+                  name="remove"
+                  size={Dimensions.get('window').width > 400 ? 25 : 20}
+                  onPress={props.onRemove}
+                />
               </View>
             )}
             {!props.editable && <Text style={styles.quantityText}>Qty : </Text>}
             <Text style={styles.quantityText}> {props.quantity} </Text>
             {props.editable && (
               <View style={styles.iconRight}>
-                <Icon name="add" size={25} onPress={props.onAdd} />
+                <Icon
+                  name="add"
+                  size={Dimensions.get('window').width > 400 ? 25 : 20}
+                  onPress={props.onAdd}
+                />
               </View>
             )}
           </View>
@@ -93,7 +101,7 @@ const styles = StyleSheet.create({
     height: 100,
   },
   price: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     marginTop: 15,
   },
   quantity: {
@@ -108,14 +116,13 @@ const styles = StyleSheet.create({
   quantityText: {
     //fontFamily: 'open-sans',
     //color: '#888',
-    fontSize: 20,
-    paddingHorizontal: 10,
+    fontSize: Dimensions.get('window').width > 400 ? 20 : 15,
+    paddingHorizontal: 7,
     //marginTop: 15,
     //justifyContent: 'center'
   },
   mainText: {
-    //fontFamily: 'open-sans-bold',
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
   },
   deleteButton: {
     marginLeft: 20,

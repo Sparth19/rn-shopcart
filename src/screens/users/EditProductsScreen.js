@@ -6,7 +6,7 @@ import {
   Platform,
   ScrollView,
   Text,
-  KeyboardAvoidingView,
+  Dimensions,
   ActivityIndicator,
 } from 'react-native';
 
@@ -276,10 +276,13 @@ const styles = StyleSheet.create({
   },
   text: {
     marginVertical: 5,
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
   },
   picker: {
     width: '100%',
+  },
+  item: {
+    fontSize: 10,
   },
 });
 export default EditProductScreen;

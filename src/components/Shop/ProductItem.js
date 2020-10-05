@@ -8,6 +8,7 @@ import {
   Platform,
   ImageBackground,
   Image,
+  Dimensions,
 } from 'react-native';
 import Card from '../UI/Card';
 
@@ -20,22 +21,24 @@ const ProductItem = (props) => {
 
   return (
     <View style={styles.cardContainer}>
-      <View style={styles.card}>
-        <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={{uri: props.image}}
-            resizeMode={'contain'}
-          />
+      <Touchable onPress={props.onSelect}>
+        <View style={styles.card}>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.image}
+              source={{uri: props.image}}
+              resizeMode={'contain'}
+            />
+          </View>
+          <View style={styles.detailsContainer}>
+            <Text style={styles.title} numberOfLines={2} ellipsizeMode={'tail'}>
+              {props.title}
+            </Text>
+            <Text style={styles.price}>₹ {props.price.toFixed(2)}</Text>
+            <View style={styles.actions}>{props.children}</View>
+          </View>
         </View>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.title} numberOfLines={2} ellipsizeMode={'tail'}>
-            {props.title}
-          </Text>
-          <Text style={styles.price}>₹ {props.price.toFixed(2)}</Text>
-          <View style={styles.actions}>{props.children}</View>
-        </View>
-      </View>
+      </Touchable>
     </View>
   );
 };
@@ -44,7 +47,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     flex: 1,
     height: 200,
-    marginHorizontal: 20,
+    marginHorizontal: Dimensions.get('window').width > 400 ? 20 : 10,
     marginVertical: 10,
     borderRadius: 10,
     borderColor: '#ccc',
@@ -56,7 +59,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     width: '40%',
-    margin: 10,
+    margin: Dimensions.get('window').width > 400 ? 10 : 5,
     borderRadius: 10,
     overflow: 'hidden',
     justifyContent: 'center',
@@ -73,15 +76,15 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   title: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     marginBottom: 6,
   },
   price: {
-    fontSize: 20,
+    fontSize: Dimensions.get('window').width > 400 ? 20 : 15,
     marginBottom: 6,
   },
   actions: {
-    paddingHorizontal: 20,
+    paddingHorizontal: Dimensions.get('window').width > 400 ? 15 : 5,
   },
 });
 

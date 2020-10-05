@@ -1,5 +1,13 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  Alert,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {CommonActions} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
@@ -116,7 +124,7 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   text: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     fontWeight: '400',
     marginVertical: 5,
   },
@@ -124,7 +132,7 @@ const styles = StyleSheet.create({
     color: Colors.primary,
   },
   textRed: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     fontWeight: '400',
     marginVertical: 5,
     color: 'red',

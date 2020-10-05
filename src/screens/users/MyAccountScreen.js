@@ -1,8 +1,6 @@
 import React, {useEffect, useState, useReducer, useCallback} from 'react';
 import {
   View,
-  Text,
-  TextInput,
   StyleSheet,
   Platform,
   ScrollView,
@@ -10,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   ActivityIndicator,
+  Dimensions,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
@@ -220,8 +219,8 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
   },
   image: {
-    height: 100,
-    width: 120,
+    height: Dimensions.get('window').width > 400 ? 100 : 80,
+    width: Dimensions.get('window').width > 400 ? 120 : 100,
   },
   spinnerCenter: {
     flex: 1,
