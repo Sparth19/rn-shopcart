@@ -20,9 +20,6 @@ const FavoritesScreen = (props) => {
   const [error, setError] = useState();
   const dispatch = useDispatch();
 
-  // console.log(favoriteList);
-  // console.log(favDisplay);
-
   const allProducts = useSelector(
     (state) => state.products.availableAllProducts,
   );

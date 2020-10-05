@@ -150,11 +150,14 @@ const UserProductsScreen = (props) => {
             title={itemData.item.title}
             price={itemData.item.price}
             onSelect={editProductHandler.bind(this, itemData.item.id)}>
-            <Button
-              color={Colors.accent}
-              title="Edit Product"
-              onPress={editProductHandler.bind(this, itemData.item.id)}
-            />
+            <View style={styles.button}>
+              <Button
+                color={Colors.accent}
+                title="Edit Product"
+                onPress={editProductHandler.bind(this, itemData.item.id)}
+              />
+            </View>
+
             <Button
               color={Colors.accent}
               title="Delete Product"
@@ -173,6 +176,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  button: {marginBottom: 5},
 });
 
 export default UserProductsScreen;

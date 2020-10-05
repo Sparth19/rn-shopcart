@@ -18,7 +18,7 @@ const CartItem = (props) => {
         <View style={styles.itemDataInnerOne}>
           <Text style={styles.mainText}>{props.title}</Text>
           <Text style={styles.price}>
-            {props.price} X {props.quantity}
+            ({props.price} X {props.quantity})
           </Text>
         </View>
 
@@ -64,6 +64,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'space-between',
     marginHorizontal: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    marginVertical: 5,
   },
   itemDataUp: {
     flexDirection: 'row',
