@@ -45,10 +45,11 @@ const FavoritesScreen = (props) => {
     try {
       await dispatch(productActions.fetchAllProduct());
       await dispatch(favoritesActions.fetchFavorites());
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       setError(err.message);
     }
-    setIsLoading(false);
   }, [dispatch, setError, setIsLoading]);
 
   useEffect(() => {

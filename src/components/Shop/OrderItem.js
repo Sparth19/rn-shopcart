@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
+import React, {useState} from 'react';
+import {View, Text, Button, StyleSheet} from 'react-native';
 
-import CartItem from './CardItem';
+import CartItem from './CartItem';
 import Colors from '../../constants/Colors';
 import Card from '../UI/Card';
 
@@ -11,7 +11,7 @@ const OrderItem = (props) => {
   return (
     <Card style={styles.orderItem}>
       <View style={styles.summary}>
-        <Text style={styles.totalAmount}>${props.amount.toFixed(2)}</Text>
+        <Text style={styles.totalAmount}>₹{props.amount.toFixed(2)}</Text>
         <Text style={styles.date}>{props.date}</Text>
       </View>
       <Button

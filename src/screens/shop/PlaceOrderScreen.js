@@ -32,11 +32,12 @@ const PlaceOrderScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+      setIsLoading(false);
       props.navigation.navigate('HomeScreen');
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch, cartItems, cartTotalAmount]);
 
   useEffect(() => {

@@ -67,10 +67,11 @@ const HomeScreen = (props) => {
     try {
       await dispatch(favoritesActions.fetchFavorites());
       await dispatch(productsActions.fetchProduct(category));
+      setIsLoading(false);
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch, setError]);
 
   useEffect(() => {
