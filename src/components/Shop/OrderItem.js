@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet} from 'react-native';
+import {View, Text, Button, StyleSheet, Dimensions} from 'react-native';
 
 import CartItem from './CartItem';
 import Colors from '../../constants/Colors';
@@ -11,10 +11,15 @@ const OrderItem = (props) => {
   return (
     <Card style={styles.orderItem}>
       <View style={styles.summary}>
-        <Text style={styles.totalAmount}>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode={'tail'}
+          style={styles.totalAmount}>
           Total : ₹{props.amount.toFixed(2)}
         </Text>
-        <Text style={styles.date}>{props.date}</Text>
+        <View style={styles.dateContainer}>
+          <Text style={styles.date}>{props.date}</Text>
+        </View>
       </View>
       <Button
         color={Colors.accent}
@@ -43,7 +48,7 @@ const OrderItem = (props) => {
 
 const styles = StyleSheet.create({
   orderItem: {
-    margin: 20,
+    margin: 10,
     padding: 10,
     alignItems: 'center',
   },
@@ -56,13 +61,15 @@ const styles = StyleSheet.create({
   },
   totalAmount: {
     //fontFamily: 'open-sans-bold',
-    fontSize: 16,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     color: Colors.primary,
   },
+  dateContainer: {},
   date: {
     //fontFamily: 'open-sans',
-    fontSize: 16,
+    fontSize: Dimensions.get('window').width > 400 ? 16 : 12,
     color: '#888',
+    overflow: 'hidden',
   },
   detailItems: {
     width: '100%',

@@ -7,6 +7,7 @@ import {
   Button,
   ActivityIndicator,
   Alert,
+  Dimensions,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
   },
   summaryText: {
     //fontFamily: 'open-sans-bold',
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
   },
   amount: {
     color: Colors.primary,

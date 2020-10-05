@@ -1,5 +1,5 @@
 import React, {useState, useReducer, useEffect, useCallback} from 'react';
-import {TextInput, View, Text, StyleSheet} from 'react-native';
+import {TextInput, View, Text, StyleSheet, Dimensions} from 'react-native';
 
 const INPUT_CHANGE = 'INPUT_CHANGE';
 const INPUT_BLUR = 'INPUT_BLUR';
@@ -87,14 +87,14 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   text: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
   },
   input: {
     borderBottomColor: '#ccc',
     borderBottomWidth: 1,
     paddingHorizontal: 2,
     paddingVertical: 5,
-    fontSize: 15,
+    fontSize: Dimensions.get('window').width > 400 ? 15 : 12,
   },
   errorContainer: {
     marginVertical: 5,

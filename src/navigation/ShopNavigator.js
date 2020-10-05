@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform} from 'react-native';
+import {Platform, Dimensions} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   createDrawerNavigator,
@@ -119,7 +119,10 @@ const DrawerNavigator = (props) => {
     <Drawer.Navigator
       drawerContentOptions={{
         activeTintColor: Colors.primary,
-        labelStyle: {fontSize: 16, fontWeight: 'bold'},
+        labelStyle: {
+          fontSize: Dimensions.get('window').width > 400 ? 16 : 14,
+          fontWeight: 'bold',
+        },
       }}
       drawerContent={(props) => {
         return (
@@ -127,7 +130,10 @@ const DrawerNavigator = (props) => {
             <DrawerItemList {...props} />
             <DrawerItem
               label="Logout"
-              labelStyle={{fontSize: 16, fontWeight: 'bold'}}
+              labelStyle={{
+                fontSize: Dimensions.get('window').width > 400 ? 16 : 14,
+                fontWeight: 'bold',
+              }}
               style={{flex: 1}}
               onPress={logoutHandler}
               icon={() => (
