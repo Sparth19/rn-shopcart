@@ -103,11 +103,12 @@ const MyAccountScreen = (props) => {
           formState.inputValues.address,
         ),
       );
+      setIsLoading(false);
       props.navigation.goBack();
     } catch (err) {
+      setIsLoading(false);
       setError('Something went wrong' + err);
     }
-    setIsLoading(false);
   }, [dispatch, formState, userData]);
 
   const {navigation} = props;

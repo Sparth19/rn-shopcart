@@ -32,11 +32,12 @@ const PlaceOrderScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+      setIsLoading(false);
       props.navigation.navigate('HomeScreen');
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch, cartItems, cartTotalAmount]);
 
   useEffect(() => {
@@ -56,7 +57,9 @@ const PlaceOrderScreen = (props) => {
   return (
     <ScrollView style={styles.screen}>
       <View style={styles.main}>
-        <Text style={styles.text}>Total Payment : ₹ {cartTotalAmount}</Text>
+        <Text style={{...styles.totalPayment, ...styles.text}}>
+          Total Payment : ₹ {cartTotalAmount}
+        </Text>
         {!editAddress ? (
           <View>
             <Text style={styles.text}>Delivery Address</Text>
@@ -116,6 +119,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     marginVertical: 5,
+  },
+  totalPayment: {
+    color: Colors.primary,
   },
   textRed: {
     fontSize: 18,
