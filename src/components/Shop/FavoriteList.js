@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, FlatList, ActivityIndicator} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {CommonActions} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { CommonActions } from '@react-navigation/native';
 
 import Colors from '../../constants/Colors';
 import FavoriteItem from './FavoriteItem';
-import {toggleFavorite} from '../../store/actions/products';
+import { toggleFavorite } from '../../store/actions/products';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as cartActions from '../../store/actions/cart';
 import * as favoritesActions from '../../store/actions/favorites';
@@ -22,6 +22,7 @@ const FavoriteList = (props) => {
         onSelect={() => {
           props.navigation.navigate('ProductDetailScreen', {
             productId: itemData.item.id,
+            variable: 'true',
           });
         }}
         onSelectFavorite={() => {
@@ -41,7 +42,7 @@ const FavoriteList = (props) => {
       <FlatList
         data={props.listData}
         renderItem={renderFavItem}
-        style={{width: '100%'}}
+        style={{ width: '100%' }}
       />
     </View>
   );
