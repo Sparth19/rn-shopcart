@@ -1,16 +1,18 @@
-import {act} from 'react-test-renderer';
+import { act } from 'react-test-renderer';
 import {
   LOGOUT,
   RESTORE_TOKEN,
   USER_LOGIN,
   USER_SIGNUP,
   USER_UPDATE,
+  SET_OTP
 } from '../actions/auth';
 
 const initialState = {
   token: null,
   isLoading: true,
   userData: null,
+  otp: null
 };
 
 export default (state = initialState, action) => {
@@ -41,6 +43,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userData: action.userData,
+      };
+    case SET_OTP:
+      return {
+        ...state,
+        otp: action.otp
       };
     case LOGOUT:
       return initialState;
