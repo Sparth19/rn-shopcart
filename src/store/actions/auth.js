@@ -26,14 +26,20 @@ export const signup = (name, email, password) => {
           }),
         },
       );
+
       if (!response.ok) {
         const resData = await response.json();
         console.log(resData);
-        throw new Error('Response not ok');
+
+        if (resData.name === 'MongoError' && resData.code === 11000) {
+          throw new Error('Email already Exists');
+        } else {
+          throw new Error('Sign up failed');
+        }
       }
 
       const resData = await response.json();
-      //console.log(resData);
+      console.log(resData);
 
       const userData = {
         userId: resData.user._id,
@@ -55,9 +61,9 @@ export const signup = (name, email, password) => {
 
       dispatch(setLogoutTimer(parseInt(expiresIn) * 1000));
 
-      dispatch({ type: USER_SIGNUP, token: resData.token, userData: userData });
+      dispatch({type: USER_SIGNUP, token: resData.token, userData: userData});
     } catch (err) {
-      throw new Error('Authentication Error in signup');
+      throw new Error(err);
     }
   };
 };
@@ -105,21 +111,21 @@ export const login = (email, password) => {
 
       dispatch(setLogoutTimer(parseInt(expiresIn) * 1000));
 
-      dispatch({ type: USER_LOGIN, token: resData.token, userData: userData });
+      dispatch({type: USER_LOGIN, token: resData.token, userData: userData});
     } catch (err) {
-      throw new Error('Authentication Error');
+      throw new Error('Invalid username or password');
     }
   };
 };
 
 export const restoreToken = (token, userData) => {
-  return { type: RESTORE_TOKEN, token: token, userData: userData };
+  return {type: RESTORE_TOKEN, token: token, userData: userData};
 };
 
 export const logout = () => {
   clearLogoutTimer();
   AsyncStorage.removeItem('userData');
-  return { type: LOGOUT };
+  return {type: LOGOUT};
 };
 
 export const userUpdate = (userId, name, email, address) => {
@@ -168,7 +174,7 @@ export const userUpdate = (userId, name, email, address) => {
         }),
       );
       console.log('after merge');
-      dispatch({ type: USER_UPDATE, userData: userData });
+      dispatch({type: USER_UPDATE, userData: userData});
     } catch (err) {
       throw new Error('Authentication Error in update user profile');
     }
@@ -186,10 +192,10 @@ export const forgetPassword = (email) => {
         {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            email: email
+            email: email,
           }),
         },
       );
@@ -203,14 +209,12 @@ export const forgetPassword = (email) => {
       console.log('forgot pass otp');
       console.log(resData);
       otp = resData.otp;
-      userId = resData.user._id
-
+      userId = resData.user._id;
 
       dispatch({
         type: SET_OTP,
-        otp: otp
-      })
-
+        otp: otp,
+      });
     } catch (err) {
       throw new Error('Authentication Error in forgot password');
     }
@@ -219,7 +223,7 @@ export const forgetPassword = (email) => {
 
 //Update user password
 export const updatePassword = (password) => {
-  return async dispatch => {
+  return async (dispatch) => {
     console.log(password);
     console.log(userId);
     try {
@@ -228,10 +232,10 @@ export const updatePassword = (password) => {
         {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            password: password
+            password: password,
           }),
         },
       );
@@ -247,14 +251,13 @@ export const updatePassword = (password) => {
 
       dispatch({
         type: SET_OTP,
-        otp: null
-      })
+        otp: null,
+      });
     } catch (err) {
       throw new Error('Authentication Error in update password');
     }
   };
 };
-
 
 //
 const clearLogoutTimer = () => {

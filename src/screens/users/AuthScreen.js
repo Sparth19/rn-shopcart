@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useReducer } from 'react';
+import React, {useState, useCallback, useEffect, useReducer} from 'react';
 import {
   View,
   StyleSheet,
@@ -7,9 +7,9 @@ import {
   Button,
   ActivityIndicator,
   Alert,
-  Text
+  Text,
 } from 'react-native';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 
 import * as authActions from '../../store/actions/auth';
 import Input from '../../components/UI/Input';
@@ -49,9 +49,9 @@ const AuthScreen = (props) => {
   const [name, setName] = useState('');
   const [isSignUp, setIsSignUp] = useState(false);
 
-  const { navigation } = props;
+  const {navigation} = props;
   useEffect(() => {
-    props.navigation.setOptions({ title: isSignUp ? 'Sign up' : 'Login' });
+    props.navigation.setOptions({title: isSignUp ? 'Sign up' : 'Login'});
   }, [navigation, isSignUp]);
 
   const [formState, dispatchFormState] = useReducer(formReducer, {
@@ -69,7 +69,7 @@ const AuthScreen = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('An Error Occurred !', error, [{ text: 'Okay' }]);
+      Alert.alert('An Error Occurred !', error, [{text: 'Okay'}]);
     }
   }, [error]);
 
@@ -77,7 +77,7 @@ const AuthScreen = (props) => {
     let action;
     if (!formState.formIsValid) {
       Alert.alert('Invalid Input', 'Please enter valid input', [
-        { text: 'Okay' },
+        {text: 'Okay'},
       ]);
       return;
     }
@@ -142,8 +142,8 @@ const AuthScreen = (props) => {
                 initialValue=""
               />
             ) : (
-                <View></View>
-              )}
+              <View></View>
+            )}
             <Input
               id="email"
               label="E-Mail"
@@ -168,23 +168,26 @@ const AuthScreen = (props) => {
               initialValue=""
             />
             {!isSignUp ? (
-              <Text style={styles.forgetPass}
-                onPress={() => props.navigation.navigate('ForgetPasswordScreen')}>
+              <Text
+                style={styles.forgetPass}
+                onPress={() =>
+                  props.navigation.navigate('ForgetPasswordScreen')
+                }>
                 Forget Password?
               </Text>
             ) : (
-                <View></View>
-              )}
+              <View></View>
+            )}
             <View style={styles.buttonContainer}>
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors.primary} />
               ) : (
-                  <Button
-                    title={isSignUp ? 'Sign Up' : 'Login'}
-                    color={Colors.primary}
-                    onPress={authHandler}
-                  />
-                )}
+                <Button
+                  title={isSignUp ? 'Sign Up' : 'Login'}
+                  color={Colors.primary}
+                  onPress={authHandler}
+                />
+              )}
             </View>
             <View style={styles.buttonContainer}>
               <Button
@@ -221,8 +224,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   forgetPass: {
-    color: Colors.primary
-  }
+    color: Colors.accent,
+    textAlign: 'right',
+  },
 });
 
 export default AuthScreen;
