@@ -6,15 +6,19 @@ import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTile from '../../components/UI/CategoryGridTile';
+import * as authActions from '../../store/actions/auth';
 
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
   const {navigation} = props;
+  const token = useSelector((state) => state.auth.token);
 
-
-  
   useEffect(() => {
+    if (token == null) {
+      dispatch(authActions.logout());
+    }
+
     navigation.setOptions({
       title: 'All Categories',
       headerLeft: () => (

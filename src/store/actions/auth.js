@@ -84,22 +84,24 @@ export const login = (email, password) => {
           }),
         },
       );
+
       if (!response.ok) {
         const resData = await response.json();
         console.log(resData);
-        throw new Error('Response not ok');
+        if (resData.e === 'Invalid username or password') {
+          throw new Error(resData.e);
+        }
+        throw new Error('login failed');
       }
 
       const resData = await response.json();
+
       const userData = {
         userId: resData.user._id,
         userName: resData.user.name,
         userEmail: resData.user.email,
         userAddress: resData.user.address,
       };
-
-      console.log('Logged in user');
-      console.log(userData);
 
       //for autologin
       const expiresIn = 3600;
@@ -113,7 +115,7 @@ export const login = (email, password) => {
 
       dispatch({type: USER_LOGIN, token: resData.token, userData: userData});
     } catch (err) {
-      throw new Error('Invalid username or password');
+      throw new Error(err);
     }
   };
 };
@@ -199,6 +201,7 @@ export const forgetPassword = (email) => {
           }),
         },
       );
+
       if (!response.ok) {
         const resData = await response.json();
         console.log(resData);
@@ -216,7 +219,7 @@ export const forgetPassword = (email) => {
         otp: otp,
       });
     } catch (err) {
-      throw new Error('Authentication Error in forgot password');
+      throw new Error(err);
     }
   };
 };
