@@ -7,6 +7,7 @@ import {
   Button,
   ActivityIndicator,
   Alert,
+  Text
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 
@@ -166,6 +167,14 @@ const AuthScreen = (props) => {
               onInputChange={inputChangeHandler}
               initialValue=""
             />
+            {!isSignUp ? (
+              <Text style={styles.forgetPass}
+                onPress={() => props.navigation.navigate('ForgetPasswordScreen')}>
+                Forget Password?
+              </Text>
+            ) : (
+                <View></View>
+              )}
             <View style={styles.buttonContainer}>
               {isLoading ? (
                 <ActivityIndicator size="small" color={Colors.primary} />
@@ -211,6 +220,9 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 10,
   },
+  forgetPass: {
+    color: Colors.primary
+  }
 });
 
 export default AuthScreen;

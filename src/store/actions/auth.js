@@ -5,6 +5,7 @@ export const USER_SIGNUP = 'USER_SIGNUP';
 export const RESTORE_TOKEN = 'RESTORE_TOKEN';
 export const LOGOUT = 'LOGOUT';
 export const USER_UPDATE = 'USER_UPDATE';
+export const SET_OTP = 'SET_OTP';
 
 let timer;
 export const signup = (name, email, password) => {
@@ -54,7 +55,7 @@ export const signup = (name, email, password) => {
 
       dispatch(setLogoutTimer(parseInt(expiresIn) * 1000));
 
-      dispatch({type: USER_SIGNUP, token: resData.token, userData: userData});
+      dispatch({ type: USER_SIGNUP, token: resData.token, userData: userData });
     } catch (err) {
       throw new Error('Authentication Error in signup');
     }
@@ -104,7 +105,7 @@ export const login = (email, password) => {
 
       dispatch(setLogoutTimer(parseInt(expiresIn) * 1000));
 
-      dispatch({type: USER_LOGIN, token: resData.token, userData: userData});
+      dispatch({ type: USER_LOGIN, token: resData.token, userData: userData });
     } catch (err) {
       throw new Error('Authentication Error');
     }
@@ -112,13 +113,13 @@ export const login = (email, password) => {
 };
 
 export const restoreToken = (token, userData) => {
-  return {type: RESTORE_TOKEN, token: token, userData: userData};
+  return { type: RESTORE_TOKEN, token: token, userData: userData };
 };
 
 export const logout = () => {
   clearLogoutTimer();
   AsyncStorage.removeItem('userData');
-  return {type: LOGOUT};
+  return { type: LOGOUT };
 };
 
 export const userUpdate = (userId, name, email, address) => {
@@ -167,12 +168,93 @@ export const userUpdate = (userId, name, email, address) => {
         }),
       );
       console.log('after merge');
-      dispatch({type: USER_UPDATE, userData: userData});
+      dispatch({ type: USER_UPDATE, userData: userData });
     } catch (err) {
       throw new Error('Authentication Error in update user profile');
     }
   };
 };
+
+//user forget password
+let otp = '';
+let userId = '';
+export const forgetPassword = (email) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/users/forgetPass',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: email
+          }),
+        },
+      );
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('Response not ok');
+      }
+
+      const resData = await response.json();
+      console.log('forgot pass otp');
+      console.log(resData);
+      otp = resData.otp;
+      userId = resData.user._id
+
+
+      dispatch({
+        type: SET_OTP,
+        otp: otp
+      })
+
+    } catch (err) {
+      throw new Error('Authentication Error in forgot password');
+    }
+  };
+};
+
+//Update user password
+export const updatePassword = (password) => {
+  return async dispatch => {
+    console.log(password);
+    console.log(userId);
+    try {
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/users/updatePassword/' + userId,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            password: password
+          }),
+        },
+      );
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('Response not ok');
+      }
+
+      const resData = await response.json();
+      console.log('Password Updated');
+      console.log(resData);
+
+      dispatch({
+        type: SET_OTP,
+        otp: null
+      })
+    } catch (err) {
+      throw new Error('Authentication Error in update password');
+    }
+  };
+};
+
 
 //
 const clearLogoutTimer = () => {
