@@ -25,15 +25,8 @@ const FavoriteList = (props) => {
           });
         }}
         onSelectFavorite={() => {
-          //dispatch(toggleFavorite(itemData.item.id));
-
           dispatch(favoritesActions.toggleFavoritesApi(itemData.item.id));
           props.navigation.replace('FavoritesScreen');
-          // props.navigation.dispatch(
-          //   CommonActions.navigate({
-          //     name: 'FavoritesScreen',
-          //   }),
-          // );
         }}
         onAdd={() => {
           dispatch(cartActions.addToCart(itemData.item));

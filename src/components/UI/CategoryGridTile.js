@@ -7,6 +7,7 @@ import {
   Platform,
   TouchableNativeFeedback,
   Image,
+  Dimensions,
 } from 'react-native';
 
 const CategoryGridTile = (props) => {
@@ -29,8 +30,7 @@ const CategoryGridTile = (props) => {
     </View>
   );
 };
-//...{ backgroundColor: props.color }
-//...{ color: props.color }
+
 const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     width: 80,
-    marginBottom: 15,
+    marginBottom: 10,
   },
   title: {
-    //fontFamily: 'open-sans-bold',
+    // fontFamily: 'Roboto',
     flex: 1,
-    fontSize: 22,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     textAlign: 'right',
     fontWeight: 'bold',
   },

@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   ImageBackground,
   Platform,
+  Dimensions,
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -25,7 +26,12 @@ const FavoriteItem = (props) => {
           <View style={{...styles.favRow, ...styles.FavHeader}}>
             <ImageBackground source={{uri: props.image}} style={styles.bgImage}>
               <View style={styles.titleContainer}>
-                <Text style={styles.title}>{props.title}</Text>
+                <Text
+                  numberOfLines={1}
+                  ellipsizeMode={'tail'}
+                  style={styles.title}>
+                  {props.title}
+                </Text>
               </View>
             </ImageBackground>
           </View>
@@ -42,7 +48,7 @@ const FavoriteItem = (props) => {
               </Touchable>
             </View>
             <Button
-              color={Colors.primary}
+              color={Colors.accent}
               title="Add to Cart"
               onPress={props.onAdd}
             />
@@ -61,6 +67,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     marginVertical: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
   },
   bgImage: {
     width: '100%',
@@ -74,11 +82,11 @@ const styles = StyleSheet.create({
     height: '75%',
   },
   price: {
-    fontSize: 20,
-    color: Colors.primary,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 12,
+    color: 'black',
   },
   favDetail: {
-    paddingHorizontal: 20,
+    paddingHorizontal: Dimensions.get('window').width > 400 ? 20 : 12,
     justifyContent: 'space-between',
     alignItems: 'center',
     height: '25%',
@@ -89,12 +97,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   title: {
-    fontSize: 20,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 15,
     color: 'white',
     textAlign: 'center',
   },
   icon: {
-    fontSize: 30,
+    fontSize: Dimensions.get('window').width > 400 ? 30 : 25,
     margin: 10,
   },
 });

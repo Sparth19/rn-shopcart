@@ -7,13 +7,14 @@ import {
   Button,
   ActivityIndicator,
   Alert,
+  Dimensions,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import Colors from '../../constants/Colors';
-import CartItem from '../../components/Shop/CardItem';
+import CartItem from '../../components/Shop/CartItem';
 import Card from '../../components/UI/Card';
 import * as cartActions from '../../store/actions/cart';
 import * as ordersActions from '../../store/actions/orders';
@@ -68,7 +69,7 @@ const CartScreen = (props) => {
         <Text style={styles.summaryText}>
           Total:{' '}
           <Text style={styles.amount}>
-            ${Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
+            ₹{Math.round(cartTotalAmount.toFixed(2) * 100) / 100}
           </Text>
         </Text>
         {isLoading ? (
@@ -123,7 +124,7 @@ const styles = StyleSheet.create({
   },
   summaryText: {
     //fontFamily: 'open-sans-bold',
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
   },
   amount: {
     color: Colors.primary,

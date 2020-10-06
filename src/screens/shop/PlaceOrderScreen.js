@@ -1,5 +1,13 @@
 import React, {useEffect, useState, useCallback} from 'react';
-import {View, Text, Button, StyleSheet, ActivityIndicator} from 'react-native';
+import {
+  View,
+  Text,
+  Button,
+  StyleSheet,
+  ActivityIndicator,
+  Dimensions,
+  Alert,
+} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {CommonActions} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
@@ -32,11 +40,12 @@ const PlaceOrderScreen = (props) => {
     setIsLoading(true);
     try {
       await dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+      setIsLoading(false);
       props.navigation.navigate('HomeScreen');
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, [dispatch, cartItems, cartTotalAmount]);
 
   useEffect(() => {
@@ -56,7 +65,9 @@ const PlaceOrderScreen = (props) => {
   return (
     <ScrollView style={styles.screen}>
       <View style={styles.main}>
-        <Text style={styles.text}>Total Payment : ₹ {cartTotalAmount}</Text>
+        <Text style={{...styles.totalPayment, ...styles.text}}>
+          Total Payment : ₹ {cartTotalAmount}
+        </Text>
         {!editAddress ? (
           <View>
             <Text style={styles.text}>Delivery Address</Text>
@@ -113,12 +124,15 @@ const styles = StyleSheet.create({
     margin: 20,
   },
   text: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     fontWeight: '400',
     marginVertical: 5,
   },
+  totalPayment: {
+    color: Colors.primary,
+  },
   textRed: {
-    fontSize: 18,
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     fontWeight: '400',
     marginVertical: 5,
     color: 'red',

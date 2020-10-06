@@ -20,9 +20,6 @@ const FavoritesScreen = (props) => {
   const [error, setError] = useState();
   const dispatch = useDispatch();
 
-  // console.log(favoriteList);
-  // console.log(favDisplay);
-
   const allProducts = useSelector(
     (state) => state.products.availableAllProducts,
   );
@@ -45,10 +42,11 @@ const FavoritesScreen = (props) => {
     try {
       await dispatch(productActions.fetchAllProduct());
       await dispatch(favoritesActions.fetchFavorites());
+      setIsLoading(false);
     } catch (err) {
+      setIsLoading(false);
       setError(err.message);
     }
-    setIsLoading(false);
   }, [dispatch, setError, setIsLoading]);
 
   useEffect(() => {

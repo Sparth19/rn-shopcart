@@ -69,6 +69,7 @@ const HomeScreen = (props) => {
       await dispatch(productsActions.fetchProduct(category));
     } catch (err) {
       setError(err.message);
+      setIsLoading(false);
     }
     setIsLoading(false);
   }, [dispatch, setError]);
@@ -153,7 +154,7 @@ const HomeScreen = (props) => {
               />
             </Touchable> */}
             <Button
-              color={Colors.primary}
+              color={Colors.accent}
               title="Add To Cart"
               onPress={() => {
                 dispatch(cartActions.addToCart(itemData.item));
