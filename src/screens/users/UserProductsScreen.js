@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Button,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -139,7 +140,7 @@ const UserProductsScreen = (props) => {
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <FlatList
         onRefresh={loadProducts}
         refreshing={isRefreshing}
@@ -166,7 +167,7 @@ const UserProductsScreen = (props) => {
           </ProductItem>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -13,7 +13,7 @@ const OrderItem = (props) => {
       <View style={styles.summary}>
         <Text
           numberOfLines={1}
-          ellipsizeMode={'tail'}
+          ellipsizeMode={'tail'}Ð
           style={styles.totalAmount}>
           Total : ₹{props.amount.toFixed(2)}
         </Text>

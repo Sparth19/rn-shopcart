@@ -8,6 +8,7 @@ import {
   Text,
   Dimensions,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
@@ -177,79 +178,81 @@ const EditProductScreen = (props) => {
     //   behavior="padding"
     //   //keyboardVerticalOffset={1}
     // >
-    <ScrollView>
-      <View style={styles.screen}>
-        <Input
-          id="title"
-          label="Title"
-          errorMessage="Please enter valid title"
-          keyboardType="default"
-          autoCapitalize="sentences"
-          autoCorrect
-          returnKeyType="next"
-          onInputChange={inputChangeHandler}
-          initialValue={selectedProduct ? selectedProduct.title : ''}
-          initiallyValid={!!selectedProduct}
-          required
-        />
-        <Input
-          id="imageUrl"
-          label="Image url"
-          errorMessage="Please enter valid image url"
-          keyboardType="default"
-          returnKeyType="next"
-          onInputChange={inputChangeHandler}
-          initialValue={selectedProduct ? selectedProduct.imageUrl : ''}
-          initiallyValid={!!selectedProduct}
-          required
-        />
-        {selectedProduct ? null : (
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.screen}>
           <Input
-            id="price"
-            label="Price"
-            errorMessage="Please enter valid price"
-            keyboardType="decimal-pad"
+            id="title"
+            label="Title"
+            errorMessage="Please enter valid title"
+            keyboardType="default"
+            autoCapitalize="sentences"
+            autoCorrect
             returnKeyType="next"
             onInputChange={inputChangeHandler}
+            initialValue={selectedProduct ? selectedProduct.title : ''}
+            initiallyValid={!!selectedProduct}
             required
           />
-        )}
-        <Input
-          id="description"
-          label="Description"
-          errorMessage="Please enter valid description"
-          keyboardType="default"
-          autoCapitalize="sentences"
-          autoCorrect
-          returnKeyType="done"
-          multiline
-          numberOfLines={3}
-          onInputChange={inputChangeHandler}
-          initialValue={selectedProduct ? selectedProduct.description : ''}
-          initiallyValid={!!selectedProduct}
-          required
-        />
-        <Text style={styles.text}>Select Category</Text>
+          <Input
+            id="imageUrl"
+            label="Image url"
+            errorMessage="Please enter valid image url"
+            keyboardType="default"
+            returnKeyType="next"
+            onInputChange={inputChangeHandler}
+            initialValue={selectedProduct ? selectedProduct.imageUrl : ''}
+            initiallyValid={!!selectedProduct}
+            required
+          />
+          {selectedProduct ? null : (
+            <Input
+              id="price"
+              label="Price"
+              errorMessage="Please enter valid price"
+              keyboardType="decimal-pad"
+              returnKeyType="next"
+              onInputChange={inputChangeHandler}
+              required
+            />
+          )}
+          <Input
+            id="description"
+            label="Description"
+            errorMessage="Please enter valid description"
+            keyboardType="default"
+            autoCapitalize="sentences"
+            autoCorrect
+            returnKeyType="done"
+            multiline
+            numberOfLines={3}
+            onInputChange={inputChangeHandler}
+            initialValue={selectedProduct ? selectedProduct.description : ''}
+            initiallyValid={!!selectedProduct}
+            required
+          />
+          <Text style={styles.text}>Select Category</Text>
 
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={category}
-            style={styles.picker}
-            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
-            <Picker.Item label="Electronics" value="Electronics" />
-            <Picker.Item label="Home" value="Home" />
-            <Picker.Item label="Fashion" value="Fashion" />
-            <Picker.Item label="Footwear" value="Footwear" />
-            <Picker.Item label="Books" value="Books" />
-            <Picker.Item label="Mobiles" value="Mobiles" />
-            <Picker.Item label="Appliances" value="Appliances" />
-            <Picker.Item label="Beauty" value="Beauty" />
-            <Picker.Item label="Sports" value="Sports" />
-            <Picker.Item label="Toys & Baby" value="Toys & Baby" />
-          </Picker>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={category}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
+              <Picker.Item label="Electronics" value="Electronics" />
+              <Picker.Item label="Home" value="Home" />
+              <Picker.Item label="Fashion" value="Fashion" />
+              <Picker.Item label="Footwear" value="Footwear" />
+              <Picker.Item label="Books" value="Books" />
+              <Picker.Item label="Mobiles" value="Mobiles" />
+              <Picker.Item label="Appliances" value="Appliances" />
+              <Picker.Item label="Beauty" value="Beauty" />
+              <Picker.Item label="Sports" value="Sports" />
+              <Picker.Item label="Toys & Baby" value="Toys & Baby" />
+            </Picker>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
     // </KeyboardAvoidingView>
   );
 };

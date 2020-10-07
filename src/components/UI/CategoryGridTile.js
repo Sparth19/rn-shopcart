@@ -8,6 +8,7 @@ import {
   TouchableNativeFeedback,
   Image,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 
 const CategoryGridTile = (props) => {
@@ -37,7 +38,9 @@ const CategoryGridTile = (props) => {
       <TouchableCmp style={{flex: 1}} onPress={props.onSelect}>
         <View style={{...styles.container, ...{borderColor: props.color}}}>
           <Image source={{uri: props.image}} style={styles.bgImage} />
-          <Text style={{...styles.title}} numberOfLines={2}>
+          <Text
+            style={screenWidth > 400 ? styles.largeTitle : styles.smallTitle}
+            numberOfLines={2}>
             {props.title}
           </Text>
         </View>
@@ -66,8 +69,6 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowRadius: 10,
     padding: 15,
-    // justifyContent: 'center',
-    // alignItems: 'center',
     borderWidth: 2,
     backgroundColor: '#fff',
   },
@@ -78,10 +79,15 @@ const styles = StyleSheet.create({
     width: 80,
     marginBottom: 10,
   },
-  title: {
-    // fontFamily: 'Roboto',
+  largeTitle: {
     flex: 1,
-    fontSize: screenWidth > 400 ? 18 : 14,
+    fontSize: 18,
+    textAlign: 'right',
+    fontWeight: 'bold',
+  },
+  smallTitle: {
+    flex: 1,
+    fontSize: 14,
     textAlign: 'right',
     fontWeight: 'bold',
   },

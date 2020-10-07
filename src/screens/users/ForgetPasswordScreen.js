@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Alert,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -130,7 +131,7 @@ const ForgetPasswordScreen = (props) => {
         behavior="height"
         keyboardVerticalOffset={50}
         style={styles.screen}>
-        <View style={styles.gradient}>
+        <SafeAreaView style={styles.gradient}>
           <Card style={styles.authContainer}>
             <ScrollView>
               <View style={styles.edit}>
@@ -159,7 +160,7 @@ const ForgetPasswordScreen = (props) => {
               </View>
             </ScrollView>
           </Card>
-        </View>
+        </SafeAreaView>
       </KeyboardAvoidingView>
     );
   } else {

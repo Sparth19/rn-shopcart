@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -64,7 +65,7 @@ const CartScreen = (props) => {
   }
 
   return (
-    <View style={styles.screen}>
+    <SafeAreaView style={styles.screen}>
       <Card style={styles.summary}>
         <Text style={styles.summaryText}>
           Total:{' '}
@@ -107,7 +108,7 @@ const CartScreen = (props) => {
           />
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

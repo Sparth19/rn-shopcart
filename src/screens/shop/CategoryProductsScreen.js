@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
+  SafeAreaView,
 } from 'react-native';
 
 import {useSelector, useDispatch} from 'react-redux';
@@ -120,7 +121,7 @@ const HomeScreen = (props) => {
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <FlatList
         onRefresh={loadProducts}
         refreshing={isRefreshing}
@@ -163,7 +164,7 @@ const HomeScreen = (props) => {
           </ProductItem>
         )}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
