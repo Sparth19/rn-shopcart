@@ -7,6 +7,7 @@ import {
   Text,
   StyleSheet,
   Button,
+  SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -95,16 +96,18 @@ const OrdersScreen = (props) => {
   }
 
   return (
-    <FlatList
-      data={orders}
-      renderItem={(itemData, index) => (
-        <OrderItem
-          amount={itemData.item.totalAmount}
-          date={itemData.item.date}
-          items={itemData.item.items}
-        />
-      )}
-    />
+    <SafeAreaView>
+      <FlatList
+        data={orders}
+        renderItem={(itemData, index) => (
+          <OrderItem
+            amount={itemData.item.totalAmount}
+            date={itemData.item.date}
+            items={itemData.item.items}
+          />
+        )}
+      />
+    </SafeAreaView>
   );
 };
 

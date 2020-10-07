@@ -24,7 +24,10 @@ const FavoriteItem = (props) => {
       <TouchableOpacity onPress={props.onSelect}>
         <View>
           <View style={{...styles.favRow, ...styles.FavHeader}}>
-            <ImageBackground source={{uri: props.image}} style={styles.bgImage}>
+            <ImageBackground
+              source={{uri: props.image}}
+              resizeMode={'contain'}
+              style={styles.bgImage}>
               <View style={styles.titleContainer}>
                 <Text
                   numberOfLines={1}
@@ -73,6 +76,7 @@ const styles = StyleSheet.create({
   bgImage: {
     width: '100%',
     height: '100%',
+    backgroundColor: '#DCDCDC',
     justifyContent: 'flex-end',
   },
   favRow: {

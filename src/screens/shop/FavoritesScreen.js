@@ -5,6 +5,7 @@ import {
   Text,
   Platform,
   ActivityIndicator,
+  SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';

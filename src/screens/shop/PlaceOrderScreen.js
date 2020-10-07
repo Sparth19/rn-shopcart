@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Alert,
+  SafeAreaView,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import {CommonActions} from '@react-navigation/native';
@@ -64,7 +65,7 @@ const PlaceOrderScreen = (props) => {
 
   return (
     <ScrollView style={styles.screen}>
-      <View style={styles.main}>
+      <SafeAreaView style={styles.main}>
         <Text style={{...styles.totalPayment, ...styles.text}}>
           Total Payment : ₹ {cartTotalAmount}
         </Text>
@@ -110,10 +111,10 @@ const PlaceOrderScreen = (props) => {
                   }),
                 );
               }}
-            />
+            />Ð
           </View>
         )}
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

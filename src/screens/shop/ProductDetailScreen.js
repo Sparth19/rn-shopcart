@@ -8,6 +8,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -39,43 +40,45 @@ const PlaceDetailScreen = (props) => {
   }, [props]);
 
   return (
-    <ScrollView>
-      <View style={styles.details}>
-        <Text style={styles.title}>{selectedProduct.title}</Text>
-        <Image
-          style={styles.image}
-          source={{uri: selectedProduct.imageUrl}}
-          resizeMode={'contain'}
-        />
-        <View style={styles.actions}>
-          <TouchableOpacity
-            onPress={() => {
-              dispatch(favoritesActions.toggleFavoritesApi(productId));
-              setFilled(filled === 'true' ? 'false' : 'true');
-            }}>
-            <Icon
-              color={Colors.primary}
-              style={styles.icon}
-              size={Dimensions.get('window').width > 400 ? 30 : 25}
-              name={filled === 'true' ? 'ios-heart' : 'ios-heart-outline'}
-            />
-          </TouchableOpacity>
-          <Button
-            color={Colors.primary}
-            title="Add to Cart"
-            onPress={() => {
-              dispatch(cartActions.addToCart(selectedProduct));
-            }}
+    <SafeAreaView>
+      <ScrollView>
+        <View style={styles.details}>
+          <Text style={styles.title}>{selectedProduct.title}</Text>
+          <Image
+            style={styles.image}
+            source={{uri: selectedProduct.imageUrl}}
+            resizeMode={'contain'}
           />
-        </View>
+          <View style={styles.actions}>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(favoritesActions.toggleFavoritesApi(productId));
+                setFilled(filled === 'true' ? 'false' : 'true');
+              }}>
+              <Icon
+                color={Colors.primary}
+                style={styles.icon}
+                size={Dimensions.get('window').width > 400 ? 30 : 25}
+                name={filled === 'true' ? 'ios-heart' : 'ios-heart-outline'}
+              />
+            </TouchableOpacity>
+            <Button
+              color={Colors.primary}
+              title="Add to Cart"
+              onPress={() => {
+                dispatch(cartActions.addToCart(selectedProduct));
+              }}
+            />
+          </View>
 
-        <Text style={styles.text}>
-          M.R.P.: <Text style={styles.price}>₹{selectedProduct.price}</Text>
-        </Text>
-        <Text style={styles.text}>Features & Details</Text>
-        <Text style={styles.description}>{selectedProduct.description}</Text>
-      </View>
-    </ScrollView>
+          <Text style={styles.text}>
+            M.R.P.: <Text style={styles.price}>₹{selectedProduct.price}</Text>
+          </Text>
+          <Text style={styles.text}>Features & Details</Text>
+          <Text style={styles.description}>{selectedProduct.description}</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

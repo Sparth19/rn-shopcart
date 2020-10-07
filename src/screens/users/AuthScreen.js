@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   Text,
+  SafeAreaView,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
 
@@ -129,7 +130,7 @@ const AuthScreen = (props) => {
       behavior="height"
       keyboardVerticalOffset={50}
       style={styles.screen}>
-      <View style={styles.gradient}>
+      <SafeAreaView style={styles.gradient}>
         <Card style={styles.authContainer}>
           <ScrollView>
             {isSignUp ? (
@@ -200,7 +201,7 @@ const AuthScreen = (props) => {
             </View>
           </ScrollView>
         </Card>
-      </View>
+      </SafeAreaView>
     </KeyboardAvoidingView>
   );
 };

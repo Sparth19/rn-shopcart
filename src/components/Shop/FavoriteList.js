@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { CommonActions } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  SafeAreaView,
+} from 'react-native';
+import {useDispatch} from 'react-redux';
+import {CommonActions} from '@react-navigation/native';
 
 import Colors from '../../constants/Colors';
 import FavoriteItem from './FavoriteItem';
-import { toggleFavorite } from '../../store/actions/products';
+import {toggleFavorite} from '../../store/actions/products';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as cartActions from '../../store/actions/cart';
 import * as favoritesActions from '../../store/actions/favorites';
@@ -38,13 +44,13 @@ const FavoriteList = (props) => {
   };
 
   return (
-    <View style={styles.list}>
+    <SafeAreaView style={styles.list}>
       <FlatList
         data={props.listData}
         renderItem={renderFavItem}
-        style={{ width: '100%' }}
+        style={{width: '100%'}}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 

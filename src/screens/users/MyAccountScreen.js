@@ -9,6 +9,7 @@ import {
   Alert,
   ActivityIndicator,
   Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
@@ -152,7 +153,7 @@ const MyAccountScreen = (props) => {
       keyboardVerticalOffset={50}
       style={styles.screen}>
       <ScrollView>
-        <View style={styles.main}>
+        <SafeAreaView style={styles.main}>
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
@@ -201,7 +202,7 @@ const MyAccountScreen = (props) => {
               required
             />
           </View>
-        </View>
+        </SafeAreaView>
       </ScrollView>
     </KeyboardAvoidingView>
   );

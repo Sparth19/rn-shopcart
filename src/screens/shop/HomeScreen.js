@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, SafeAreaView} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -15,10 +15,9 @@ const HomeScreen = (props) => {
   const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
-    if (token == null) {
+    if (token === null) {
       dispatch(authActions.logout());
     }
-   
 
     navigation.setOptions({
       title: 'All Categories',
@@ -48,7 +47,7 @@ const HomeScreen = (props) => {
   }, [navigation]);
 
   return (
-    <View>
+    <SafeAreaView>
       <FlatList
         data={categories}
         renderItem={(itemData) => (
@@ -65,7 +64,7 @@ const HomeScreen = (props) => {
         )}
         numColumns={2}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
