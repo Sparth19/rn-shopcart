@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Dimensions} from 'react-native';
+import {Platform, Dimensions, Alert} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   createDrawerNavigator,
@@ -121,8 +121,16 @@ const MyAccountNavigator = () => {
 const DrawerNavigator = (props) => {
   const dispatch = useDispatch();
   const logoutHandler = () => {
-    console.log('Logout');
-    dispatch(authActions.logout());
+    Alert.alert('Are you sure ?', 'Do you really want to logout ?', [
+      {text: 'No', style: 'default'},
+      {
+        text: 'Yes',
+        style: 'destructive',
+        onPress: () => {
+          dispatch(authActions.logout());
+        },
+      },
+    ]);
   };
   return (
     <Drawer.Navigator

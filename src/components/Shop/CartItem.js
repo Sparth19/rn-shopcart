@@ -23,7 +23,11 @@ const CartItem = (props) => {
         </View>
 
         <View style={styles.itemDataInnerTwo}>
-          <Image style={styles.image} source={{uri: props.image}} />
+          <Image
+            style={styles.image}
+            source={{uri: props.image}}
+            resizeMode={'contain'}
+          />
           <View style={styles.quantity}>
             {props.editable && (
               <View style={styles.iconleft}>

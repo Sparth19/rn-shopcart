@@ -44,7 +44,7 @@ const HomeScreen = (props) => {
         </HeaderButtons>
       ),
     });
-  }, [navigation]);
+  }, [navigation, token]);
 
   return (
     <SafeAreaView>

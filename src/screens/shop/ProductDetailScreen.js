@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   image: {
     width: '100%',
     height: Dimensions.get('window').width > 400 ? 300 : 250,
-    backgroundColor: '#DCDCDC',
+    // backgroundColor: '#DCDCDC',
   },
   actions: {
     marginVertical: 20,
