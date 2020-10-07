@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-
+import {StatusBar} from 'react-native';
 import React from 'react';
 import {createStore, compose, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
@@ -30,7 +30,6 @@ const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(ReduxThunk)),
 );
-
 
 const App = () => {
   return (

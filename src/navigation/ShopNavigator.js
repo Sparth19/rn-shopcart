@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, Dimensions, Alert} from 'react-native';
+import {Platform, Dimensions, Alert, StatusBar} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {
   createDrawerNavigator,
@@ -258,6 +258,12 @@ const ShopNavigator = (props) => {
   if (isLoading) {
     return (
       <NavigationContainer>
+        <StatusBar
+          barStyle="default"
+          hidden={false}
+          backgroundColor={Colors.primary}
+          translucent={true}
+        />
         <StartupNavigator />
       </NavigationContainer>
     );
@@ -265,12 +271,24 @@ const ShopNavigator = (props) => {
   if (token === null) {
     return (
       <NavigationContainer>
+        <StatusBar
+          barStyle="default"
+          hidden={false}
+          backgroundColor={Colors.primary}
+          translucent={true}
+        />
         <AuthNavigator />
       </NavigationContainer>
     );
   } else {
     return (
       <NavigationContainer>
+        <StatusBar
+          barStyle="default"
+          hidden={false}
+          backgroundColor={Colors.primary}
+          translucent={true}
+        />
         <DrawerNavigator />
       </NavigationContainer>
     );
