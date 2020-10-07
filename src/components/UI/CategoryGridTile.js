@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   TouchableOpacity,
   View,
@@ -16,6 +16,21 @@ const CategoryGridTile = (props) => {
   if (Platform.OS === 'android' && Platform.Version >= 21) {
     TouchableCmp = TouchableNativeFeedback;
   }
+
+  const [screenWidth, setScreenWidth] = useState(
+    Dimensions.get('window').width,
+  );
+  useEffect(() => {
+    const updateLayout = () => {
+      setScreenWidth(Dimensions.get('window').width);
+    };
+
+    Dimensions.addEventListener('change', updateLayout);
+    return () => {
+      Dimensions.removeEventListener('change', updateLayout);
+    };
+  });
+
   //console.log(props.image);
   return (
     <View style={{...styles.gridItem}}>
@@ -66,7 +81,7 @@ const styles = StyleSheet.create({
   title: {
     // fontFamily: 'Roboto',
     flex: 1,
-    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
+    fontSize: screenWidth > 400 ? 18 : 14,
     textAlign: 'right',
     fontWeight: 'bold',
   },

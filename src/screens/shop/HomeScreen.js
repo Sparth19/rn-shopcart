@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -18,6 +18,7 @@ const HomeScreen = (props) => {
     if (token == null) {
       dispatch(authActions.logout());
     }
+   
 
     navigation.setOptions({
       title: 'All Categories',
