@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Dimensions,
   SafeAreaView,
+  Button,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
@@ -126,17 +127,6 @@ const MyAccountScreen = (props) => {
           />
         </HeaderButtons>
       ),
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Save"
-            iconName={
-              Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
-            }
-            onPress={saveAccountHandler}
-          />
-        </HeaderButtons>
-      ),
     });
   }, [navigation, saveAccountHandler]);
 
@@ -202,6 +192,13 @@ const MyAccountScreen = (props) => {
               required
             />
           </View>
+          <View style={styles.button}>
+            <Button
+              title="Save Account"
+              color={Colors.accent}
+              onPress={saveAccountHandler}
+            />
+          </View>
         </SafeAreaView>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -227,6 +224,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    alignItems: 'center',
+    borderWidth: Platform.OS === 'ios' ? 1 : 0,
+    borderColor: Colors.accent,
+    padding: 10,
+    margin: 10,
   },
 });
 

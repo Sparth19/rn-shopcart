@@ -111,7 +111,7 @@ const PlaceOrderScreen = (props) => {
                   }),
                 );
               }}
-            />Ð
+            />
           </View>
         )}
       </SafeAreaView>

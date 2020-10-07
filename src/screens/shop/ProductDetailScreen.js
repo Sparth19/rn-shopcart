@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#DCDCDC',
   },
   actions: {
-    marginVertical: 10,
+    marginVertical: 20,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -100,7 +100,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
-    marginBottom: 10,
+    marginBottom: 20,
+    fontWeight: 'bold',
   },
   price: {
     fontSize: Dimensions.get('window').width > 400 ? 20 : 15,

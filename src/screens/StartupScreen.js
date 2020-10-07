@@ -8,6 +8,7 @@ import {cos} from 'react-native-reanimated';
 const StartupScreen = (props) => {
   console.log('Start Up Screen');
   const dispatch = useDispatch();
+
   useEffect(() => {
     const tryLogin = async () => {
       const storedUserData = await AsyncStorage.getItem('userData');

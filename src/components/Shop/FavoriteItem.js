@@ -65,18 +65,18 @@ const FavoriteItem = (props) => {
 const styles = StyleSheet.create({
   favItem: {
     height: 250,
-    width: '100%',
+    // width: '100%',
     backgroundColor: '#f5f5f5',
     borderRadius: 10,
     overflow: 'hidden',
-    marginVertical: 10,
+    margin: 10,
     borderColor: '#ccc',
     borderWidth: 1,
   },
   bgImage: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#DCDCDC',
+    //backgroundColor: '#DCDCDC',
     justifyContent: 'flex-end',
   },
   favRow: {

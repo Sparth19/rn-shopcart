@@ -3,12 +3,13 @@ import {
   View,
   StyleSheet,
   Alert,
-  Platform,
+  Button,
   ScrollView,
   Text,
   Dimensions,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
 } from 'react-native';
 
 import {Picker} from '@react-native-community/picker';
@@ -99,6 +100,12 @@ const EditProductScreen = (props) => {
       ]);
       return;
     }
+
+    if (category === '') {
+      Alert.alert('Invalid Input', 'Please select category', [{text: 'Okay'}]);
+      return;
+    }
+
     setError(null);
     setIsLoading(true);
     //console.log(category);
@@ -151,17 +158,17 @@ const EditProductScreen = (props) => {
   useEffect(() => {
     navigation.setOptions({
       title: productId ? 'Edit Product' : 'Add Product',
-      headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Save"
-            iconName={
-              Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
-            }
-            onPress={saveProductHandler}
-          />
-        </HeaderButtons>
-      ),
+      // headerRight: () => (
+      //   <HeaderButtons HeaderButtonComponent={HeaderButton}>
+      //     <Item
+      //       title="Save"
+      //       iconName={
+      //         Platform.OS === 'android' ? 'md-checkmark' : 'ios-checkmark'
+      //       }
+      //       onPress={saveProductHandler}
+      //     />
+      //   </HeaderButtons>
+      // ),
     });
   }, [navigation, saveProductHandler]);
 
@@ -250,6 +257,13 @@ const EditProductScreen = (props) => {
               <Picker.Item label="Toys & Baby" value="Toys & Baby" />
             </Picker>
           </View>
+          <View style={styles.button}>
+            <Button
+              title="Save Product"
+              color={Colors.accent}
+              onPress={saveProductHandler}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -286,6 +300,13 @@ const styles = StyleSheet.create({
   },
   item: {
     fontSize: 10,
+  },
+  button: {
+    alignItems: 'center',
+    borderWidth: Platform.OS === 'ios' ? 1 : 0,
+    borderColor: Colors.accent,
+    padding: 10,
+    margin: 10,
   },
 });
 export default EditProductScreen;

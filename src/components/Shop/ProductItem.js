@@ -10,6 +10,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import Colors from '../../constants/Colors';
 import Card from '../UI/Card';
 
 const ProductItem = (props) => {
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
   image: {
     height: '100%',
     width: '100%',
-    backgroundColor: '#DCDCDC',
+    //backgroundColor: '#DCDCDC',
   },
   detailsContainer: {
     width: '60%',
@@ -78,10 +79,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     marginBottom: 6,
+    // fontWeight: 'bold',
   },
   price: {
     fontSize: Dimensions.get('window').width > 400 ? 20 : 15,
     marginBottom: 6,
+    color: Colors.primary,
   },
   actions: {
     paddingHorizontal: Dimensions.get('window').width > 400 ? 15 : 5,

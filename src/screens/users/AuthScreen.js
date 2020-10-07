@@ -126,83 +126,81 @@ const AuthScreen = (props) => {
   );
 
   return (
-    <KeyboardAvoidingView
-      behavior="height"
-      keyboardVerticalOffset={50}
-      style={styles.screen}>
-      <SafeAreaView style={styles.gradient}>
-        <Card style={styles.authContainer}>
-          <ScrollView>
-            {isSignUp ? (
-              <Input
-                id="name"
-                label="Full Name"
-                autoCapitalize="none"
-                errorMessage="Please enter a valid name"
-                onInputChange={inputChangeHandler}
-                initialValue=""
-              />
-            ) : (
-              <View></View>
-            )}
+    // <KeyboardAvoidingView
+    //   behavior="height"
+    //   keyboardVerticalOffset={50}
+    //   style={styles.screen}>
+    <SafeAreaView style={styles.gradient}>
+      <Card style={styles.authContainer}>
+        <ScrollView>
+          {isSignUp ? (
             <Input
-              id="email"
-              label="E-Mail"
-              keyboardType="email-address"
-              required
-              email
+              id="name"
+              label="Full Name"
               autoCapitalize="none"
-              errorMessage="Please enter a valid email address."
+              errorMessage="Please enter a valid name"
               onInputChange={inputChangeHandler}
               initialValue=""
             />
-            <Input
-              id="password"
-              label="Password"
-              keyboardType="default"
-              secureTextEntry
-              required
-              minLength={6}
-              autoCapitalize="none"
-              errorMessage="Please enter a valid password."
-              onInputChange={inputChangeHandler}
-              initialValue=""
-            />
-            {!isSignUp ? (
-              <Text
-                style={styles.forgetPass}
-                onPress={() =>
-                  props.navigation.navigate('ForgetPasswordScreen')
-                }>
-                Forget Password?
-              </Text>
+          ) : (
+            <View></View>
+          )}
+          <Input
+            id="email"
+            label="E-Mail"
+            keyboardType="email-address"
+            required
+            email
+            autoCapitalize="none"
+            errorMessage="Please enter a valid email address."
+            onInputChange={inputChangeHandler}
+            initialValue=""
+          />
+          <Input
+            id="password"
+            label="Password"
+            keyboardType="default"
+            secureTextEntry
+            required
+            minLength={6}
+            autoCapitalize="none"
+            errorMessage="Please enter a valid password."
+            onInputChange={inputChangeHandler}
+            initialValue=""
+          />
+          {!isSignUp ? (
+            <Text
+              style={styles.forgetPass}
+              onPress={() => props.navigation.navigate('ForgetPasswordScreen')}>
+              Forget Password?
+            </Text>
+          ) : (
+            <View></View>
+          )}
+          <View style={styles.buttonContainer}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color={Colors.primary} />
             ) : (
-              <View></View>
-            )}
-            <View style={styles.buttonContainer}>
-              {isLoading ? (
-                <ActivityIndicator size="small" color={Colors.primary} />
-              ) : (
-                <Button
-                  title={isSignUp ? 'Sign Up' : 'Login'}
-                  color={Colors.primary}
-                  onPress={authHandler}
-                />
-              )}
-            </View>
-            <View style={styles.buttonContainer}>
               <Button
-                title={`Switch to ${isSignUp ? 'Login' : 'SignUp'}`}
+                title={isSignUp ? 'Sign Up' : 'Login'}
                 color={Colors.primary}
-                onPress={() => {
-                  setIsSignUp((prev) => !prev);
-                }}
+                onPress={authHandler}
               />
-            </View>
-          </ScrollView>
-        </Card>
-      </SafeAreaView>
-    </KeyboardAvoidingView>
+            )}
+          </View>
+          <View style={styles.buttonContainer}>
+            <Button
+              title={`Switch to ${isSignUp ? 'Login' : 'SignUp'}`}
+              color={Colors.primary}
+              onPress={() => {
+                setIsSignUp((prev) => !prev);
+              }}
+            />
+          </View>
+        </ScrollView>
+      </Card>
+    </SafeAreaView>
+    // </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({
