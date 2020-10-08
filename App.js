@@ -2,7 +2,8 @@ import 'react-native-gesture-handler';
 import {StatusBar} from 'react-native';
 import React from 'react';
 import {createStore, compose, combineReducers, applyMiddleware} from 'redux';
-import {Provider} from 'react-redux';
+import {Provider as PaperProvider} from 'react-native-paper';
+import {Provider as StoreProvider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 
 import ShopNavigator from './src/navigation/ShopNavigator';
@@ -33,9 +34,11 @@ const store = createStore(
 
 const App = () => {
   return (
-    <Provider store={store}>
-      <ShopNavigator />
-    </Provider>
+    <StoreProvider store={store}>
+      <PaperProvider>
+        <ShopNavigator />
+      </PaperProvider>
+    </StoreProvider>
   );
 };
 

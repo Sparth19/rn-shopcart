@@ -27,6 +27,7 @@ import UserProductsScreen from '../screens/users/UserProductsScreen';
 import EditProductsScreen from '../screens/users/EditProductsScreen';
 import MyAccountScreen from '../screens/users/MyAccountScreen';
 import ForgetPasswordScreen from '../screens/users/ForgetPasswordScreen';
+import SearchScreen from '../screens/shop/SearchScreen';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -87,7 +88,9 @@ const HomeNavigator = () => {
         name="ProductDetailScreen"
         component={ProductDetailScreen}
       />
+      <Stack.Screen name="SearchScreen" component={SearchScreen} />
       <Stack.Screen name="CartScreen" component={CartScreen} />
+
       <Stack.Screen name="PlaceOrderScreen" component={PlaceOrderScreen} />
     </Stack.Navigator>
   );
