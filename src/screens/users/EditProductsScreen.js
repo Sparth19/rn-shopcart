@@ -1,4 +1,4 @@
-import React, {useReducer, useCallback, useEffect, useState} from 'react';
+import React, { useReducer, useCallback, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,9 +12,9 @@ import {
   Platform,
 } from 'react-native';
 
-import {Picker} from '@react-native-community/picker';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {useSelector, useDispatch} from 'react-redux';
+import { Picker } from '@react-native-community/picker';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { useSelector, useDispatch } from 'react-redux';
 
 import * as productActions from '../../store/actions/products';
 import Input from '../../components/UI/Input';
@@ -54,7 +54,7 @@ const EditProductScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const {productId} = props.route.params;
+  const { productId } = props.route.params;
   //console.log('product id : ' + productId);
   const selectedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId),
@@ -66,13 +66,15 @@ const EditProductScreen = (props) => {
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputValues: {
       title: selectedProduct ? selectedProduct.title : '',
+      short_title: selectedProduct ? selectedProduct.short_title : '',
       imageUrl: selectedProduct ? selectedProduct.imageUrl : '',
       description: selectedProduct ? selectedProduct.description : '',
-      price: '',
+      price: selectedProduct ? selectedProduct.price : '',
     },
 
     inputValidities: {
       title: selectedProduct ? true : false,
+      short_title: selectedProduct ? true : false,
       imageUrl: selectedProduct ? true : false,
       description: selectedProduct ? true : false,
       price: selectedProduct ? true : false,
@@ -84,7 +86,7 @@ const EditProductScreen = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Error Occurred', error, [{text: 'Okay'}]);
+      Alert.alert('Error Occurred', error, [{ text: 'Okay' }]);
     }
   }, [error]);
 
@@ -96,13 +98,13 @@ const EditProductScreen = (props) => {
     // console.log(formState);
     if (!formState.formIsValid) {
       Alert.alert('Invalid Input', 'Please enter valid input', [
-        {text: 'Okay'},
+        { text: 'Okay' },
       ]);
       return;
     }
 
     if (category === '') {
-      Alert.alert('Invalid Input', 'Please select category', [{text: 'Okay'}]);
+      Alert.alert('Invalid Input', 'Please select category', [{ text: 'Okay' }]);
       return;
     }
 
@@ -116,7 +118,9 @@ const EditProductScreen = (props) => {
           productActions.updateProduct(
             productId,
             formState.inputValues.title,
+            formState.inputValues.short_title,
             formState.inputValues.imageUrl,
+            formState.inputValues.price,
             formState.inputValues.description,
             category,
           ),
@@ -126,6 +130,7 @@ const EditProductScreen = (props) => {
         await dispatch(
           productActions.createProduct(
             formState.inputValues.title,
+            formState.inputValues.short_title,
             formState.inputValues.imageUrl,
             +formState.inputValues.price,
             formState.inputValues.description,
@@ -153,7 +158,7 @@ const EditProductScreen = (props) => {
     },
     [dispatchFormState],
   );
-  const {navigation} = props;
+  const { navigation } = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -202,6 +207,19 @@ const EditProductScreen = (props) => {
             required
           />
           <Input
+            id="short_title"
+            label="Short Title"
+            errorMessage="Please enter valid mini title"
+            keyboardType="default"
+            autoCapitalize="sentences"
+            autoCorrect
+            returnKeyType="next"
+            onInputChange={inputChangeHandler}
+            initialValue={selectedProduct ? selectedProduct.short_title : ''}
+            initiallyValid={!!selectedProduct}
+            required
+          />
+          <Input
             id="imageUrl"
             label="Image url"
             errorMessage="Please enter valid image url"
@@ -212,17 +230,17 @@ const EditProductScreen = (props) => {
             initiallyValid={!!selectedProduct}
             required
           />
-          {selectedProduct ? null : (
-            <Input
-              id="price"
-              label="Price"
-              errorMessage="Please enter valid price"
-              keyboardType="decimal-pad"
-              returnKeyType="next"
-              onInputChange={inputChangeHandler}
-              required
-            />
-          )}
+          <Input
+            id="price"
+            label="Price"
+            errorMessage="Please enter valid price"
+            keyboardType="decimal-pad"
+            returnKeyType="next"
+            onInputChange={inputChangeHandler}
+            initialValue={selectedProduct ? selectedProduct.price : ''}
+            initiallyValid={!!selectedProduct}
+            required
+          />
           <Input
             id="description"
             label="Description"
