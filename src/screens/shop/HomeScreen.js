@@ -1,11 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, Dimensions, SafeAreaView} from 'react-native';
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Dimensions,
+  SafeAreaView,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Searchbar, List} from 'react-native-paper';
 
 import HeaderButton from '../../components/UI/HeaderButton';
-import CategoryGridTile from '../../components/UI/CategoryGridTile';
+import CategoryGridTiles from '../../components/UI/CategoryGridTile';
 import * as authActions from '../../store/actions/auth';
 
 const HomeScreen = (props) => {
@@ -35,6 +42,13 @@ const HomeScreen = (props) => {
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
+            title="search"
+            iconName={Platform.OS === 'android' ? 'md-search' : 'ios-search'}
+            onPress={() => {
+              props.navigation.navigate('SearchScreen');
+            }}
+          />
+          <Item
             title="cart"
             iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
             onPress={() => {
@@ -48,10 +62,12 @@ const HomeScreen = (props) => {
 
   return (
     <SafeAreaView>
+      {/* main category */}
       <FlatList
         data={categories}
+        numColumns={2}
         renderItem={(itemData) => (
-          <CategoryGridTile
+          <CategoryGridTiles
             title={itemData.item.title}
             color={itemData.item.color}
             image={itemData.item.image}
@@ -62,12 +78,9 @@ const HomeScreen = (props) => {
             }}
           />
         )}
-        numColumns={2}
       />
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default HomeScreen;

@@ -51,6 +51,7 @@ export const fetchProduct = (category) => {
               resData[key].price,
               resData[key].category,
               resData[key].owner,
+              resData[key].short_title,
             ),
           );
         }
@@ -100,6 +101,7 @@ export const fetchAllProduct = () => {
             resData[key].price,
             resData[key].category,
             resData[key].owner,
+            resData[key].short_title,
           ),
         );
       }
@@ -147,6 +149,7 @@ export const fetchUserProduct = () => {
             resData[key].price,
             resData[key].category,
             resData[key].owner,
+            resData[key].short_title,
           ),
         );
       }

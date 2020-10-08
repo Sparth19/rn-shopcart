@@ -11,6 +11,7 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
+import {Snackbar} from 'react-native-paper';
 
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
@@ -27,6 +28,8 @@ import Colors from '../../constants/Colors';
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
   const [filled, setFilled] = useState();
+  //for snackbar
+  const [visible, setVisible] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -65,6 +68,8 @@ const HomeScreen = (props) => {
   const loadProducts = useCallback(async () => {
     setError(null);
     setIsLoading(true);
+    setVisible(false);
+
     try {
       await dispatch(favoritesActions.fetchFavorites());
       await dispatch(productsActions.fetchProduct(category));
@@ -121,7 +126,7 @@ const HomeScreen = (props) => {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <FlatList
         onRefresh={loadProducts}
         refreshing={isRefreshing}
@@ -159,11 +164,26 @@ const HomeScreen = (props) => {
               title="Add To Cart"
               onPress={() => {
                 dispatch(cartActions.addToCart(itemData.item));
+                setVisible(true);
               }}
             />
           </ProductItem>
         )}
       />
+      <Snackbar
+        style={styles.snackbar}
+        visible={visible}
+        onDismiss={() => {
+          setVisible(false);
+        }}
+        action={{
+          label: 'Okay',
+          onPress: () => {
+            setVisible(false);
+          },
+        }}>
+        Added to cart.
+      </Snackbar>
     </SafeAreaView>
   );
 };
@@ -177,6 +197,10 @@ const styles = StyleSheet.create({
   icon: {
     fontSize: 30,
     margin: 8,
+  },
+  snackbar: {
+    justifyContent: 'flex-end',
+    marginBottom: 20,
   },
 });
 
