@@ -1,9 +1,8 @@
-import React, { useReducer, useCallback, useEffect, useState } from 'react';
+import React, {useReducer, useCallback, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
   Alert,
-  Button,
   ScrollView,
   Text,
   Dimensions,
@@ -12,14 +11,13 @@ import {
   Platform,
 } from 'react-native';
 
-import { Picker } from '@react-native-community/picker';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector, useDispatch } from 'react-redux';
+import {Picker} from '@react-native-community/picker';
+import {useSelector, useDispatch} from 'react-redux';
+import {Button} from 'react-native-paper';
 
 import * as productActions from '../../store/actions/products';
 import Input from '../../components/UI/Input';
 import Colors from '../../constants/Colors';
-import HeaderButton from '../../components/UI/HeaderButton';
 
 const FORM_UPDATE_REDUCER = 'FORM_UPDATE_REDUCER';
 
@@ -54,7 +52,7 @@ const EditProductScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
-  const { productId } = props.route.params;
+  const {productId} = props.route.params;
   //console.log('product id : ' + productId);
   const selectedProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === productId),
@@ -86,7 +84,7 @@ const EditProductScreen = (props) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Error Occurred', error, [{ text: 'Okay' }]);
+      Alert.alert('Error Occurred', error, [{text: 'Okay'}]);
     }
   }, [error]);
 
@@ -98,13 +96,13 @@ const EditProductScreen = (props) => {
     // console.log(formState);
     if (!formState.formIsValid) {
       Alert.alert('Invalid Input', 'Please enter valid input', [
-        { text: 'Okay' },
+        {text: 'Okay'},
       ]);
       return;
     }
 
     if (category === '') {
-      Alert.alert('Invalid Input', 'Please select category', [{ text: 'Okay' }]);
+      Alert.alert('Invalid Input', 'Please select category', [{text: 'Okay'}]);
       return;
     }
 
@@ -114,15 +112,22 @@ const EditProductScreen = (props) => {
     try {
       if (selectedProduct) {
         //edited product
+        // productId,
+        // title,
+        //   image,
+        //   description,
+        //   category,
+        //   price,
+        //   short_title,
         await dispatch(
           productActions.updateProduct(
             productId,
             formState.inputValues.title,
-            formState.inputValues.short_title,
             formState.inputValues.imageUrl,
-            formState.inputValues.price,
             formState.inputValues.description,
             category,
+            formState.inputValues.price,
+            formState.inputValues.short_title,
           ),
         );
       } else {
@@ -130,11 +135,11 @@ const EditProductScreen = (props) => {
         await dispatch(
           productActions.createProduct(
             formState.inputValues.title,
-            formState.inputValues.short_title,
             formState.inputValues.imageUrl,
-            +formState.inputValues.price,
             formState.inputValues.description,
             category,
+            +formState.inputValues.price,
+            formState.inputValues.short_title,
           ),
         );
       }
@@ -158,7 +163,7 @@ const EditProductScreen = (props) => {
     },
     [dispatchFormState],
   );
-  const { navigation } = props;
+  const {navigation} = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -237,7 +242,9 @@ const EditProductScreen = (props) => {
             keyboardType="decimal-pad"
             returnKeyType="next"
             onInputChange={inputChangeHandler}
-            initialValue={selectedProduct ? selectedProduct.price : ''}
+            initialValue={
+              selectedProduct ? selectedProduct.price.toString() : ''
+            }
             initiallyValid={!!selectedProduct}
             required
           />
@@ -277,10 +284,12 @@ const EditProductScreen = (props) => {
           </View>
           <View style={styles.button}>
             <Button
-              title="Save Product"
               color={Colors.accent}
-              onPress={saveProductHandler}
-            />
+              uppercase={false}
+              mode="contained"
+              onPress={saveProductHandler}>
+              Save Product
+            </Button>
           </View>
         </View>
       </ScrollView>
@@ -320,9 +329,9 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   button: {
-    alignItems: 'center',
-    borderWidth: Platform.OS === 'ios' ? 1 : 0,
-    borderColor: Colors.accent,
+    // alignItems: 'center',
+    // borderWidth: Platform.OS === 'ios' ? 1 : 0,
+    // borderColor: Colors.accent,
     padding: 10,
     margin: 10,
   },

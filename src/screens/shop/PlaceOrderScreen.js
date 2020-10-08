@@ -2,7 +2,6 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   ActivityIndicator,
   Dimensions,
@@ -12,6 +11,7 @@ import {
 import {ScrollView} from 'react-native-gesture-handler';
 import {CommonActions} from '@react-navigation/native';
 import {useSelector, useDispatch} from 'react-redux';
+import {Button} from 'react-native-paper';
 
 import Colors from '../../constants/Colors';
 import * as ordersActions from '../../store/actions/orders';
@@ -76,24 +76,30 @@ const PlaceOrderScreen = (props) => {
               <Text style={styles.text}>{userData.userAddress}</Text>
             </View>
             <View style={styles.changeAddress}>
-              <Text>Change Address ? </Text>
+              <Text style={styles.extra}>Change Address ? </Text>
+
               <Button
-                title="Go to My Account"
+                color={Colors.accent}
+                uppercase={false}
+                mode="outlined"
                 onPress={() => {
                   navigation.dispatch(
                     CommonActions.navigate({
                       name: 'MyAccountNavigator',
                     }),
                   );
-                }}
-              />
+                }}>
+                Go to My Account
+              </Button>
             </View>
             <View style={styles.addOrderContainer}>
               <Button
-                title="Place Order"
-                color={Colors.primary}
-                onPress={placeOrderHandler}
-              />
+                color={'green'}
+                uppercase={false}
+                mode="contained"
+                onPress={placeOrderHandler}>
+                Place Order
+              </Button>
             </View>
           </View>
         ) : (
@@ -161,11 +167,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   addOrderContainer: {
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: Colors.primary,
+    // alignItems: 'center',
+    // borderWidth: 1,
+    // borderColor: Colors.primary,
     padding: 10,
     margin: 10,
+  },
+  extra: {
+    fontSize: Dimensions.get('window').width > 400 ? 15 : 13,
   },
 });
 

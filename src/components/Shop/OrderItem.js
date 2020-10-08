@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {View, Text, Button, StyleSheet, Dimensions} from 'react-native';
+import {View, Text, StyleSheet, Dimensions} from 'react-native';
 
 import CartItem from './CartItem';
 import Colors from '../../constants/Colors';
 import Card from '../UI/Card';
+import {Button} from 'react-native-paper';
 
 const OrderItem = (props) => {
   const [showDetail, setShowDetail] = useState(false);
@@ -13,7 +14,8 @@ const OrderItem = (props) => {
       <View style={styles.summary}>
         <Text
           numberOfLines={1}
-          ellipsizeMode={'tail'}Ð
+          ellipsizeMode={'tail'}
+          Ð
           style={styles.totalAmount}>
           Total : ₹{props.amount.toFixed(2)}
         </Text>
@@ -21,13 +23,17 @@ const OrderItem = (props) => {
           <Text style={styles.date}>{props.date}</Text>
         </View>
       </View>
+
       <Button
         color={Colors.accent}
-        title={showDetail ? 'Hide Details' : 'Show Details'}
+        uppercase={false}
+        mode="contained"
         onPress={() => {
           setShowDetail((prevState) => !prevState);
-        }}
-      />
+        }}>
+        {showDetail ? 'Hide Details' : 'Show Details'}
+      </Button>
+
       {showDetail && (
         <View style={styles.detailItems}>
           {props.items.map((cartItem) => (

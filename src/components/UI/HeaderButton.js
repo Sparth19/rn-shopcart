@@ -8,7 +8,7 @@ const CustomHeaderButton = (props) => {
   return (
     <HeaderButton
       {...props}
-      iconSize={30}
+      iconSize={25}
       IconComponent={Icon}
       color={Platform.OS === 'android' ? 'white' : Colors.primary}
     />

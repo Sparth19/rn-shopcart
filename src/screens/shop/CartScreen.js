@@ -4,16 +4,14 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Button,
   ActivityIndicator,
   Alert,
   Dimensions,
   SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Button} from 'react-native-paper';
 
-import HeaderButton from '../../components/UI/HeaderButton';
 import Colors from '../../constants/Colors';
 import CartItem from '../../components/Shop/CartItem';
 import Card from '../../components/UI/Card';
@@ -79,9 +77,12 @@ const CartScreen = (props) => {
           <Button
             color={Colors.accent}
             title="Buy Now"
+            uppercase={false}
+            mode="contained"
             disabled={cartItems.length === 0}
-            onPress={buyNowHandler}
-          />
+            onPress={buyNowHandler}>
+            Buy Now
+          </Button>
         )}
       </Card>
       <FlatList

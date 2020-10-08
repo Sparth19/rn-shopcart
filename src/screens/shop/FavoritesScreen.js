@@ -5,10 +5,11 @@ import {
   Text,
   Platform,
   ActivityIndicator,
-  SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Button, Badge} from 'react-native-paper';
+
 import * as favoritesActions from '../../store/actions/favorites';
 import * as productActions from '../../store/actions/products';
 import Colors from '../../constants/Colors';
@@ -20,6 +21,9 @@ const FavoritesScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const dispatch = useDispatch();
+
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartLength = Object.keys(cartItems).length;
 
   const allProducts = useSelector(
     (state) => state.products.availableAllProducts,
@@ -96,6 +100,15 @@ const FavoritesScreen = (props) => {
               props.navigation.navigate('CartScreen');
             }}
           />
+          <Badge
+            style={{
+              backgroundColor: Colors.accent,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}
+            size={20}>
+            {cartLength}
+          </Badge>
         </HeaderButtons>
       ),
     });

@@ -5,12 +5,12 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  Button,
   Alert,
   SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Button} from 'react-native-paper';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
@@ -154,16 +154,20 @@ const UserProductsScreen = (props) => {
             <View style={styles.button}>
               <Button
                 color={Colors.accent}
-                title="Edit Product"
-                onPress={editProductHandler.bind(this, itemData.item.id)}
-              />
+                uppercase={false}
+                mode="contained"
+                onPress={editProductHandler.bind(this, itemData.item.id)}>
+                Edit Product
+              </Button>
             </View>
-
             <Button
-              color={Colors.accent}
-              title="Delete Product"
-              onPress={deleteProductHandler.bind(this, itemData.item.id)}
-            />
+              icon={'delete'}
+              color={'red'}
+              uppercase={false}
+              mode="outlined"
+              onPress={deleteProductHandler.bind(this, itemData.item.id)}>
+              Delete Product
+            </Button>
           </ProductItem>
         )}
       />

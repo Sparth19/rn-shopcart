@@ -4,14 +4,13 @@ import {
   View,
   Text,
   Image,
-  Button,
   StyleSheet,
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-
+import {Button} from 'react-native-paper';
 import * as favoritesActions from '../../store/actions/favorites';
 import Colors from '../../constants/Colors';
 import * as cartActions from '../../store/actions/cart';
@@ -62,13 +61,17 @@ const PlaceDetailScreen = (props) => {
                 name={filled === 'true' ? 'ios-heart' : 'ios-heart-outline'}
               />
             </TouchableOpacity>
+
             <Button
-              color={Colors.primary}
-              title="Add to Cart"
+              icon="plus"
+              color={Colors.accent}
+              uppercase={false}
+              mode="outlined"
               onPress={() => {
                 dispatch(cartActions.addToCart(selectedProduct));
-              }}
-            />
+              }}>
+              Add to cart
+            </Button>
           </View>
 
           <Text style={styles.text}>

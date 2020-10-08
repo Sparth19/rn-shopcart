@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
-import {Searchbar, List} from 'react-native-paper';
+import {List} from 'react-native-paper';
 
 import Colors from '../../constants/Colors';
 import * as productActions from '../../store/actions/products';

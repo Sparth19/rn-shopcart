@@ -5,17 +5,14 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
-  Button,
   TouchableOpacity,
   TouchableNativeFeedback,
   Platform,
   SafeAreaView,
 } from 'react-native';
-import {Snackbar} from 'react-native-paper';
-
+import {Snackbar, Badge, Button} from 'react-native-paper';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import Icon from 'react-native-vector-icons/Ionicons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
@@ -27,7 +24,6 @@ import Colors from '../../constants/Colors';
 
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
-  const [filled, setFilled] = useState();
   //for snackbar
   const [visible, setVisible] = useState(false);
 
@@ -37,6 +33,11 @@ const HomeScreen = (props) => {
 
   const {category} = props.route.params;
   const selectedCategory = CATEGORIES.find((cat) => cat.title === category);
+
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartLength = Object.keys(cartItems).length;
+  // console.log(cartLength);
+
   const {navigation} = props;
 
   useEffect(() => {
@@ -51,10 +52,19 @@ const HomeScreen = (props) => {
               props.navigation.navigate('CartScreen');
             }}
           />
+          <Badge
+            style={{
+              backgroundColor: Colors.accent,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}
+            size={20}>
+            {cartLength}
+          </Badge>
         </HeaderButtons>
       ),
     });
-  }, [navigation]);
+  }, [navigation, cartLength]);
 
   let Touchable = TouchableOpacity;
 
@@ -159,14 +169,18 @@ const HomeScreen = (props) => {
                 name={filled === 'true' ? 'ios-heart' : 'ios-heart-outline'}
               />
             </Touchable> */}
+
             <Button
+              icon="plus"
               color={Colors.accent}
-              title="Add To Cart"
+              uppercase={false}
+              mode="contained"
               onPress={() => {
                 dispatch(cartActions.addToCart(itemData.item));
                 setVisible(true);
-              }}
-            />
+              }}>
+              Add to cart
+            </Button>
           </ProductItem>
         )}
       />

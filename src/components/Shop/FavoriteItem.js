@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View,
   Text,
-  Button,
   StyleSheet,
   TouchableOpacity,
   TouchableNativeFeedback,
@@ -12,6 +11,7 @@ import {
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Button} from 'react-native-paper';
 
 const FavoriteItem = (props) => {
   let Touchable = TouchableOpacity;
@@ -50,11 +50,15 @@ const FavoriteItem = (props) => {
                 />
               </Touchable>
             </View>
+
             <Button
+              icon={'plus'}
               color={Colors.accent}
-              title="Add to Cart"
-              onPress={props.onAdd}
-            />
+              uppercase={false}
+              mode="contained"
+              onPress={props.onAdd}>
+              Add to Cart
+            </Button>
           </View>
         </View>
       </TouchableOpacity>

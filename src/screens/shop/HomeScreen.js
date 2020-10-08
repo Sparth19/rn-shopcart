@@ -9,25 +9,31 @@ import {
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {Searchbar, List} from 'react-native-paper';
+import {Badge} from 'react-native-paper';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
 import * as authActions from '../../store/actions/auth';
+import {color} from 'react-native-reanimated';
+import Colors from '../../constants/Colors';
 
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
   const {navigation} = props;
   const token = useSelector((state) => state.auth.token);
+  const cartItems = useSelector((state) => state.cart.items);
+  const cartLength = Object.keys(cartItems).length;
+
+  //console.log(cartLength);
 
   useEffect(() => {
     if (token === null) {
       dispatch(authActions.logout());
     }
-
     navigation.setOptions({
       title: 'All Categories',
+
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
@@ -43,7 +49,12 @@ const HomeScreen = (props) => {
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
           <Item
             title="search"
-            iconName={Platform.OS === 'android' ? 'md-search' : 'ios-search'}
+            iconSize={20}
+            iconName={
+              Platform.OS === 'android'
+                ? 'md-search-outline'
+                : 'ios-search-outline'
+            }
             onPress={() => {
               props.navigation.navigate('SearchScreen');
             }}
@@ -55,10 +66,19 @@ const HomeScreen = (props) => {
               props.navigation.navigate('CartScreen');
             }}
           />
+          <Badge
+            style={{
+              backgroundColor: Colors.accent,
+              fontSize: 14,
+              fontWeight: 'bold',
+            }}
+            size={20}>
+            {cartLength}
+          </Badge>
         </HeaderButtons>
       ),
     });
-  }, [navigation, token]);
+  }, [navigation, token, cartLength]);
 
   return (
     <SafeAreaView>

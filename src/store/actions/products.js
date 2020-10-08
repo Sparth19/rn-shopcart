@@ -7,11 +7,11 @@ import Product from '../../models/Product';
 export const FETCH_USER_PRODUCT = 'FETCH_USER_PRODUCT';
 
 export const toggleFavorite = (id) => {
-  return { type: TOGGLE_FAVORITE, productId: id };
+  return {type: TOGGLE_FAVORITE, productId: id};
 };
 
 export const toggleFavoriteIcon = (value) => {
-  return { type: TOGGLE_FAVORITE_ICON, value: value };
+  return {type: TOGGLE_FAVORITE_ICON, value: value};
 };
 
 //fetch all products by category
@@ -165,7 +165,14 @@ export const fetchUserProduct = () => {
 
 //crete new product from edit(new) products screen
 
-export const createProduct = (title, image, price, description, category) => {
+export const createProduct = (
+  title,
+  image,
+  description,
+  category,
+  price,
+  short_title,
+) => {
   return async (dispatch, getState) => {
     try {
       const token = getState().auth.token;
@@ -183,7 +190,7 @@ export const createProduct = (title, image, price, description, category) => {
             description: description,
             price: price,
             category: category,
-            short_title: short_title
+            short_title: short_title,
           }),
         },
       );
@@ -210,6 +217,8 @@ export const updateProduct = (
   image,
   description,
   category,
+  price,
+  short_title,
 ) => {
   return async (dispatch, getState) => {
     //console.log(title);
@@ -229,7 +238,7 @@ export const updateProduct = (
             description: description,
             category: category,
             price: price,
-            short_title: short_title
+            short_title: short_title,
           }),
         },
       );

@@ -10,10 +10,10 @@ import {
   ActivityIndicator,
   Dimensions,
   SafeAreaView,
-  Button,
 } from 'react-native';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {useSelector, useDispatch} from 'react-redux';
+import {Button} from 'react-native-paper';
 
 import Colors from '../../constants/Colors';
 import Input from '../../components/UI/Input';
@@ -194,10 +194,12 @@ const MyAccountScreen = (props) => {
           </View>
           <View style={styles.button}>
             <Button
-              title="Save Account"
               color={Colors.accent}
-              onPress={saveAccountHandler}
-            />
+              uppercase={false}
+              mode="contained"
+              onPress={saveAccountHandler}>
+              Save Account
+            </Button>
           </View>
         </SafeAreaView>
       </ScrollView>
@@ -226,9 +228,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    alignItems: 'center',
-    borderWidth: Platform.OS === 'ios' ? 1 : 0,
-    borderColor: Colors.accent,
+    // alignItems: 'center',
+    // borderWidth: Platform.OS === 'ios' ? 1 : 0,
+    // borderColor: Colors.accent,
     padding: 10,
     margin: 10,
   },
