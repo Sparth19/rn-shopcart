@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     marginBottom: 20,
     fontWeight: 'bold',
+    lineHeight: 25,
   },
   price: {
     fontSize: Dimensions.get('window').width > 400 ? 20 : 15,
@@ -118,6 +119,7 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
+    lineHeight: 25,
   },
 });
 
