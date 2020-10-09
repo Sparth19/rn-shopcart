@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,9 +10,10 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
-import {Snackbar, Badge, Button} from 'react-native-paper';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { Snackbar, Button } from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Icon } from 'react-native-elements';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
@@ -21,6 +22,7 @@ import * as cartActions from '../../store/actions/cart';
 import * as favoritesActions from '../../store/actions/favorites';
 import CATEGORIES from '../../data/category-data';
 import Colors from '../../constants/Colors';
+import withBadge from '../../components/UI/Badge';
 
 const HomeScreen = (props) => {
   const dispatch = useDispatch();
@@ -31,40 +33,35 @@ const HomeScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
-  const {category} = props.route.params;
+  const { category } = props.route.params;
   const selectedCategory = CATEGORIES.find((cat) => cat.title === category);
 
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
   // console.log(cartLength);
 
-  const {navigation} = props;
+  const { navigation } = props;
 
   useEffect(() => {
+    const BadgedIcon = withBadge(cartLength)(Icon);
     navigation.setOptions({
       title: selectedCategory.title,
       headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="cart"
-            iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-            onPress={() => {
-              props.navigation.navigate('CartScreen');
-            }}
-          />
-          <Badge
-            style={{
-              backgroundColor: Platform.OS === 'ios' ? 'white' : Colors.primary,
-              fontSize: 15,
-              fontWeight: 'bold',
-              borderColor: Platform.OS === 'android' ? 'white' : Colors.primary,
-              borderWidth: 1,
-              color: Platform.OS === 'android' ? 'white' : Colors.primary,
-            }}
-            size={20}>
-            {cartLength}
-          </Badge>
-        </HeaderButtons>
+        <React.Fragment>
+          <Touchable onPress={() => {
+            props.navigation.navigate('CartScreen');
+          }}>
+            <BadgedIcon
+              name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+              type='ionicon'
+              size={25}
+              color={Platform.OS === 'android' ? 'white' : Colors.primary}
+              containerStyle={{
+                paddingRight: 18
+              }}
+            />
+          </Touchable>
+        </React.Fragment>
       ),
     });
   }, [navigation, cartLength]);
@@ -139,7 +136,7 @@ const HomeScreen = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         onRefresh={loadProducts}
         refreshing={isRefreshing}

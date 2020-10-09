@@ -1,14 +1,15 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   StyleSheet,
   Text,
   Platform,
   ActivityIndicator,
+  TouchableOpacity
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {Button, Badge} from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Icon } from 'react-native-elements';
 
 import * as favoritesActions from '../../store/actions/favorites';
 import * as productActions from '../../store/actions/products';
@@ -16,6 +17,7 @@ import Colors from '../../constants/Colors';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import FavoriteList from '../../components/Shop/FavoriteList';
+import withBadge from '../../components/UI/Badge';
 
 const FavoritesScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -75,9 +77,10 @@ const FavoritesScreen = (props) => {
     });
   };
 
-  const {navigation} = props;
+  const { navigation } = props;
 
   useEffect(() => {
+    const BadgedIcon = withBadge(cartLength)(Icon);
     navigation.setOptions({
       title: 'Your Favorites',
       headerLeft: () => (
@@ -92,28 +95,22 @@ const FavoritesScreen = (props) => {
         </HeaderButtons>
       ),
       headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="cart"
-            iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-            onPress={() => {
-              props.navigation.navigate('CartScreen');
-            }}
-          />
-          <Badge
-            style={{
-              backgroundColor: Platform.OS === 'ios' ? 'white' : Colors.primary,
-              fontSize: 15,
-              fontWeight: 'bold',
-              borderColor: Platform.OS === 'android' ? 'white' : Colors.primary,
-              borderWidth: 1,
-              color: Platform.OS === 'android' ? 'white' : Colors.primary,
-            }}
-            size={20}>
-            {cartLength}
-          </Badge>
-        </HeaderButtons>
-      ),
+        <React.Fragment>
+          <TouchableOpacity onPress={() => {
+            props.navigation.navigate('CartScreen');
+          }}>
+            <BadgedIcon
+              name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+              type='ionicon'
+              size={25}
+              color={Platform.OS === 'android' ? 'white' : Colors.primary}
+              containerStyle={{
+                paddingRight: 18
+              }}
+            />
+          </TouchableOpacity>
+        </React.Fragment>
+      )
     });
   }, [navigation, cartLength]);
 
