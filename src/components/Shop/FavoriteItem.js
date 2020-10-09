@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Colors from '../../constants/Colors';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {Button} from 'react-native-paper';
+import { Button } from 'react-native-paper';
 
 const FavoriteItem = (props) => {
   let Touchable = TouchableOpacity;
@@ -23,9 +23,9 @@ const FavoriteItem = (props) => {
     <View style={styles.favItem}>
       <TouchableOpacity onPress={props.onSelect}>
         <View>
-          <View style={{...styles.favRow, ...styles.FavHeader}}>
+          <View style={{ ...styles.favRow, ...styles.FavHeader }}>
             <ImageBackground
-              source={{uri: props.image}}
+              source={{ uri: props.image }}
               resizeMode={'contain'}
               style={styles.bgImage}>
               <View style={styles.titleContainer}>
@@ -38,8 +38,10 @@ const FavoriteItem = (props) => {
               </View>
             </ImageBackground>
           </View>
-          <View style={{...styles.favRow, ...styles.favDetail}}>
-            <Text style={styles.price}>Price : ₹ {props.price}</Text>
+          <View style={{ ...styles.favRow, ...styles.favDetail }}>
+            <Text style={styles.text}>
+              Price : <Text style={styles.price}>₹{props.price}</Text>
+            </Text>
             <View>
               <Touchable onPress={props.onSelectFavorite}>
                 {/* change icon here */}
@@ -91,7 +93,11 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: Dimensions.get('window').width > 400 ? 18 : 12,
-    color: 'black',
+    color: Colors.primary,
+  },
+  text: {
+    fontWeight: 'bold',
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 12,
   },
   favDetail: {
     paddingHorizontal: Dimensions.get('window').width > 400 ? 20 : 12,

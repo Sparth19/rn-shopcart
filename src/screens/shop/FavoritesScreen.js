@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,9 +6,9 @@ import {
   Platform,
   ActivityIndicator,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {Button, Badge} from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Button, Badge } from 'react-native-paper';
 
 import * as favoritesActions from '../../store/actions/favorites';
 import * as productActions from '../../store/actions/products';
@@ -75,7 +75,7 @@ const FavoritesScreen = (props) => {
     });
   };
 
-  const {navigation} = props;
+  const { navigation } = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -102,9 +102,11 @@ const FavoritesScreen = (props) => {
           />
           <Badge
             style={{
-              backgroundColor: Colors.accent,
-              fontSize: 14,
+              backgroundColor: Platform.OS === 'ios' ? 'white' : Colors.primary,
+              fontSize: 15,
               fontWeight: 'bold',
+              borderColor: Platform.OS === 'android' ? 'white' : Colors.primary,
+              borderWidth: 1,
             }}
             size={20}>
             {cartLength}
@@ -112,7 +114,7 @@ const FavoritesScreen = (props) => {
         </HeaderButtons>
       ),
     });
-  }, [navigation]);
+  }, [navigation, cartLength]);
 
   if (isLoading) {
     return (

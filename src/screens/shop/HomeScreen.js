@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   TextInput,
@@ -6,21 +6,20 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {Badge} from 'react-native-paper';
+import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Badge } from 'react-native-paper';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
 import * as authActions from '../../store/actions/auth';
-import {color} from 'react-native-reanimated';
 import Colors from '../../constants/Colors';
 
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const {navigation} = props;
+  const { navigation } = props;
   const token = useSelector((state) => state.auth.token);
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
@@ -68,9 +67,11 @@ const HomeScreen = (props) => {
           />
           <Badge
             style={{
-              backgroundColor: Colors.accent,
-              fontSize: 14,
+              backgroundColor: Platform.OS === 'ios' ? 'white' : Colors.primary,
+              fontSize: 15,
               fontWeight: 'bold',
+              borderColor: Platform.OS === 'android' ? 'white' : Colors.primary,
+              borderWidth: 1,
             }}
             size={20}>
             {cartLength}

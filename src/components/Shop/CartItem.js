@@ -25,7 +25,7 @@ const CartItem = (props) => {
         <View style={styles.itemDataInnerTwo}>
           <Image
             style={styles.image}
-            source={{uri: props.image}}
+            source={{ uri: props.image }}
             resizeMode={'contain'}
           />
           <View style={styles.quantity}>
@@ -69,6 +69,7 @@ const CartItem = (props) => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   cartItem: {
     padding: 10,

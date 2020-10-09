@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,9 +10,9 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
-import {Snackbar, Badge, Button} from 'react-native-paper';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import { Snackbar, Badge, Button } from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import ProductItem from '../../components/Shop/ProductItem';
@@ -31,14 +31,14 @@ const HomeScreen = (props) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState();
 
-  const {category} = props.route.params;
+  const { category } = props.route.params;
   const selectedCategory = CATEGORIES.find((cat) => cat.title === category);
 
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
   // console.log(cartLength);
 
-  const {navigation} = props;
+  const { navigation } = props;
 
   useEffect(() => {
     navigation.setOptions({
@@ -54,9 +54,11 @@ const HomeScreen = (props) => {
           />
           <Badge
             style={{
-              backgroundColor: Colors.accent,
-              fontSize: 14,
+              backgroundColor: Platform.OS === 'ios' ? 'white' : Colors.primary,
+              fontSize: 15,
               fontWeight: 'bold',
+              borderColor: Platform.OS === 'android' ? 'white' : Colors.primary,
+              borderWidth: 1,
             }}
             size={20}>
             {cartLength}
@@ -136,7 +138,7 @@ const HomeScreen = (props) => {
   }
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <FlatList
         onRefresh={loadProducts}
         refreshing={isRefreshing}

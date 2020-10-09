@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   TextInput,
-  Button,
   StyleSheet,
   ScrollView,
   KeyboardAvoidingView,
@@ -11,7 +10,8 @@ import {
   ActivityIndicator,
   SafeAreaView,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Snackbar, Badge, Button } from 'react-native-paper';
 
 import Card from '../../components/UI/Card';
 import Colors from '../../constants/Colors';
@@ -27,7 +27,7 @@ const ForgetPasswordScreen = (props) => {
   const [updatedPassword, setUpdatedPassword] = useState('');
   const dispatch = useDispatch();
 
-  const {navigation} = props;
+  const { navigation } = props;
   useEffect(() => {
     navigation.setOptions({
       title: 'Forget Password',
@@ -150,12 +150,14 @@ const ForgetPasswordScreen = (props) => {
                   {isLoading ? (
                     <ActivityIndicator size="small" color={Colors.primary} />
                   ) : (
-                    <Button
-                      title={'Update Password'}
-                      color={Colors.primary}
-                      onPress={updatePasswordHandler}
-                    />
-                  )}
+                      <Button
+                        color={Colors.primary}
+                        mode="contained"
+                        onPress={updatePasswordHandler}
+                      >
+                        Update Password
+                      </Button>
+                    )}
                 </View>
               </View>
             </ScrollView>
@@ -187,12 +189,14 @@ const ForgetPasswordScreen = (props) => {
                   {isLoading ? (
                     <ActivityIndicator size="small" color={Colors.primary} />
                   ) : (
-                    <Button
-                      title={'Send OTP'}
-                      color={Colors.primary}
-                      onPress={sendOtpHandler}
-                    />
-                  )}
+                      <Button
+                        color={Colors.primary}
+                        mode="contained"
+                        onPress={sendOtpHandler}
+                      >
+                        Send OTP
+                      </Button>
+                    )}
                 </View>
               </View>
               {otp ? (
@@ -207,17 +211,19 @@ const ForgetPasswordScreen = (props) => {
                     {isLoading ? (
                       <ActivityIndicator size="small" color={Colors.primary} />
                     ) : (
-                      <Button
-                        title="Confirm OTP"
-                        color={Colors.primary}
-                        onPress={confirmOtpHandler}
-                      />
-                    )}
+                        <Button
+                          color={Colors.primary}
+                          mode="contained"
+                          onPress={confirmOtpHandler}
+                        >
+                          Confirm OTP
+                        </Button>
+                      )}
                   </View>
                 </View>
               ) : (
-                <View></View>
-              )}
+                  <View></View>
+                )}
             </ScrollView>
           </Card>
         </View>
