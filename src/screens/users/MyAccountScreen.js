@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useReducer, useCallback } from 'react';
+import React, {useEffect, useState, useReducer, useCallback} from 'react';
 import {
   View,
   StyleSheet,
@@ -11,9 +11,9 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button, Avatar } from 'react-native-paper';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {useSelector, useDispatch} from 'react-redux';
+import {Button, Avatar} from 'react-native-paper';
 
 import Colors from '../../constants/Colors';
 import Input from '../../components/UI/Input';
@@ -68,25 +68,23 @@ const MyAccountScreen = (props) => {
     formIsValid: false,
   });
 
-  let newName = ''
+  let newName = '';
 
   const [imageName, setImageName] = useState('');
 
   const nameImageHandler = () => {
-    let name = userData.userName.split(' ')
+    let name = userData.userName.split(' ');
     for (var x in name) {
-      newName = newName.concat(name[x].charAt(0))
+      newName = newName.concat(name[x].charAt(0));
     }
-    console.log(newName)
-    setImageName(newName)
+    console.log(newName);
+    setImageName(newName);
   };
 
-
-
   useEffect(() => {
-    nameImageHandler()
+    nameImageHandler();
     if (error) {
-      Alert.alert('Error Occurred', error, [{ text: 'Okay' }]);
+      Alert.alert('Error Occurred', error, [{text: 'Okay'}]);
     }
   }, [error, userData.userName]);
 
@@ -103,10 +101,10 @@ const MyAccountScreen = (props) => {
   );
 
   const saveAccountHandler = useCallback(async () => {
-    console.log(formState)
+    console.log(formState);
     if (!formState.formIsValid) {
       Alert.alert('Invalid Input', 'Please enter valid input', [
-        { text: 'Okay' },
+        {text: 'Okay'},
       ]);
       return;
     }
@@ -129,7 +127,7 @@ const MyAccountScreen = (props) => {
     }
   }, [dispatch, formState, userData]);
 
-  const { navigation } = props;
+  const {navigation} = props;
   useEffect(() => {
     navigation.setOptions({
       title: 'My Account',
@@ -237,7 +235,7 @@ const styles = StyleSheet.create({
     // borderBottomWidth: 1,
   },
   image: {
-    backgroundColor: Colors.background
+    backgroundColor: Colors.background,
     // height: Dimensions.get('window').width > 400 ? 100 : 80,
     // width: Dimensions.get('window').width > 400 ? 120 : 100,
   },

@@ -1,15 +1,16 @@
 import React from 'react';
-import { Platform, Dimensions, Alert, StatusBar } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import {Platform, Dimensions, Alert, StatusBar} from 'react-native';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItem,
   DrawerItemList,
 } from '@react-navigation/drawer';
-import { NavigationContainer } from '@react-navigation/native';
-import { useDispatch, useSelector } from 'react-redux';
+import {NavigationContainer} from '@react-navigation/native';
+import {useDispatch, useSelector} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {Avatar, Divider} from 'react-native-paper';
 
 import * as authActions from '../store/actions/auth';
 import Colors from '../constants/Colors';
@@ -57,7 +58,7 @@ const StartupNavigator = () => {
       <Stack.Screen
         name="StartupScreen"
         component={StartupScreen}
-        options={{ headerTitle: 'Please wait a moment..' }}
+        options={{headerTitle: 'Please wait a moment..'}}
       />
     </Stack.Navigator>
   );
@@ -123,9 +124,15 @@ const MyAccountNavigator = () => {
 
 const DrawerNavigator = (props) => {
   const dispatch = useDispatch();
+  const userName = useSelector((state) => state.auth.userData.userName);
+  let name = userName.split(' ');
+  let newName = '';
+  for (var x in name) {
+    newName = newName.concat(name[x].charAt(0));
+  }
   const logoutHandler = () => {
     Alert.alert('Are you sure ?', 'Do you really want to logout ?', [
-      { text: 'No', style: 'default' },
+      {text: 'No', style: 'default'},
       {
         text: 'Yes',
         style: 'destructive',
@@ -147,14 +154,51 @@ const DrawerNavigator = (props) => {
       drawerContent={(props) => {
         return (
           <DrawerContentScrollView {...props}>
+            <DrawerItem
+              label=""
+              labelStyle={{
+                fontSize: Dimensions.get('window').width > 400 ? 16 : 14,
+                fontWeight: 'bold',
+              }}
+              onPress={() => {
+                props.navigation.navigate('MyAccountNavigator');
+              }}
+              icon={() => (
+                <Avatar.Text
+                  size={70}
+                  label={newName}
+                  color="white"
+                  style={{backgroundColor: 'orange'}}
+                />
+              )}
+            />
+            <DrawerItem
+              label={userName}
+              style={{
+                borderBottomColor: '#ccc',
+                borderBottomWidth: 2,
+                flex: 1,
+              }}
+              labelStyle={{
+                fontSize: Dimensions.get('window').width > 400 ? 16 : 14,
+                fontWeight: 'bold',
+                fontSize: 20,
+              }}
+              onPress={() => {
+                props.navigation.navigate('MyAccountNavigator');
+              }}
+            />
+
+            {/* other drawer screens */}
             <DrawerItemList {...props} />
+
             <DrawerItem
               label="Logout"
               labelStyle={{
                 fontSize: Dimensions.get('window').width > 400 ? 16 : 14,
                 fontWeight: 'bold',
               }}
-              style={{ flex: 1 }}
+              style={{flex: 1}}
               onPress={logoutHandler}
               icon={() => (
                 <Icon color="red" size={25} name={'ios-close-outline'} />
@@ -168,7 +212,7 @@ const DrawerNavigator = (props) => {
         component={HomeNavigator}
         options={{
           title: 'Home',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -186,7 +230,7 @@ const DrawerNavigator = (props) => {
         component={OrderNavigator}
         options={{
           title: 'My Orders',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -204,7 +248,7 @@ const DrawerNavigator = (props) => {
         component={FavoriteNavigator}
         options={{
           title: 'My Favorites',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
@@ -222,7 +266,7 @@ const DrawerNavigator = (props) => {
         component={MyAccountNavigator}
         options={{
           title: 'My Account',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon name={'person-circle-outline'} size={25} color={color} />
           ),
         }}
@@ -232,7 +276,7 @@ const DrawerNavigator = (props) => {
         component={UserProductsNavigator}
         options={{
           title: 'Sell on Shopcart',
-          drawerIcon: ({ color }) => (
+          drawerIcon: ({color}) => (
             <Icon
               name={
                 Platform.OS === 'android'
