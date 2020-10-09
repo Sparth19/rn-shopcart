@@ -167,8 +167,7 @@ const DrawerNavigator = (props) => {
                 <Avatar.Text
                   size={70}
                   label={newName}
-                  color="white"
-                  style={{backgroundColor: 'orange'}}
+                  style={{backgroundColor: Colors.background}}
                 />
               )}
             />
