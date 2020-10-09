@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -9,8 +9,8 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { Button } from 'react-native-paper';
+import {useSelector, useDispatch} from 'react-redux';
+import {Button} from 'react-native-paper';
 
 import Colors from '../../constants/Colors';
 import CartItem from '../../components/Shop/CartItem';
@@ -21,7 +21,7 @@ import * as ordersActions from '../../store/actions/orders';
 const CartScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { navigation } = props;
+  const {navigation} = props;
   useEffect(() => {
     navigation.setOptions({
       title: 'Your Cart',
@@ -74,16 +74,16 @@ const CartScreen = (props) => {
         {isLoading ? (
           <ActivityIndicator size="small" color={Colors.primary} />
         ) : (
-            <Button
-              color={Colors.accent}
-              title="Buy Now"
-              uppercase={false}
-              mode="contained"
-              disabled={cartItems.length === 0}
-              onPress={buyNowHandler}>
-              Buy Now
-            </Button>
-          )}
+          <Button
+            color={Colors.accent}
+            title="Buy Now"
+            uppercase={false}
+            mode="contained"
+            disabled={cartItems.length === 0}
+            onPress={buyNowHandler}>
+            Buy Now
+          </Button>
+        )}
       </Card>
       <FlatList
         data={cartItems}
@@ -116,7 +116,7 @@ const CartScreen = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 10
+    padding: 10,
   },
   summary: {
     flexDirection: 'row',
@@ -124,6 +124,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 20,
     padding: 10,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
   },
   summaryText: {
     //fontFamily: 'open-sans-bold',
