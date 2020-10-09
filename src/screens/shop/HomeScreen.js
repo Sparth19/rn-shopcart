@@ -1,35 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   TextInput,
   StyleSheet,
   Dimensions,
   SafeAreaView,
+  TouchableOpacity
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {Badge} from 'react-native-paper';
+import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Icon } from 'react-native-elements';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
 import * as authActions from '../../store/actions/auth';
 import Colors from '../../constants/Colors';
+import withBadge from '../../components/UI/Badge';
 
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const {navigation} = props;
+  const { navigation } = props;
   const token = useSelector((state) => state.auth.token);
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
-
-  //console.log(cartLength);
 
   useEffect(() => {
     if (token === null) {
       dispatch(authActions.logout());
     }
+    const BadgedIcon = withBadge(cartLength)(Icon);
     navigation.setOptions({
       title: 'All Categories',
 
@@ -45,39 +46,39 @@ const HomeScreen = (props) => {
         </HeaderButtons>
       ),
       headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="search"
-            iconSize={20}
-            iconName={
-              Platform.OS === 'android'
-                ? 'md-search-outline'
-                : 'ios-search-outline'
-            }
-            onPress={() => {
-              props.navigation.navigate('SearchScreen');
-            }}
-          />
-          <Item
-            title="cart"
-            iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-            onPress={() => {
+        <View style={{ flexDirection: 'row' }}>
+          <React.Fragment>
+            <Icon
+              name={
+                Platform.OS === 'android'
+                  ? 'md-search-outline'
+                  : 'ios-search-outline'
+              }
+              type='ionicon'
+              size={25}
+              color={Platform.OS === 'android' ? 'white' : Colors.primary}
+              containerStyle={{
+                paddingRight: 18
+              }}
+              onPress={() => {
+                props.navigation.navigate('SearchScreen');
+              }}
+            />
+            <TouchableOpacity onPress={() => {
               props.navigation.navigate('CartScreen');
-            }}
-          />
-          <Badge
-            style={{
-              backgroundColor: Platform.OS === 'ios' ? 'white' : Colors.primary,
-              fontSize: 15,
-              fontWeight: 'bold',
-              borderColor: Platform.OS === 'android' ? 'white' : Colors.primary,
-              borderWidth: 1,
-              color: Platform.OS === 'android' ? 'white' : Colors.primary,
-            }}
-            size={20}>
-            {cartLength}
-          </Badge>
-        </HeaderButtons>
+            }}>
+              <BadgedIcon
+                name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
+                type='ionicon'
+                size={25}
+                color={Platform.OS === 'android' ? 'white' : Colors.primary}
+                containerStyle={{
+                  marginRight: 18
+                }}
+              />
+            </TouchableOpacity>
+          </React.Fragment>
+        </View>
       ),
     });
   }, [navigation, token, cartLength]);
