@@ -12,14 +12,24 @@ import { FlatList } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import { HeaderButtons, Item } from 'react-navigation-header-buttons';
 import { Icon } from 'react-native-elements';
+import { SliderBox } from 'react-native-image-slider-box';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
 import * as authActions from '../../store/actions/auth';
 import Colors from '../../constants/Colors';
 import withBadge from '../../components/UI/Badge';
+import ImageSlider from '../../data/image-slider';
 
 const HomeScreen = (props) => {
+  const [imageSlider, setImageSlider] = useState(() => {
+    let imageS = []
+    for (var x in ImageSlider) {
+      imageS = imageS.concat(ImageSlider[x].image);
+    }
+    return imageS;
+  });
+
   const categories = useSelector((state) => state.products.availableCategories);
 
   const { navigation } = props;
@@ -89,7 +99,16 @@ const HomeScreen = (props) => {
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* main category */}
-        <View style={styles.slider}></View>
+        <View style={styles.slider}>
+          <SliderBox
+            images={imageSlider}
+            sliderBoxHeight={250}
+            dotColor={Colors.primary}
+            inactiveDotColor="#90A4AE"
+            autoplay
+            circleLoop
+          />
+        </View>
         <View style={styles.heading}>
           <Text>All Categories</Text>
         </View>
