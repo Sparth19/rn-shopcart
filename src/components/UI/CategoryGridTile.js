@@ -54,7 +54,7 @@ const CategoryGridTile = (props) => {
 const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
-    margin: 15,
+    margin: 10,
     height: Dimensions.get('window').width > 400 ? 150 : 130,
     borderRadius: 10,
     overflow:

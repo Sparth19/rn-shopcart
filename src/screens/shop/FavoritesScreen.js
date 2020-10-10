@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   StyleSheet,
   Text,
   Platform,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import { useSelector, useDispatch } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { Icon } from 'react-native-elements';
+import {useSelector, useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Icon} from 'react-native-elements';
 
 import * as favoritesActions from '../../store/actions/favorites';
 import * as productActions from '../../store/actions/products';
@@ -77,7 +77,7 @@ const FavoritesScreen = (props) => {
     });
   };
 
-  const { navigation } = props;
+  const {navigation} = props;
 
   useEffect(() => {
     const BadgedIcon = withBadge(cartLength)(Icon);
@@ -96,21 +96,22 @@ const FavoritesScreen = (props) => {
       ),
       headerRight: () => (
         <React.Fragment>
-          <TouchableOpacity onPress={() => {
-            props.navigation.navigate('CartScreen');
-          }}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('CartScreen');
+            }}>
             <BadgedIcon
               name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-              type='ionicon'
+              type="ionicon"
               size={25}
               color={Platform.OS === 'android' ? 'white' : Colors.primary}
               containerStyle={{
-                paddingRight: 18
+                paddingRight: 18,
               }}
             />
           </TouchableOpacity>
         </React.Fragment>
-      )
+      ),
     });
   }, [navigation, cartLength]);
 
