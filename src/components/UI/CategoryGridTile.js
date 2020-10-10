@@ -37,7 +37,9 @@ const CategoryGridTile = (props) => {
     <View style={{...styles.gridItem}}>
       <TouchableCmp style={{flex: 1}} onPress={props.onSelect}>
         <View style={{...styles.container, ...{borderColor: props.color}}}>
-          <Image source={{uri: props.image}} style={styles.bgImage} />
+          <View style={styles.imageContainer}>
+            <Image source={{uri: props.image}} style={styles.bgImage} />
+          </View>
           <Text
             style={screenWidth > 400 ? styles.largeTitle : styles.smallTitle}
             numberOfLines={2}>
@@ -53,7 +55,7 @@ const styles = StyleSheet.create({
   gridItem: {
     flex: 1,
     margin: 15,
-    height: 150,
+    height: Dimensions.get('window').width > 400 ? 150 : 130,
     borderRadius: 10,
     overflow:
       Platform.OS === 'android' && Platform.Version >= 21
@@ -72,23 +74,34 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     backgroundColor: '#fff',
   },
-  bgImage: {
+  imageContainer: {
     flex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    height: '100%',
+  },
+  bgImage: {
+    flex: 1,
+    alignItems: 'center',
     flexDirection: 'column',
-    justifyContent: 'flex-start',
-    width: 80,
+    // justifyContent: 'flex-start',
+    justifyContent: 'center',
+    width: Dimensions.get('window').width > 400 ? 80 : 62,
     marginBottom: 10,
   },
   largeTitle: {
     flex: 1,
     fontSize: 18,
-    textAlign: 'right',
+    // textAlign: 'right',
+    textAlign: 'center',
     fontWeight: 'bold',
   },
   smallTitle: {
     flex: 1,
     fontSize: 14,
-    textAlign: 'right',
+    textAlign: 'center',
+
     fontWeight: 'bold',
   },
 });
