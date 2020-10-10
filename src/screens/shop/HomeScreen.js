@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
@@ -8,18 +8,23 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { Icon } from 'react-native-elements';
+import {FlatList} from 'react-native-gesture-handler';
+import {useSelector, useDispatch} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Icon} from 'react-native-elements';
+import Carousel from 'react-native-snap-carousel';
 import { SliderBox } from 'react-native-image-slider-box';
 
+import ImageSlider from '../../data/image-slider';
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
-import * as authActions from '../../store/actions/auth';
 import Colors from '../../constants/Colors';
 import withBadge from '../../components/UI/Badge';
-import ImageSlider from '../../data/image-slider';
+import CardFavorites from '../../components/UI/CardFavorites';
+
+import * as authActions from '../../store/actions/auth';
+import * as favoritesActions from '../../store/actions/favorites';
+import * as productActions from '../../store/actions/products';
 
 const HomeScreen = (props) => {
   const [imageSlider, setImageSlider] = useState(() => {
@@ -32,10 +37,60 @@ const HomeScreen = (props) => {
 
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const { navigation } = props;
+  const {navigation} = props;
   const token = useSelector((state) => state.auth.token);
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
+
+  //for favorites slider
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const allProducts = useSelector(
+    (state) => state.products.availableAllProducts,
+  );
+
+  const favoriteList = useSelector((state) => state.fav.favoritesProduct);
+
+  const favDisplay = allProducts.filter((prod) => {
+    for (var x in favoriteList) {
+      if (prod.id === favoriteList[x].favProductId) {
+        return true;
+      }
+    }
+  });
+
+  //console.log(favDisplay);
+
+  const loadedFavorites = useCallback(async () => {
+    setError(null);
+    setIsLoading(true);
+    try {
+      await dispatch(productActions.fetchAllProduct());
+      await dispatch(favoritesActions.fetchFavorites());
+      setIsLoading(false);
+    } catch (err) {
+      setIsLoading(false);
+      setError(err.message);
+    }
+  }, [dispatch, setError, setIsLoading]);
+
+  useEffect(() => {
+    props.navigation.addListener('focus', loadedFavorites);
+    return () => {
+      props.navigation.removeListener('focus', loadedFavorites);
+    };
+  }, [loadedFavorites]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    loadedFavorites().then(() => {
+      setIsLoading(false);
+    });
+  }, [loadedFavorites]);
 
   useEffect(() => {
     if (token === null) {
@@ -57,7 +112,7 @@ const HomeScreen = (props) => {
         </HeaderButtons>
       ),
       headerRight: () => (
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{flexDirection: 'row'}}>
           <React.Fragment>
             <Icon
               name={
@@ -98,8 +153,7 @@ const HomeScreen = (props) => {
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* main category */}
-        <View style={styles.slider}>
+         <View style={styles.slider}>
           <SliderBox
             images={imageSlider}
             sliderBoxHeight={250}
@@ -109,8 +163,8 @@ const HomeScreen = (props) => {
             circleLoop
           />
         </View>
-        <View style={styles.heading}>
-          <Text>All Categories</Text>
+       <View style={styles.headingContainer}>
+          <Text style={styles.heading}>All Categories</Text>
         </View>
         <FlatList
           data={categories}
@@ -130,14 +184,52 @@ const HomeScreen = (props) => {
             />
           )}
         />
+        <View style={styles.headingContainer}>
+          <Text style={styles.heading}>Your Favorites</Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Carousel
+            layout={'default'}
+            autoplay
+            data={favDisplay}
+            sliderWidth={270}
+            itemWidth={270}
+            loop
+            renderItem={(itemData) => {
+              return (
+                <CardFavorites
+                  image={itemData.item.imageUrl}
+                  title={itemData.item.short_title}
+                  price={itemData.item.price}
+                />
+              );
+            }}
+            onSnapToItem={(index) => setActiveIndex(index)}
+          />
+        </View>
       </ScrollView>
-    </SafeAreaView >
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   slider: {
     height: Dimensions.get('window').width > 400 ? 270 : 200,
+  },
+  headingContainer: {
+    marginHorizontal: 20,
+    marginVertical: 10,
+  },
+  heading: {
+    fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
+    color: 'grey',
+    fontWeight: 'bold',
   },
 });
 export default HomeScreen;
