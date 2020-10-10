@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  TextInput,
+  Text,
   StyleSheet,
   Dimensions,
   SafeAreaView,
@@ -89,6 +89,9 @@ const HomeScreen = (props) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* main category */}
         <View style={styles.slider}></View>
+        <View style={styles.heading}>
+          <Text>All Categories</Text>
+        </View>
         <FlatList
           data={categories}
           horizontal={true}
