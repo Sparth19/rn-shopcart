@@ -13,7 +13,9 @@ import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {Icon} from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
+import { SliderBox } from 'react-native-image-slider-box';
 
+import ImageSlider from '../../data/image-slider';
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
 import Colors from '../../constants/Colors';
@@ -25,6 +27,14 @@ import * as favoritesActions from '../../store/actions/favorites';
 import * as productActions from '../../store/actions/products';
 
 const HomeScreen = (props) => {
+  const [imageSlider, setImageSlider] = useState(() => {
+    let imageS = []
+    for (var x in ImageSlider) {
+      imageS = imageS.concat(ImageSlider[x].image);
+    }
+    return imageS;
+  });
+
   const categories = useSelector((state) => state.products.availableCategories);
 
   const {navigation} = props;
@@ -143,9 +153,17 @@ const HomeScreen = (props) => {
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* main category */}
-        <View style={styles.slider}></View>
-        <View style={styles.headingContainer}>
+         <View style={styles.slider}>
+          <SliderBox
+            images={imageSlider}
+            sliderBoxHeight={250}
+            dotColor={Colors.primary}
+            inactiveDotColor="#90A4AE"
+            autoplay
+            circleLoop
+          />
+        </View>
+       <View style={styles.headingContainer}>
           <Text style={styles.heading}>All Categories</Text>
         </View>
         <FlatList
