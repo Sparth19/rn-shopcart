@@ -86,31 +86,22 @@ const HomeScreen = (props) => {
 
   return (
     <SafeAreaView>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        {/* main category */}
-        <View style={styles.slider}></View>
-        <View style={styles.heading}>
-          <Text>All Categories</Text>
-        </View>
-        <FlatList
-          data={categories}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          // numColumns={2}
-          renderItem={(itemData) => (
-            <CategoryGridTiles
-              title={itemData.item.title}
-              color={itemData.item.color}
-              image={itemData.item.image}
-              onSelect={() => {
-                props.navigation.navigate('CategoryProductsScreen', {
-                  category: itemData.item.title,
-                });
-              }}
-            />
-          )}
-        />
-      </ScrollView>
+      <FlatList
+        data={categories}
+        numColumns={2}
+        renderItem={(itemData) => (
+          <CategoryGridTiles
+            title={itemData.item.title}
+            color={itemData.item.color}
+            image={itemData.item.image}
+            onSelect={() => {
+              props.navigation.navigate('CategoryProductsScreen', {
+                category: itemData.item.title,
+              });
+            }}
+          />
+        )}
+      />
     </SafeAreaView>
   );
 };
