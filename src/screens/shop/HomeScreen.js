@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
   StyleSheet,
   Dimensions,
   SafeAreaView,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
-import { HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { Icon } from 'react-native-elements';
+import {FlatList, ScrollView} from 'react-native-gesture-handler';
+import {useSelector} from 'react-redux';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
+import {Icon} from 'react-native-elements';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
@@ -21,7 +21,7 @@ import withBadge from '../../components/UI/Badge';
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const { navigation } = props;
+  const {navigation} = props;
   const token = useSelector((state) => state.auth.token);
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
@@ -46,7 +46,7 @@ const HomeScreen = (props) => {
         </HeaderButtons>
       ),
       headerRight: () => (
-        <View style={{ flexDirection: 'row' }}>
+        <View style={{flexDirection: 'row'}}>
           <React.Fragment>
             <Icon
               name={
@@ -54,26 +54,27 @@ const HomeScreen = (props) => {
                   ? 'md-search-outline'
                   : 'ios-search-outline'
               }
-              type='ionicon'
+              type="ionicon"
               size={25}
               color={Platform.OS === 'android' ? 'white' : Colors.primary}
               containerStyle={{
-                paddingRight: 18
+                paddingRight: 18,
               }}
               onPress={() => {
                 props.navigation.navigate('SearchScreen');
               }}
             />
-            <TouchableOpacity onPress={() => {
-              props.navigation.navigate('CartScreen');
-            }}>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('CartScreen');
+              }}>
               <BadgedIcon
                 name={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
-                type='ionicon'
+                type="ionicon"
                 size={25}
                 color={Platform.OS === 'android' ? 'white' : Colors.primary}
                 containerStyle={{
-                  marginRight: 18
+                  marginRight: 18,
                 }}
               />
             </TouchableOpacity>
@@ -85,25 +86,35 @@ const HomeScreen = (props) => {
 
   return (
     <SafeAreaView>
-      {/* main category */}
-      <FlatList
-        data={categories}
-        numColumns={2}
-        renderItem={(itemData) => (
-          <CategoryGridTiles
-            title={itemData.item.title}
-            color={itemData.item.color}
-            image={itemData.item.image}
-            onSelect={() => {
-              props.navigation.navigate('CategoryProductsScreen', {
-                category: itemData.item.title,
-              });
-            }}
-          />
-        )}
-      />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* main category */}
+        <View style={styles.slider}></View>
+        <FlatList
+          data={categories}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          // numColumns={2}
+          renderItem={(itemData) => (
+            <CategoryGridTiles
+              title={itemData.item.title}
+              color={itemData.item.color}
+              image={itemData.item.image}
+              onSelect={() => {
+                props.navigation.navigate('CategoryProductsScreen', {
+                  category: itemData.item.title,
+                });
+              }}
+            />
+          )}
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
 
+const styles = StyleSheet.create({
+  slider: {
+    height: Dimensions.get('window').width > 400 ? 270 : 200,
+  },
+});
 export default HomeScreen;
