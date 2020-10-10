@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   Dimensions,
   SafeAreaView,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {FlatList, ScrollView} from 'react-native-gesture-handler';
-import {useSelector} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {Icon} from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Icon } from 'react-native-elements';
 
 import HeaderButton from '../../components/UI/HeaderButton';
 import CategoryGridTiles from '../../components/UI/CategoryGridTile';
@@ -21,7 +22,7 @@ import withBadge from '../../components/UI/Badge';
 const HomeScreen = (props) => {
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const {navigation} = props;
+  const { navigation } = props;
   const token = useSelector((state) => state.auth.token);
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
@@ -46,7 +47,7 @@ const HomeScreen = (props) => {
         </HeaderButtons>
       ),
       headerRight: () => (
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <React.Fragment>
             <Icon
               name={
@@ -86,23 +87,32 @@ const HomeScreen = (props) => {
 
   return (
     <SafeAreaView>
-      <FlatList
-        data={categories}
-        numColumns={2}
-        renderItem={(itemData) => (
-          <CategoryGridTiles
-            title={itemData.item.title}
-            color={itemData.item.color}
-            image={itemData.item.image}
-            onSelect={() => {
-              props.navigation.navigate('CategoryProductsScreen', {
-                category: itemData.item.title,
-              });
-            }}
-          />
-        )}
-      />
-    </SafeAreaView>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        {/* main category */}
+        <View style={styles.slider}></View>
+        <View style={styles.heading}>
+          <Text>All Categories</Text>
+        </View>
+        <FlatList
+          data={categories}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          // numColumns={2}
+          renderItem={(itemData) => (
+            <CategoryGridTiles
+              title={itemData.item.title}
+              color={itemData.item.color}
+              image={itemData.item.image}
+              onSelect={() => {
+                props.navigation.navigate('CategoryProductsScreen', {
+                  category: itemData.item.title,
+                });
+              }}
+            />
+          )}
+        />
+      </ScrollView>
+    </SafeAreaView >
   );
 };
 
