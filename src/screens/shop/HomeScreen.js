@@ -2,18 +2,20 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {
   View,
   Text,
+  Image,
   StyleSheet,
   Dimensions,
   SafeAreaView,
   ScrollView,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {useSelector, useDispatch} from 'react-redux';
 import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 import {Icon} from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
-import { SliderBox } from 'react-native-image-slider-box';
+import {SliderBox} from 'react-native-image-slider-box';
 
 import ImageSlider from '../../data/image-slider';
 import HeaderButton from '../../components/UI/HeaderButton';
@@ -25,10 +27,11 @@ import CardFavorites from '../../components/UI/CardFavorites';
 import * as authActions from '../../store/actions/auth';
 import * as favoritesActions from '../../store/actions/favorites';
 import * as productActions from '../../store/actions/products';
+import {cond} from 'react-native-reanimated';
 
 const HomeScreen = (props) => {
   const [imageSlider, setImageSlider] = useState(() => {
-    let imageS = []
+    let imageS = [];
     for (var x in ImageSlider) {
       imageS = imageS.concat(ImageSlider[x].image);
     }
@@ -46,6 +49,7 @@ const HomeScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [favoritesSlider, setFavoritesSlider] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -62,6 +66,13 @@ const HomeScreen = (props) => {
       }
     }
   });
+
+  useEffect(() => {
+    //console.log(favDisplay.length);
+    if (favDisplay.length != 0) {
+      setFavoritesSlider(true);
+    }
+  }, [favDisplay]);
 
   //console.log(favDisplay);
 
@@ -98,7 +109,7 @@ const HomeScreen = (props) => {
     }
     const BadgedIcon = withBadge(cartLength)(Icon);
     navigation.setOptions({
-      title: 'All Categories',
+      title: 'Home',
 
       headerLeft: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
@@ -153,17 +164,17 @@ const HomeScreen = (props) => {
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-         <View style={styles.slider}>
+        <View style={styles.slider}>
           <SliderBox
             images={imageSlider}
-            sliderBoxHeight={250}
+            sliderBoxHeight={Dimensions.get('window').width > 400 ? 250 : 200}
             dotColor={Colors.primary}
             inactiveDotColor="#90A4AE"
             autoplay
             circleLoop
           />
         </View>
-       <View style={styles.headingContainer}>
+        <View style={styles.headingContainer}>
           <Text style={styles.heading}>All Categories</Text>
         </View>
         <FlatList
@@ -187,32 +198,56 @@ const HomeScreen = (props) => {
         <View style={styles.headingContainer}>
           <Text style={styles.heading}>Your Favorites</Text>
         </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <Carousel
-            layout={'default'}
-            autoplay
-            data={favDisplay}
-            sliderWidth={270}
-            itemWidth={270}
-            loop
-            renderItem={(itemData) => {
-              return (
-                <CardFavorites
-                  image={itemData.item.imageUrl}
-                  title={itemData.item.short_title}
-                  price={itemData.item.price}
-                />
-              );
-            }}
-            onSnapToItem={(index) => setActiveIndex(index)}
-          />
-        </View>
+        {favDisplay.length > 0 ? (
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Carousel
+              layout={'default'}
+              autoplay
+              data={favDisplay}
+              sliderWidth={270}
+              itemWidth={270}
+              loop
+              renderItem={(itemData) => {
+                return (
+                  <CardFavorites
+                    image={itemData.item.imageUrl}
+                    title={itemData.item.short_title}
+                    price={itemData.item.price}
+                    id={itemData.item.id}
+                    navigation={props.navigation}
+                  />
+                );
+              }}
+              onSnapToItem={(index) => setActiveIndex(index)}
+            />
+          </View>
+        ) : (
+          <View
+            style={{
+              height: 200,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <TouchableWithoutFeedback
+              onPress={() => {
+                props.navigation.navigate('SearchScreen');
+              }}>
+              <Image
+                style={{height: '60%', width: '70%'}}
+                source={{
+                  uri:
+                    'https://image.freepik.com/free-vector/illustration-search-box_53876-37578.jpg',
+                }}
+              />
+            </TouchableWithoutFeedback>
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

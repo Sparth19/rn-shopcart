@@ -16,7 +16,10 @@ const CardFavorites = (props) => {
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log(props.title);
+        props.navigation.navigate('ProductDetailScreen', {
+          productId: props.id,
+          variable: 'true',
+        });
       }}>
       <Card style={styles.main}>
         <View style={styles.imageContainer}>
