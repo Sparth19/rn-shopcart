@@ -10,7 +10,7 @@ import {
   SafeAreaView,
 } from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
-import {Button} from 'react-native-paper';
+import {Button, FAB, Portal, Provider} from 'react-native-paper';
 import * as favoritesActions from '../../store/actions/favorites';
 import Colors from '../../constants/Colors';
 import * as cartActions from '../../store/actions/cart';
@@ -20,6 +20,12 @@ const PlaceDetailScreen = (props) => {
   const {productId} = props.route.params;
   const {variable} = props.route.params;
   const [filled, setFilled] = useState(variable);
+
+  const [open, setOpen] = useState(false);
+
+  const onStateChange = () => {
+    setOpen(open ? false : true);
+  };
 
   let selectedProduct = useSelector((state) =>
     state.products.availableAllProducts.find((prod) => prod.id === productId),
@@ -39,7 +45,7 @@ const PlaceDetailScreen = (props) => {
   }, [props]);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView>
         <View style={styles.details}>
           <Text style={styles.title}>{selectedProduct.title}</Text>
@@ -81,6 +87,33 @@ const PlaceDetailScreen = (props) => {
           <Text style={styles.description}>{selectedProduct.description}</Text>
         </View>
       </ScrollView>
+      <Provider>
+        <Portal>
+          <FAB.Group
+            fabStyle={styles.fab}
+            open={open}
+            icon={open ? 'close' : 'chat'}
+            actions={[
+              {
+                icon: 'email',
+                label: 'Give Feedback',
+                onPress: () => console.log('Pressed give feedback'),
+              },
+              {
+                icon: 'send',
+                label: 'Ask questions',
+                onPress: () => console.log('Pressed chat'),
+              },
+            ]}
+            onStateChange={onStateChange}
+            onPress={() => {
+              if (open) {
+                // do something if the speed dial is open
+              }
+            }}
+          />
+        </Portal>
+      </Provider>
     </SafeAreaView>
   );
 };
@@ -120,6 +153,12 @@ const styles = StyleSheet.create({
   description: {
     fontSize: Dimensions.get('window').width > 400 ? 18 : 14,
     lineHeight: 25,
+  },
+  fab: {
+    margin: 20,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'green',
   },
 });
 
