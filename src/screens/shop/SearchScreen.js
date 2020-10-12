@@ -1,16 +1,18 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
+  Text,
   TextInput,
   StyleSheet,
   Dimensions,
   SafeAreaView,
   ActivityIndicator,
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {useSelector, useDispatch} from 'react-redux';
-import {List} from 'react-native-paper';
+import { FlatList } from 'react-native-gesture-handler';
+import { useSelector, useDispatch } from 'react-redux';
+import { List, Chip } from 'react-native-paper';
 
+//import Chips from '../../components/UI/Chips';
 import Colors from '../../constants/Colors';
 import * as productActions from '../../store/actions/products';
 import * as favoritesActions from '../../store/actions/favorites';
@@ -21,6 +23,21 @@ const SearchScreen = (props) => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const dispatch = useDispatch();
+
+  const categories = useSelector((state) => state.products.availableCategories);
+  const [chipTitle, setChipsTitle] = useState(() => {
+    let chips = [];
+    for (var x in categories) {
+      chips.push(categories[x].title);
+    }
+    return chips;
+  });
+
+  const chipSelectHandler = (text) => {
+    console.log(text);
+    props.navigation.navigate('CategoryProductsScreen',
+      { category: text })
+  };
 
   const allProducts = useSelector(
     (state) => state.products.availableAllProducts,
@@ -62,7 +79,7 @@ const SearchScreen = (props) => {
     });
   }, [dispatch, loadProducts]);
 
-  const {navigation} = props;
+  const { navigation } = props;
   useEffect(() => {
     navigation.setOptions({
       title: 'Search Products',
@@ -111,13 +128,100 @@ const SearchScreen = (props) => {
         underlineColorAndroid="transparent"
         placeholder="Search Here"
       />
+      {/* <FlatList
+        data={categories}
+        //horizontal={true}
+        renderItem={(itemData) => (
+          <Chips
+            title={itemData.item.title}
+            onSelect={() => {
+              props.navigation.navigate('CategoryProductsScreen', {
+                category: itemData.item.title,
+              });
+            }}
+          />
+        )}
+
+      /> */}
+      <View style={styles.row}>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[0])}
+        >
+          <Text style={styles.chipText}>{chipTitle[0]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[1])}
+        >
+          <Text style={styles.chipText}>{chipTitle[1]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[2])}
+        >
+          <Text style={styles.chipText}>{chipTitle[2]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[3])}
+        >
+          <Text style={styles.chipText}>{chipTitle[3]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[4])}
+        >
+          <Text style={styles.chipText}>{chipTitle[4]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[5])}
+        >
+          <Text style={styles.chipText}>{chipTitle[5]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[6])}
+        >
+          <Text style={styles.chipText}>{chipTitle[6]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[7])}
+        >
+          <Text style={styles.chipText}>{chipTitle[7]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[8])}
+        >
+          <Text style={styles.chipText}>{chipTitle[8]}</Text>
+        </Chip>
+        <Chip
+          style={styles.chip}
+          //type='outlined'
+          onPress={chipSelectHandler.bind(this, chipTitle[9])}
+        >
+          <Text style={styles.chipText}>{chipTitle[9]}</Text>
+        </Chip>
+      </View>
 
       <FlatList
         style={styles.searchList}
         data={data}
         keyExtractor={(item, index) => index.toString()}
         ItemSeparatorComponent={RenderSeparator}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <List.Item
             title={item}
             onPress={() => {
@@ -162,6 +266,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  row: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    //paddingHorizontal: 10
+  },
+  chip: {
+    backgroundColor: Colors.background,
+    margin: 5
+  },
+  chipText: {
+    color: Colors.primary
+  }
 });
 
 export default SearchScreen;
