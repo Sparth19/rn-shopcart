@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -10,12 +10,12 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {FlatList} from 'react-native-gesture-handler';
-import {useSelector, useDispatch} from 'react-redux';
-import {HeaderButtons, Item} from 'react-navigation-header-buttons';
-import {Icon} from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
+import { useSelector, useDispatch } from 'react-redux';
+import { HeaderButtons, Item } from 'react-navigation-header-buttons';
+import { Icon } from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
-import {SliderBox} from 'react-native-image-slider-box';
+import { SliderBox } from 'react-native-image-slider-box';
 
 import ImageSlider from '../../data/image-slider';
 import HeaderButton from '../../components/UI/HeaderButton';
@@ -27,7 +27,7 @@ import CardFavorites from '../../components/UI/CardFavorites';
 import * as authActions from '../../store/actions/auth';
 import * as favoritesActions from '../../store/actions/favorites';
 import * as productActions from '../../store/actions/products';
-import {cond} from 'react-native-reanimated';
+import { cond } from 'react-native-reanimated';
 
 const HomeScreen = (props) => {
   const [imageSlider, setImageSlider] = useState(() => {
@@ -40,7 +40,7 @@ const HomeScreen = (props) => {
 
   const categories = useSelector((state) => state.products.availableCategories);
 
-  const {navigation} = props;
+  const { navigation } = props;
   const token = useSelector((state) => state.auth.token);
   const cartItems = useSelector((state) => state.cart.items);
   const cartLength = Object.keys(cartItems).length;
@@ -123,7 +123,7 @@ const HomeScreen = (props) => {
         </HeaderButtons>
       ),
       headerRight: () => (
-        <View style={{flexDirection: 'row'}}>
+        <View style={{ flexDirection: 'row' }}>
           <React.Fragment>
             <Icon
               name={
@@ -228,26 +228,28 @@ const HomeScreen = (props) => {
             />
           </View>
         ) : (
-          <View
-            style={{
-              height: 200,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <TouchableWithoutFeedback
-              onPress={() => {
-                props.navigation.navigate('SearchScreen');
+            <View
+              style={{
+                height: 200,
+                justifyContent: 'center',
+                alignItems: 'center',
               }}>
-              <Image
-                style={{height: '60%', width: '70%'}}
-                source={{
-                  uri:
-                    'https://image.freepik.com/free-vector/illustration-search-box_53876-37578.jpg',
-                }}
-              />
-            </TouchableWithoutFeedback>
-          </View>
-        )}
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  props.navigation.navigate('SearchScreen');
+                }}>
+                <Image
+                  style={{ height: '70%', width: '70%' }}
+                  resizeMode={'contain'}
+                  source={require('../../Images/search.png')}
+                // source={{
+                //   uri:
+                //     'https://image.freepik.com/free-vector/illustration-search-box_53876-37578.jpg',
+                // }}
+                />
+              </TouchableWithoutFeedback>
+            </View>
+          )}
       </ScrollView>
     </SafeAreaView>
   );
