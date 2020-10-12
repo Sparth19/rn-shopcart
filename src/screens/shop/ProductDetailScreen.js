@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   ScrollView,
   View,
@@ -9,16 +9,16 @@ import {
   Dimensions,
   SafeAreaView,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
-import {Button, FAB, Portal, Provider} from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
+import { Button, FAB, Portal, Provider } from 'react-native-paper';
 import * as favoritesActions from '../../store/actions/favorites';
 import Colors from '../../constants/Colors';
 import * as cartActions from '../../store/actions/cart';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 const PlaceDetailScreen = (props) => {
-  const {productId} = props.route.params;
-  const {variable} = props.route.params;
+  const { productId } = props.route.params;
+  const { variable } = props.route.params;
   const [filled, setFilled] = useState(variable);
 
   const [open, setOpen] = useState(false);
@@ -45,13 +45,13 @@ const PlaceDetailScreen = (props) => {
   }, [props]);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
         <View style={styles.details}>
           <Text style={styles.title}>{selectedProduct.title}</Text>
           <Image
             style={styles.image}
-            source={{uri: selectedProduct.imageUrl}}
+            source={{ uri: selectedProduct.imageUrl }}
             resizeMode={'contain'}
           />
           <View style={styles.actions}>
@@ -102,7 +102,7 @@ const PlaceDetailScreen = (props) => {
               {
                 icon: 'send',
                 label: 'Ask questions',
-                onPress: () => console.log('Pressed chat'),
+                onPress: () => props.navigation.navigate('ChatScreen'),
               },
             ]}
             onStateChange={onStateChange}
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  icon: {marginRight: 10},
+  icon: { marginRight: 10 },
   details: {
     margin: 20,
   },
