@@ -22,6 +22,8 @@ const SearchScreen = (props) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedChip, setSelectedChip] = useState();
+  //const [selectedChipTitle, setSelectedChipTitle] = useState('')
   const dispatch = useDispatch();
 
   const categories = useSelector((state) => state.products.availableCategories);
@@ -35,8 +37,8 @@ const SearchScreen = (props) => {
 
   const chipSelectHandler = (text) => {
     console.log(text);
-    props.navigation.navigate('CategoryProductsScreen',
-      { category: text })
+    setSelectedChip(text);
+    setData([]);
   };
 
   const allProducts = useSelector(
@@ -47,7 +49,13 @@ const SearchScreen = (props) => {
   let allProductsTitle = [];
 
   for (var x in allProducts) {
-    allProductsTitle = allProductsTitle.concat(allProducts[x].short_title);
+    if (selectedChip) {
+      if (allProducts[x].category === selectedChip) {
+        allProductsTitle = allProductsTitle.concat(allProducts[x].short_title);
+      }
+    } else {
+      allProductsTitle = allProductsTitle.concat(allProducts[x].short_title);
+    }
   }
   //console.log(allProducts);
 
@@ -128,93 +136,94 @@ const SearchScreen = (props) => {
         underlineColorAndroid="transparent"
         placeholder="Search Here"
       />
-      {/* <FlatList
-        data={categories}
-        //horizontal={true}
-        renderItem={(itemData) => (
-          <Chips
-            title={itemData.item.title}
-            onSelect={() => {
-              props.navigation.navigate('CategoryProductsScreen', {
-                category: itemData.item.title,
-              });
+      {selectedChip ? (
+        <View style={styles.row}>
+          <Chip
+            style={styles.chipSelected}
+            icon='close'
+            onPress={() => {
+              setSelectedChip(undefined)
+              setData([]);
             }}
-          />
-        )}
+          >
+            <Text style={styles.chipText}>{selectedChip}</Text>
+          </Chip>
 
-      /> */}
-      <View style={styles.row}>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[0])}
-        >
-          <Text style={styles.chipText}>{chipTitle[0]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[1])}
-        >
-          <Text style={styles.chipText}>{chipTitle[1]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[2])}
-        >
-          <Text style={styles.chipText}>{chipTitle[2]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[3])}
-        >
-          <Text style={styles.chipText}>{chipTitle[3]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[4])}
-        >
-          <Text style={styles.chipText}>{chipTitle[4]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[5])}
-        >
-          <Text style={styles.chipText}>{chipTitle[5]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[6])}
-        >
-          <Text style={styles.chipText}>{chipTitle[6]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[7])}
-        >
-          <Text style={styles.chipText}>{chipTitle[7]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[8])}
-        >
-          <Text style={styles.chipText}>{chipTitle[8]}</Text>
-        </Chip>
-        <Chip
-          style={styles.chip}
-          //type='outlined'
-          onPress={chipSelectHandler.bind(this, chipTitle[9])}
-        >
-          <Text style={styles.chipText}>{chipTitle[9]}</Text>
-        </Chip>
-      </View>
+        </View>
+      ) : (
+          <View style={styles.row}>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[0])}
+            >
+              <Text style={styles.chipText}>{chipTitle[0]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[1])}
+            >
+              <Text style={styles.chipText}>{chipTitle[1]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[2])}
+            >
+              <Text style={styles.chipText}>{chipTitle[2]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[3])}
+            >
+              <Text style={styles.chipText}>{chipTitle[3]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[4])}
+            >
+              <Text style={styles.chipText}>{chipTitle[4]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[5])}
+            >
+              <Text style={styles.chipText}>{chipTitle[5]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[6])}
+            >
+              <Text style={styles.chipText}>{chipTitle[6]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[7])}
+            >
+              <Text style={styles.chipText}>{chipTitle[7]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[8])}
+            >
+              <Text style={styles.chipText}>{chipTitle[8]}</Text>
+            </Chip>
+            <Chip
+              style={styles.chip}
+              //type='outlined'
+              onPress={chipSelectHandler.bind(this, chipTitle[9])}
+            >
+              <Text style={styles.chipText}>{chipTitle[9]}</Text>
+            </Chip>
+          </View>
+        )}
 
       <FlatList
         style={styles.searchList}
@@ -274,6 +283,10 @@ const styles = StyleSheet.create({
   chip: {
     backgroundColor: Colors.background,
     margin: 5
+  },
+  chipSelected: {
+    // backgroundColor: Colors.background,
+    margin: 5,
   },
   chipText: {
     color: Colors.primary
