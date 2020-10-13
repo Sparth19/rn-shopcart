@@ -8,7 +8,7 @@ const ChatScreen = (props) => {
   const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
 
-  const socket = io('http://localhost:3000');
+  const socket = io('https://shopcartapi.herokuapp.com');
 
 
 
