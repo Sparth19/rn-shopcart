@@ -2,12 +2,33 @@ import React, {useState, useCallback, useEffect} from 'react';
 import {View, Button, Text, TextInput, StyleSheet} from 'react-native';
 import io from 'socket.io-client';
 import {GiftedChat} from 'react-native-gifted-chat';
+import {HeaderButtons, Item} from 'react-navigation-header-buttons';
 
-const ChatScreen = (props) => {
+import HeaderButton from '../../components/UI/HeaderButton';
+
+const MyChatScreen = (props) => {
   //const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
 
   const socket = io('http://localhost:3000');
+
+  const {navigation} = props;
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'My Chats',
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            name="Menu"
+            iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+            onPress={() => {
+              navigation.toggleDrawer();
+            }}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [navigation]);
 
   useEffect(() => {
     setChatMessages([
@@ -26,24 +47,12 @@ const ChatScreen = (props) => {
     ]);
   }, []);
 
-  // socket.on("loadMessage", msg => {
-  //     setChatMessages([...chatMessages, msg]);
-  // });
-
-  // const submitChatMessage = () => {
-  //     socket.emit('chat message', chatMessage);
-  //     setChatMessage('');
-  // };
-
   const onSend = useCallback((chatMessages = []) => {
-    socket.emit('sendMessage', chatMessages, 'ios');
+    socket.emit('sendMessage', chatMessages, 'android');
     setChatMessages((previousMessages) =>
       GiftedChat.append(previousMessages, chatMessages),
     );
   }, []);
-  // const chatMessagess = chatMessages.map(chatMessage => (
-  //     <Text style={{ borderWidth: 2, top: 500 }}>{chatMessage}</Text>
-  // ));
 
   return (
     <GiftedChat
@@ -54,25 +63,7 @@ const ChatScreen = (props) => {
         _id: 1,
       }}
     />
-    // {/* {chatMessagess}
-    // <TextInput
-    //     style={{ height: 40, borderWidth: 2, top: 600 }}
-    //     autoCorrect={false}
-    //     value={chatMessage}
-    //     onSubmitEditing={submitChatMessage}
-    //     onChangeText={chatMessage => {
-    //         setChatMessage(chatMessage);
-    //     }}
-    // /> */}
   );
 };
 
-// const styles = StyleSheet.create({
-//     container: {
-//         height: 400,
-//         flex: 1,
-//         backgroundColor: '#F5FCFF',
-//     },
-// });
-
-export default ChatScreen;
+export default MyChatScreen;
