@@ -1,20 +1,48 @@
-import React, {useState, useCallback, useEffect} from 'react';
-import {View, Button, Text, TextInput, StyleSheet} from 'react-native';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Button, Text, TextInput, StyleSheet } from 'react-native';
 import io from 'socket.io-client';
-import {GiftedChat} from 'react-native-gifted-chat';
+import { GiftedChat } from 'react-native-gifted-chat';
 
+let text1 = ''
 const ChatScreen = (props) => {
-  //const [chatMessage, setChatMessage] = useState('');
+  const [chatMessage, setChatMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
 
   const socket = io('http://localhost:3000');
+
+
+
+  socket.emit('join', { username: 'ayush', id: 'id:ayush', room: 'ayush-room' }, (error) => {
+    if (error) {
+      console.log(error)
+      //location.href = '/'
+    }
+  })
+
+  socket.on('message', (msgObject) => {
+    console.log(msgObject)
+    text1 = text1.concat(msgObject.text);
+
+    // const html = Mustache.render(messageTemplate, {
+    //   username: msgObject.username,
+    //   message: msgObject.text,
+    //   createdAt: moment(msgObject.createdAt).format('h:mm a')
+    // })
+    // if (msgObject.side === 0) {
+    //   console.log("Other")
+    // } else if (msgObject.side === 1) {
+    //   console.log("me")
+    // }
+    // message.insertAdjacentHTML('beforeend', html)
+    // autoscroll()
+  })
 
   useEffect(() => {
     setChatMessages([
       {
         //receiver id 1
         _id: 1,
-        text: 'Hello developer',
+        text: text1,
         createdAt: new Date(),
         user: {
           //sender id 2
@@ -24,7 +52,7 @@ const ChatScreen = (props) => {
         },
       },
     ]);
-  }, []);
+  }, [text1]);
 
   // socket.on("loadMessage", msg => {
   //     setChatMessages([...chatMessages, msg]);
@@ -36,7 +64,12 @@ const ChatScreen = (props) => {
   // };
 
   const onSend = useCallback((chatMessages = []) => {
-    socket.emit('sendMessage', chatMessages, 'ios');
+    const len = chatMessages.length
+    socket.emit('sendMsg', chatMessages[len - 1].text, 'id:ayush', (error) => {
+      if (error) {
+        console.log(error)
+      }
+    });
     setChatMessages((previousMessages) =>
       GiftedChat.append(previousMessages, chatMessages),
     );
@@ -48,7 +81,12 @@ const ChatScreen = (props) => {
   return (
     <GiftedChat
       messages={chatMessages}
-      onSend={(messages) => onSend(messages)}
+      onSend={(messages) => {
+        // console.log(messages[0].text)
+        // setChatMessage(messages[0].text)
+        onSend(messages)
+      }
+      }
       user={{
         //sender id
         _id: 1,
