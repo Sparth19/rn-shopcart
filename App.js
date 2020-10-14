@@ -12,6 +12,7 @@ import authReducer from './src/store/reducers/auth';
 import cartReducer from './src/store/reducers/cart';
 import orderReducer from './src/store/reducers/orders';
 import favReducer from './src/store/reducers/favorites';
+import chatReducer from './src/store/reducers/chat';
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   cart: cartReducer,
   orders: orderReducer,
   fav: favReducer,
+  chat: chatReducer,
 });
 
 let composeEnhancers = compose;
