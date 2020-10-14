@@ -97,7 +97,9 @@ const PlaceDetailScreen = (props) => {
               {
                 icon: 'email',
                 label: 'Give Feedback',
-                onPress: () => console.log('Pressed give feedback'),
+                onPress: () => props.navigation.navigate('FeedbackScreen', {
+                  productId: selectedProduct.id
+                }),
               },
               {
                 icon: 'send',

@@ -7,11 +7,11 @@ import Product from '../../models/Product';
 export const FETCH_USER_PRODUCT = 'FETCH_USER_PRODUCT';
 
 export const toggleFavorite = (id) => {
-  return {type: TOGGLE_FAVORITE, productId: id};
+  return { type: TOGGLE_FAVORITE, productId: id };
 };
 
 export const toggleFavoriteIcon = (value) => {
-  return {type: TOGGLE_FAVORITE_ICON, value: value};
+  return { type: TOGGLE_FAVORITE_ICON, value: value };
 };
 
 //fetch all products by category
@@ -284,6 +284,46 @@ export const deleteProduct = (productId) => {
       console.log(resData);
     } catch (err) {
       throw new Error('Error in delete product');
+    }
+  };
+};
+
+//Feedback 
+export const sendProductFeedback = (
+  productId, message
+) => {
+  console.log(productId);
+  console.log(message);
+  return async (dispatch, getState) => {
+    try {
+      const token = getState().auth.token;
+      const response = await fetch(
+        'https://shopcartapi.herokuapp.com/products/sendFeedback/',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            productId: productId,
+            message: message
+          }),
+        },
+      );
+
+      console.log(response)
+      if (!response.ok) {
+        const resData = await response.json();
+        console.log(resData);
+        throw new Error('Send feedback failed.');
+      }
+
+      const resData = await response.json();
+      console.log(resData);
+    } catch (err) {
+      console.log(err);
+      throw new Error('Error in send feedback of product');
     }
   };
 };
