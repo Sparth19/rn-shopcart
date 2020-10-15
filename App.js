@@ -1,10 +1,12 @@
 import 'react-native-gesture-handler';
-import {StatusBar} from 'react-native';
+import {StatusBar, LogBox} from 'react-native';
 import React from 'react';
 import {createStore, compose, combineReducers, applyMiddleware} from 'redux';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {Provider as StoreProvider} from 'react-redux';
 import ReduxThunk from 'redux-thunk';
+
+LogBox.ignoreAllLogs();
 
 import ShopNavigator from './src/navigation/ShopNavigator';
 import productsReducer from './src/store/reducers/products';
