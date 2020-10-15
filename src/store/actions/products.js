@@ -7,11 +7,11 @@ import Product from '../../models/Product';
 export const FETCH_USER_PRODUCT = 'FETCH_USER_PRODUCT';
 
 export const toggleFavorite = (id) => {
-  return { type: TOGGLE_FAVORITE, productId: id };
+  return {type: TOGGLE_FAVORITE, productId: id};
 };
 
 export const toggleFavoriteIcon = (value) => {
-  return { type: TOGGLE_FAVORITE_ICON, value: value };
+  return {type: TOGGLE_FAVORITE_ICON, value: value};
 };
 
 //fetch all products by category
@@ -288,10 +288,8 @@ export const deleteProduct = (productId) => {
   };
 };
 
-//Feedback 
-export const sendProductFeedback = (
-  productId, message
-) => {
+//Feedback
+export const sendProductFeedback = (productId, message) => {
   console.log(productId);
   console.log(message);
   return async (dispatch, getState) => {
@@ -307,12 +305,12 @@ export const sendProductFeedback = (
           },
           body: JSON.stringify({
             productId: productId,
-            message: message
+            message: message,
           }),
         },
       );
 
-      console.log(response)
+      console.log(response);
       if (!response.ok) {
         const resData = await response.json();
         console.log(resData);
